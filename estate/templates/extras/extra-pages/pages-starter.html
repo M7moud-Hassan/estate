@@ -1,0 +1,11 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Starter Page{% endblock title %}
+{% block content %}
+    
+    {% block page_title %}
+    {% include 'partials/page-title.html' with page_title="Starter Page" sub_title="Extra Pages" title="Starter Page"%}
+    {% endblock page_title %}
+
+        
+{% endblock content %}

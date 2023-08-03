@@ -1,0 +1,65 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+{% block title %}Register{% endblock title %}
+{% block header %}
+<h5 class="text-center mt-5 font-size-18">Free Register</h5>
+<p class="text-muted text-center">Get your free Veltrix account now.</p>                         
+{% endblock header %}
+{% block content %}
+<form class="form-horizontal mt-2 pb-0 needs-validation" novalidate id="signup_form" method="post" action="{% url 'account_signup' %}">
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} my-3" role="alert">
+        <strong>{{ message }}</strong>
+    </div>
+    {% endfor %} 
+    {% if field.help_text %}
+        <div class="alert alert-danger mb-3" role="alert">
+            <strong>{{ field.help_text }}</strong>
+        </div>
+    {% endif %}
+    {% csrf_token %}
+    <div class="mb-3">
+        {{form.email|as_crispy_field}}
+    </div>
+
+    <div class="mb-3">
+        {{form.username|as_crispy_field}}
+    </div>
+
+    <div class="mb-3">
+        {{form.password1|as_crispy_field}}
+    </div>
+    <div class="mb-3">
+        {{form.password2|as_crispy_field}}
+    </div>
+
+    <div class="mb-3 row mt-2">
+        <div class="col-12 text-end">
+            <button class="btn btn-primary w-md waves-effect waves-light"
+                type="submit">Register</button>
+        </div>
+    </div>
+
+    <div class="mb-0 row">
+        <div class="col-12 mt-2">
+            <p class="text-muted mb-0 font-size-14">By registering you agree to the Lexa
+                <a href="#" class="text-primary">Terms of Use</a></p>
+            </div>
+        </div>
+    </div>
+</form> 
+<hr>
+<div class="mt-2 text-center">
+    <div class="signin-other-title">
+        <h5 class="fs-13 mb-2 title">Sign In with</h5>
+    </div>
+    <div>
+        <a href="{% provider_login_url 'google' %}" class="btn btn-danger btn-icon waves-effect waves-light"><i class="mdi mdi-google fs-16"></i></a>
+</div>
+{% endblock content %}
+{% block extra_content %}
+<p>Already have an account ? <a href="{% url 'account_login'%}" class="fw-medium text-primary"> Login </a> </p>
+{% endblock extra_content %}

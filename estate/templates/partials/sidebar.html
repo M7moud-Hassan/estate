@@ -1,0 +1,244 @@
+<!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+
+            <div data-simplebar class="h-100">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">المشاريع</li>
+
+                        <li>
+                            <a href="{% url 'home.projects' %}" class="waves-effect">
+<!--                                <i class="ti-home"></i><span class="badge rounded-pill bg-primary float-end">1</span>-->
+                                <span>المشاريع</span>
+                            </a>
+                        </li>
+
+<!--                        <li>-->
+<!--                            <a href="{% url 'main:calendar'%}" class=" waves-effect">-->
+<!--                                <i class="ti-calendar"></i>-->
+<!--                                <span>Calendar</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-email"></i>-->
+<!--                                <span>Email</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'main:email.inbox'%}">Inbox</a></li>-->
+<!--                                <li><a href="{% url 'main:email.read'%}">Email Read</a></li>-->
+<!--                                <li><a href="{% url 'main:email.compose'%}">Email Compose</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li class="menu-title">Components</li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-package"></i>-->
+<!--                                <span>UI Elements</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:ui_elements.alerts'%}">Alerts</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.buttons'%}">Buttons</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.cards'%}">Cards</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.carousel'%}">Carousel</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.dropdowns'%}">Dropdowns</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.grid'%}">Grid</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.images'%}">Images</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.lightbox'%}">Lightbox</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.modals'%}">Modals</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.offcanvas'%}">Offcanvas</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.rangeslidebar'%}">Range Slider</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.sessiontimeout'%}">Session Timeout</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.progressbars'%}">Progress Bars</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.sweetalert'%}">SweetAlert 2</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.tabs'%}">Tabs &amp; Accordions</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.typography'%}">Typography</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.video'%}">Video</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.general'%}">General</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.colors'%}">Colors</a></li>-->
+<!--                                <li><a href="{% url 'components:ui_elements.rating'%}">Rating</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="waves-effect">-->
+<!--                                <i class="ti-receipt"></i>-->
+<!--                                <span class="badge rounded-pill bg-success float-end">9</span>-->
+<!--                                <span>Forms</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:forms.elements'%}">Form Elements</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.validation'%}">Form Validation</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.advanced'%}">Form Advanced</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.editors'%}">Form Editors</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.fileupload'%}">Form File Upload</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.xeditable'%}">Form Xeditable</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.repeater'%}">Form Repeater</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.wizard'%}">Form Wizard</a></li>-->
+<!--                                <li><a href="{% url 'components:forms.mask'%}">Form Mask</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-pie-chart"></i>-->
+<!--                                <span>Charts</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:charts.morris'%}">Morris Chart</a></li>-->
+<!--                                <li><a href="{% url 'components:charts.chartist'%}">Chartist Chart</a></li>-->
+<!--                                <li><a href="{% url 'components:charts.chartjs'%}">Chartjs Chart</a></li>-->
+<!--                                <li><a href="{% url 'components:charts.flot'%}">Flot Chart</a></li>-->
+<!--                                <li><a href="{% url 'components:charts.knob'%}">Jquery Knob Chart</a></li>-->
+<!--                                <li><a href="{% url 'components:charts.sparkline'%}">Sparkline Chart</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-view-grid"></i>-->
+<!--                                <span>Tables</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:tables.basic' %}">Basic Tables</a></li>-->
+<!--                                <li><a href="{% url 'components:tables.datatable' %}">Data Tables</a></li>-->
+<!--                                <li><a href="{% url 'components:tables.responsive' %}">Responsive Tables</a></li>-->
+<!--                                <li><a href="{% url 'components:tables.editable' %}">Editable Tables</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-face-smile"></i>-->
+<!--                                <span>Icons</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:icons.material'%}">Material Design</a></li>-->
+<!--                                <li><a href="{% url 'components:icons.fontawesome'%}">Font Awesome</a></li>-->
+<!--                                <li><a href="{% url 'components:icons.ion'%}">Ion Icons</a></li>-->
+<!--                                <li><a href="{% url 'components:icons.themify'%}">Themify Icons</a></li>-->
+<!--                                <li><a href="{% url 'components:icons.dripicons'%}">Dripicons</a></li>-->
+<!--                                <li><a href="{% url 'components:icons.typicons'%}">Typicons Icons</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="waves-effect">-->
+<!--                                <i class="ti-location-pin"></i>-->
+<!--                                <span class="badge rounded-pill bg-danger float-end">2</span>-->
+<!--                                <span>Maps</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'components:maps.google' %}"> Google Map</a></li>-->
+<!--                                <li><a href="{% url 'components:maps.vector' %}"> Vector Map</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li class="menu-title">Extras</li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-layout"></i>-->
+<!--                                <span>Layouts</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="true">-->
+<!--                                <li>-->
+<!--                                    <a href="javascript: void(0);" class="has-arrow">Vertical</a>-->
+<!--                                    <ul class="sub-menu" aria-expanded="true">-->
+<!--                                        <li><a href="{% url 'extras:layouts.vertical.light_sidebar' %}">Light Sidebar</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.vertical.compact_sidebar' %}">Compact Sidebar</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.vertical.icon_sidebar' %}">Icon Sidebar</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.vertical.boxed' %}">Boxed Layout</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.vertical.colored_sidebar' %}">Colored Sidebar</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="javascript: void(0);" class="has-arrow">Horizontal</a>-->
+<!--                                    <ul class="sub-menu" aria-expanded="true">-->
+<!--                                        <li><a href="{% url 'extras:layouts.horizontal.horizontal' %}">Horizontal</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.horizontal.hori_topbar_light' %}">Light Topbar</a></li>-->
+<!--                                        <li><a href="{% url 'extras:layouts.horizontal.hori_boxed_width' %}">Boxed Layout</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-archive"></i>-->
+<!--                                <span> Authentication </span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'extras:authentication.login' %}">Login 1</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.login_2' %}">Login 2</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.register' %}">Register 1</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.register_2' %}">Register 2</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.recoverpw' %}">Recover Password 1</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.recoverpw_2' %}">Recover Password 2</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.lock_screen' %}">Lock Screen 1</a></li>-->
+<!--                                <li><a href="{% url 'extras:authentication.lock_screen_2' %}">Lock Screen 2</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-support"></i>-->
+<!--                                <span>  Extra Pages  </span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'extras:pages.timeline' %}">Timeline</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.invoice' %}">Invoice</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.directory' %}">Directory</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.starter_page' %}">Starter Page</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.404' %}">Error 404</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.500' %}">Error 500</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.pricing' %}">Pricing</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.gallery' %}">Gallery</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.maintenance' %}">Maintenance</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.comingsoon' %}">Coming Soon</a></li>-->
+<!--                                <li><a href="{% url 'extras:pages.faq' %}">FAQs</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-bookmark-alt"></i>-->
+<!--                                <span>  Email Templates  </span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="false">-->
+<!--                                <li><a href="{% url 'extras:email_templates.basic' %}">Basic Action Email</a></li>-->
+<!--                                <li><a href="{% url 'extras:email_templates.alerts' %}">Alert Email</a></li>-->
+<!--                                <li><a href="{% url 'extras:email_templates.billing' %}">Billing Email</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+<!--                        <li>-->
+<!--                            <a href="javascript: void(0);" class="has-arrow waves-effect">-->
+<!--                                <i class="ti-more"></i>-->
+<!--                                <span>Multi Level</span>-->
+<!--                            </a>-->
+<!--                            <ul class="sub-menu" aria-expanded="true">-->
+<!--                                <li><a href="javascript: void(0);">Level 1.1</a></li>-->
+<!--                                <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>-->
+<!--                                    <ul class="sub-menu" aria-expanded="true">-->
+<!--                                        <li><a href="javascript: void(0);">Level 2.1</a></li>-->
+<!--                                        <li><a href="javascript: void(0);">Level 2.2</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+        <!-- Left Sidebar End -->

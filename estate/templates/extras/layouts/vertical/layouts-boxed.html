@@ -1,0 +1,28 @@
+{% extends 'partials/base.html' %}
+{% load static %}    
+{% block title %}Boxed Layout{% endblock title %}
+
+{% block extra_css %}
+    <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block body %}data-sidebar="dark" data-keep-enlarged="true" class="vertical-collpsed" data-layout-size="boxed"{% endblock body %}
+
+{% block content %}
+    
+    {% block page_title %}
+    {% include 'partials/page-title.html' with page_title="Boxed Layout" sub_title="Vertical" title="Boxed Layout"%}
+    {% endblock page_title %}
+        
+    {% include 'partials/content.html' %}  
+{% endblock content %}
+
+{% block extra_js %}
+    <!-- Peity chart-->
+    <script src="{% static 'libs/peity/jquery.peity.min.js' %}"></script>
+
+    <!-- Plugin Js-->
+    <script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
+
+    <script src="{% static 'js/pages/dashboard.init.js' %}"></script>
+{% endblock extra_js %}

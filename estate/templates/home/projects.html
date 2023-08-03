@@ -1,0 +1,338 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Responsive Tables{% endblock title %}
+
+{% block extra_css %}
+    <!-- Responsive Table css -->
+    <link href="{% static 'libs/admin-resources/rwd-table/rwd-table.min.css'%}" rel="stylesheet" type="text/css">
+{% endblock extra_css %}
+
+{% block page_title %}
+    {% include 'partials/page_title_projects.html' with page_title="المشاريع" sub_title="المشاريع" title="المشاريع" %}
+    {% endblock page_title %}
+{% block content %}
+
+{% for p in projects %}
+<div class="modal fade modal-ahdaa-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">العهد</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <div class="table-responsive">
+                            <table class="table table-editable table-nowrap align-middle table-edits">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th>الاسم</th>
+                                        <th>القيمة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for ah in p.ahdaa.all %}
+                                    <tr class="trah{{p.id}}" data-id="{{ ah.id }}">
+                                        <td style="width: 80px">{{ ah.id }}</td>
+                                        <td data-field="name">{{ ah.name }}</td>
+                                        <td data-field="price"> {{ ah.price }} </td>
+                                        <td style="width: 100px">
+                                            <a class="btn btn-secondary btn-sm edit"   title="Edit">
+                                                <i id="icon-{{ah.id}}" class="fas fa-pencil-alt" ></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" onclick="saveAhdaa({{p.id}},{{p.ahdaa.all|length}})">Save
+                                                    changes</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+<div class="modal fade modal-masrouf-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myLargeModalLabel">
+                                                    المصروفات
+                                                    </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                               <div class="table-responsive">
+                            <table class="table table-editable table-nowrap align-middle table-edits">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th>قيمة الصرف</th>
+                                        <th>تاريخ الصرف</th>
+                                        <th>الموردين</th>
+                                        <th> التفاصيل</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for mo in p.masourfats.all %}
+                                    <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
+                                        <td  style="width: 80px">{{ mo.id }}</td>
+                                        <td data-field="price">{{ mo.price }}</td>
+                                        <td data-field="date_masrouf"> {{ mo.date_masrouf|date:'d-m-Y' }} </td>
+                                        <td data-field="almardeen"> {{ mo.almardeen }} </td>
+                                         <td data-field="descriptions"> {{ mo.descriptions }} </td>
+                                        <td style="width: 100px">
+                                            <a class="btn btn-secondary btn-sm edit" title="Edit">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                 <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" onclick="saveMasrouf({{p.id}},{{p.masourfats.all|length}})">Save
+                                                    changes</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+    <div class="modal fade" id="staticBackdrop{{p.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المشروع
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح مشروع {{p.name}}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a href="{% url 'delete_project' p.id %}"
+                                                    class="btn btn-primary">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+{% endfor %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-rep-plugin">
+                            <div class="table-responsive mb-0" data-bs-pattern="priority-columns">
+                                <table id="tech-companies-1" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>اسم المشروع</th>
+                                        <th data-priority="3">تاريخ الجلسة</th>
+                                        <th data-priority="1">تاريخ فتح مالي</th>
+                                        <th data-priority="3"> تاريخ اخطار الترسية </th>
+                                        <th data-priority="3">تاريخ سداد تأمين خطاب الخمسات</th>
+                                        <th data-priority="6">تاريخ امر الاسناد</th>
+                                        <th data-priority="6">تاريخ امر الشغل</th>
+                                        <th data-priority="6">تاريخ انتهاء المشروع </th>
+                                        <th data-priority="7">قيمة المشروع</th>
+                                        <th data-priority="7"> غرامة التأخير</th>
+                                        <th data-priority="7">قيمة المشروع المنفذه فعليا</th>
+                                        <th data-priority="8">العهد</th>
+                                        <th data-priority="8">المصروفات</th>
+                                        <th data-priority="8">اسم المستخلص</th>
+                                        <th data-priority="8"> تاريخ المستخلص</th>
+                                        <th data-priority="8">قيمة الصرف</th>
+                                        <th data-priority="8">قيمة المستخلص بعد الخصم</th>
+                                        <th data-priority="8">التأميين</th>
+                                        <th> الانشطة </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                   {% for p in projects %}
+                                   <tr>
+                                       <td>{{p.name}}</td>
+                                       <td>{{p.date_session}}</td>
+                                       <td>{{p.date_finance}}</td>
+                                       <td>{{p.date_notification_Altrsih}}</td>
+                                       <td>{{p.date_sadad_khatab_alkhsmat}}</td>
+                                       <td>{{p.date_asnad}}</td>
+                                       <td>{{p.date_work}}</td>
+                                       <td>{{p.date_end}}</td>
+                                       <td>{{p.date_extra_end}}</td>
+                                       <td>{{p.price_project}}</td>
+                                       <td>{{p.gramat_altakheer}}</td>
+                                       <td>{{p.total_price_end}}</td>
+                                       {% if p.ahdaa.all|length > 0 %}
+                                       <td>{{ p.ahdaa.all|length }}
+                                           عهده <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-ahdaa-{{p.id}}" type="button" value="عرض">
+                                       </td>
+                                      {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+                                        {% if p.masourfats.all|length > 0 %}
+                                        <td>{{p.masourfats.all|length}} مصروف <input class="btn btn-outline-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal-masrouf-{{p.id}}" type="button" value="عرض"></td>
+                                     {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+                                       <td>{{p.name_mostakhlas}}</td>
+                                       <td>{{p.date_mostakhlas}}</td>
+                                       <td>{{p.price_mostakhlas}}</td>
+                                       <td>{{p.price_mostakhlas_after}}</td>
+                                       <td>{{p.altamin}}</td>
+                                       <td><a class="btn btn-info" type="button" href="{% url 'edit_project' p.id %}" >تعديل</a>
+                            <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{p.id}}"></td>
+                                   </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+{% endblock content %}
+
+{% block extra_js %}
+    <!-- Responsive Table js -->
+    <script src="{% static 'libs/admin-resources/rwd-table/rwd-table.min.js'%}"></script>
+
+    <!-- Init js -->
+    <script src="{% static 'js/pages/table-responsive.init.js'%}"></script>
+    <script src="{% static 'libs/table-edits/build/table-edits.min.js'%}"></script>
+    <script src="{% static 'js/pages/table-editable.init.js'%}"></script>
+<script>
+
+function saveAhdaa(id,num){
+var trElements = document.querySelectorAll('.trah'+id);
+
+var elementsArray = Array.from(trElements);
+
+var lastElements = elementsArray.slice(-num);
+
+var allDataFields = [];
+
+lastElements.forEach(function(trElement) {
+    var trDataId = trElement.dataset.id;
+
+    var tdElements = trElement.querySelectorAll('td[data-field]');
+    var dataFields = {};
+
+    tdElements.forEach(function(tdElement) {
+        var dataField = tdElement.dataset.field;
+        var fieldValue = tdElement.textContent.trim();
+        dataFields[dataField] = fieldValue;
+
+    });
+    console.log(trElement)
+    dataFields["id"]=trElement.getAttribute('data-id');
+
+    allDataFields.push(dataFields);
+});
+fetch('/projects/update_ahdaa/', {
+    method: 'POST', // or 'PUT', 'PATCH' depending on your Django view
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+    },
+    body: JSON.stringify(allDataFields)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Data updated successfully:', data);
+})
+.catch(error => {
+    console.error('Error updating data:', error);
+});
+}
+
+
+function saveMasrouf(id,num){
+var trElements = document.querySelectorAll('.masro'+id);
+
+var elementsArray = Array.from(trElements);
+
+var lastElements = elementsArray.slice(-num);
+
+var allDataFields = [];
+
+lastElements.forEach(function(trElement) {
+    var trDataId = trElement.dataset.id;
+
+    var tdElements = trElement.querySelectorAll('td[data-field]');
+    var dataFields = {};
+
+    tdElements.forEach(function(tdElement) {
+        var dataField = tdElement.dataset.field;
+        var fieldValue = tdElement.textContent.trim();
+        dataFields[dataField] = fieldValue;
+
+    });
+    console.log(trElement)
+    dataFields["id"]=trElement.getAttribute('data-id');
+
+    allDataFields.push(dataFields);
+});
+fetch('/projects/update_masrouf/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+    },
+    body: JSON.stringify(allDataFields)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Data updated successfully:', data);
+})
+.catch(error => {
+    console.error('Error updating data:', error);
+});
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock extra_js %}

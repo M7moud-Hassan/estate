@@ -1,0 +1,465 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Form Wizard{% endblock title %}
+    {% block page_title %}
+{% if project %}
+        {% include 'partials/page_title_projects.html' with page_title=project.name sub_title="المشاريع" title="تحديث مشروع" hide="true" %}
+{% else %}
+   {% include 'partials/page_title_projects.html' with page_title="مشروع جديد" sub_title="المشاريع" title="اضافة مشروع" hide="true" %}
+{% endif %}
+{% endblock page_title %}
+
+
+
+
+{% block extra_css %}
+<style>
+    .input-group-prepend ,.input-group-append{
+    display:none !important;
+    }
+    .bootstrap-touchspin-prefix ,.bootstrap-touchspin-postfix{
+    display:block !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body" >
+                        <form id="form-horizontal"  class="form-horizontal form-wizard-wrapper custom-validation needs-validation"  method="post" novalidate>
+                             {% csrf_token %}
+                            <h3>تفاصيل المشروع</h3>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="name" class="col-lg-3 col-form-label">اسم المشروع</label>
+                                            <div class="col-lg-9  has-validation" >
+                                                <input id="name" name="name_project"  value="{{project.name}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
+                                             <div class="invalid-feedback">
+                                       ادخل اسم المشروع
+                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">تاريخ الجلسة</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker2">
+                                    <input id="date_session" type="text" value="{{project.date_session|date:'d-m-Y'}}" name="date1" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="finance" class="col-lg-3 col-form-label">تاريخ فتح مالي</label>
+                                            <div class="col-lg-9">
+                                                <div class="input-group" id="datepicker3">
+                                    <input id="finance" value="{{project.date_finance|date:'d-m-Y'}}" name="date2" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker3' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date3" class="col-lg-3 col-form-label">تاريخ اخطار الترسية</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker4">
+                                    <input id="date3" value="{{project.date_notification_Altrsih|date:'d-m-Y'}}" name="date3" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker4' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date4" class="col-lg-3 col-form-label">تاريخ سداد تأمين خطاب الخسمات</label>
+                                            <div class="col-lg-9">
+                                                <div class="input-group" id="datepicker5">
+                                    <input id="date4" value="{{project.date_sadad_khatab_alkhsmat|date:'d-m-Y'}}" name="date4" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker5' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date5" class="col-lg-3 col-form-label">تاريخ امر الاسناد</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker6">
+                                    <input id="date5" value="{{project.date_asnad|date:'d-m-Y'}}" name="date5" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker6' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date7" class="col-lg-3 col-form-label">تاريخ امر الشعل</label>
+                                            <div class="col-lg-9">
+                                                <div class="input-group" id="datepicker7">
+                                    <input id="date7" value="{{project.date_work|date:'d-m-Y'}}" name="date6" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker7' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date8" class="col-lg-3 col-form-label">تاريخ انتهاء المشروع </label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker8">
+                                    <input id="date8" value="{{project.date_end|date:'d-m-Y'}}" name="date7" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker8' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date18" class="col-lg-3 col-form-label">تاريخ اضافة</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker18">
+                                    <input id="date18" value="{{project.date_extra_end|date:'d-m-Y'}}" name="date8" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker18' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </fieldset>
+                            <h3>القيمة المالية</h3>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="total" class="col-lg-3 col-form-label">قيمة المشروع</label>
+                                            <div class="col-lg-9">
+                                                 <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.price_project}}"  name="demo2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="demo1" class="col-lg-3 col-form-label">غرامت التأخير</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" class="form-control" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                </div>
+                                <!-- end row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="total" class="col-lg-3 col-form-label"> قيمة المشروع المنفذه فعليا</label>
+                                            <div class="col-lg-9">
+                                                 <input id="total2" data-parsley-type="number" class="form-control" type="number" value="{{project.total_price_end}}" name="demo2">
+                                            </div>
+                                        </div>
+
+                                </div>
+
+                                </div>
+                                <!-- end row -->
+                            </fieldset>
+                            <h3>مصاريف وعهدة</h3>
+                            <fieldset>
+                               <div class="row">
+                             <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">عهدة</h4>
+                        <div class="repeater">
+                            {% if project.ahdaa.all %}
+                             <div data-repeater-list="group-a">
+                            {% for ah in project.ahdaa.all %}
+
+                                <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-5">
+                                        <label class="form-label" for="name_m_">اسم العهدة</label>
+                                        <input type="text" id="name_m_" value="{{ah.name}}" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>
+                                    </div>
+                                    <div  class="mb-3 col-lg-5">
+                                        <label class="form-label" for="price_">قيمة العهدة</label>
+                                         <input id="price_" data-parsley-type="number" class="form-control" type="number" value="{{ah.price}}"  name="demo2">
+
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4 align-self-center">
+                                        <div class="d-grid">
+                                            <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                </div>
+                                <!-- end row -->
+
+                            {% endfor %}
+                                  </div>
+                            {% else %}
+                              <div data-repeater-list="group-a">
+                                <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-5">
+                                        <label class="form-label" for="name_m">اسم العهدة</label>
+                                        <input type="text" id="name_m" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>
+                                    </div>
+                                    <div  class="mb-3 col-lg-5">
+                                        <label class="form-label" for="price">قيمة العهدة</label>
+                                        <input id="price" data-parsley-type="number" class="form-control" type="number" value="0" name="demo2">
+
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4 align-self-center">
+                                        <div class="d-grid">
+                                            <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                </div>
+                                <!-- end row -->
+                            </div>
+                            {% endif %}
+
+                            <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة عهدة اخري"/>
+                        <div>
+                    </div>
+                </div>
+            </div>
+                                     </div>
+                                <div class="row">
+                             <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">مصروفات</h4>
+                           <div class="repeater">
+                                <div data-repeater-list="group-a">
+                               {% if project.masourfats.all %}
+                                    {% for mo in project.masourfats.all %}
+                                     <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2_">قيمة المصروف</label>
+
+                                         <input id="price_2_" data-parsley-type="number" class="form-control" type="number"  value="{{mo.price}}" name="demo2">
+
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">تاريخ المصروف</label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="date10" type="text" value="{{mo.date_masrouf|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label6" for="price_2">الموردين</label>
+                                         <input id="almordeen6" value="{{mo.almardeen}}" name="moard" type="text"  class=" form-control">
+                                    </div>
+                                    <div class="mb-3 col-lg-10 ">
+                                        <label class="form-label" for="message">التفاصيل</label>
+                                        <input id="messagel" name="des" class="form-control" value="{{mo.descriptions}}" placeholder="التفاصيل هنا"/>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-lg-2 col-sm-4 align-self-center">
+                                        <div class="d-grid">
+                                            <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح مصروف"/>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                </div>
+                                    {% endfor %}
+                                    {% else %}
+                                     <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">قيمة المصروف</label>
+                                        <input id="price_2" data-parsley-type="number" class="form-control" type="number" value="0" name="demo2">
+
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">قيمة المصروف</label>
+                                         <div class="input-group" id="datepicker10">
+                                    <input id="date_price" name="date10" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker10' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">الموردين</label>
+                                         <input id="almordeen" name="moard" type="text"  class=" form-control">
+                                    </div>
+                                    <div class="mb-3 col-lg-10 ">
+                                        <label class="form-label" for="message">التفاصيل</label>
+                                        <textarea id="message" name="des" class="form-control" placeholder="التفاصيل هنا"></textarea>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-lg-2 col-sm-4 align-self-center">
+                                        <div class="d-grid">
+                                            <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح مصروف"/>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                </div>
+                                    {% endif %}
+                                <!-- end row -->
+                            </div>
+                            <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مصروف اخر"/>
+
+                           </div>
+                    </div>
+                </div>
+                             </div>
+                </div>
+            </div>
+                                     </div>
+                            </fieldset>
+                            <h3> المستخلصات</h3>
+                            <fieldset>
+                                <div class="p-3">
+                                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="name_mo" class="col-lg-3 col-form-label">اسم المستخلص</label>
+                                            <div class="col-lg-9">
+                                                <input id="name_mo" value="{{project.name_mostakhlas}}" name="name_mo" type="text" class="form-control" placeholder="ادخل اسم المشروع">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">تاريخ المصروف</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="datepicker11">
+                                    <input id="date_mo" type="text" value="{{project.date_mostakhlas|date:'d-m-Y'}}" name="date_mo" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker11' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">قيمة الصرف</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group">
+                                                    <input id="price_3_0" data-parsley-type="number" class="form-control" type="number"  value="{{project.price_mostakhlas}}" name="demo2">
+
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group">
+                                                   <input id="price_3_p" data-parsley-type="number" class="form-control" type="number"  value="{{project.price_mostakhlas_after}}" name="demo2">
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">التأميين</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group">
+                                                   <input id="price_3" data-parsley-type="number" class="form-control" type="number" value="{{project.altamin}}" name="demo2">
+
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                    <button class="btn btn-primary w-100">
+                                        {% if project %}
+                                        تحديث
+                                        {%else%}
+                                        حفظ
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}
+{% block extra_js %}
+    <script src="{% static 'libs/jquery-steps/build/jquery.steps.min.js'%}"></script>
+    <script src="{% static 'js/pages/form-wizard.init.js'%}"></script>
+    <script src="{% static 'libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+    <script src="{% static 'libs/select2/dist/js/select2.min.js'%}"></script>
+    <script src="{% static 'libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+    <script src="{% static 'libs/spectrum-colorpicker2/dist/spectrum.min.js'%}"></script>
+    <script src="{% static 'libs/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js'%}"></script>
+    <script src="{% static 'libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js'%}"></script>
+    <script src="{% static 'libs/bootstrap-maxlength/dist/bootstrap-maxlength.min.js'%}"></script>
+    <script src="{% static 'js/pages/form-advanced.init.js'%}"></script>
+    <script src="{% static 'libs/jquery.repeater/jquery.repeater.min.js'%}"></script>
+    <script src="{% static 'js/pages/form-repeater.int.js'%}"></script>
+    <script src="{% static  'libs/parsleyjs/dist/parsley.min.js'%}"></script>
+    <script src="{% static 'js/pages/form-validation.init.js'%}"></script>
+<script>
+
+</script>
+{% endblock extra_js %}

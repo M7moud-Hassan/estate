@@ -1,0 +1,28 @@
+{% extends 'partials/base.html' %}
+{% load static %}    
+{% block title %}Compact Sidebar{% endblock title %}
+
+{% block extra_css %}
+    <link href="{% static 'libs/chartist/dist/chartist.min.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block body %}data-sidebar="dark" data-sidebar-size="small"{% endblock body %}
+
+{% block content %}
+    
+    {% block page_title %}
+    {% include 'partials/page-title.html' with page_title="Compact Sidebar" sub_title="Vertical Layouts" title="Compact Sidebar"%}
+    {% endblock page_title %}
+        
+    {% include 'partials/content.html' %}  
+{% endblock content %}
+
+{% block extra_js %}
+    <!-- Peity chart-->
+    <script src="{% static 'libs/peity/jquery.peity.min.js' %}"></script>
+
+    <!-- Plugin Js-->
+    <script src="{% static 'libs/chartist/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
+
+    <script src="{% static 'js/pages/dashboard.init.js' %}"></script>
+{% endblock extra_js %}
