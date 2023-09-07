@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+
 from extras.views import (
     layouts_vertical_light_sidebar_view,
     layouts_vertical_compact_sidebar_view,
@@ -35,6 +36,9 @@ from extras.views import (
 app_name = "extras"
 
 urlpatterns = [
+
+    #engineers
+    path("engineers/",include("engineers.urls")),
     # Layouts
     path("layouts/vertical/light-sidebar",view=layouts_vertical_light_sidebar_view,name="layouts.vertical.light_sidebar"),
     path("layouts/vertical/compact-sidebar",view=layouts_vertical_compact_sidebar_view,name="layouts.vertical.compact_sidebar"),

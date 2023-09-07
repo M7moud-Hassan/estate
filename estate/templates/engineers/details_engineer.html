@@ -1,0 +1,231 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %} تفاصيل المهندس{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
+
+{% endblock extra_css %}
+
+{% block page_title %}
+    {% include 'partials/page_title_engineers.html' with page_title=engineer.name sub_title="مهندسين التنفيذ" title=" تفاصيل" hide="true" %}
+    {% endblock page_title %}
+{% block content %}
+
+{% for p in projects %}
+<div class="modal fade modal-ahdaa-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">العهد</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <div class="table-responsive">
+                            <table class="table  table-nowrap align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th>المهندس</th>
+                                        <th>قيمة العهدة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for ah in ahdaa %}
+                                    <tr class="trah{{p.id}}" data-id="{{ ah.id }}">
+                                        <td style="width: 80px">{{forloop.counter}}</td>
+
+                                        <td data-field="price"> {{ ah.engineer_id.name }} </td>
+                                         <td data-field="name">{{ ah.price }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+<div class="modal fade modal-masrouf-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myLargeModalLabel">
+                                                    المصروفات
+                                                    </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                               <div class="table-responsive">
+                            <table class="table table-nowrap align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th>قيمة الصرف</th>
+                                        <th>تاريخ الصرف</th>
+                                        <th>الموردين</th>
+                                        <th> التفاصيل</th>
+                                        <th>بيان المصروف</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for mo in masrouf %}
+                                    <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
+                                        <td  style="width: 80px">{{forloop.counter}}</td>
+                                        <td data-field="price">{{ mo.price }}</td>
+                                        <td data-field="date_masrouf"> {{ mo.date_masrouf|date:'d-m-Y' }} </td>
+                                        <td data-field="almardeen"> {{ mo.almardeen }} </td>
+                                        <td data-field="descriptions"> {{ mo.descriptions }} </td>
+                                        <td> {{mo.bain_masrouf.name}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                 <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+<div class="modal fade modal-mostakhlas-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myLargeModalLabel">
+                                                    المستخلصات
+                                                    </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                               <div class="table-responsive">
+                            <table class="table table-nowrap align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th> اسم المهندس</th>
+                                        <th>تاريخ المستخلص</th>
+                                        <th> قيمة المستخلص الفعلية</th>
+                                        <th>قيمة المستخلص بعد الخصم</th>
+                                        <th> التأمينات</th>
+                                        <th>القوه العاملة</th>
+                                        <th> نسبة خصم الجمعية</th>
+                                        <th> نسبة  البنك</th>
+                                        <th>   الدمغة الهندسية</th>
+                                        <th>   اخري</th>
+                                        <th>    الضرائب</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for mo in moustakhlas %}
+                                    <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
+                                        <td  style="width: 80px">{{forloop.counter}}</td>
+                                        <td data-field="price">{{ mo.engineer_id.name }}</td>
+                                        <td data-field="date_masrouf"> {{ mo.date_mostakhlas|date:'d-m-Y' }} </td>
+                                        <td data-field="almardeen"> {{ mo.actual_extract_value }} </td>
+                                        <td data-field="almardeen"> {{ mo.price_mostakhlas_after }} </td>
+                                        <td data-field="descriptions"> {{ mo.altaminat }} </td>
+                                        <td> {{mo.workforce}}</td>
+                                        <td> {{mo.Combined_discount_rate}}</td>
+                                        <td> {{mo.bank_ratio}}</td>
+                                        <td> {{mo.engineering_stamp}}</td>
+                                        <td> {{mo.others}}</td>
+                                        <td> {{mo.taxes}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                 <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+{% endfor %}
+<div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> تفاصيل المهندس   </h4>
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم المشروع</th>
+                                    <th>العهد</th>
+                                    <th> المصروفات</th>
+                                    <th> المستخلصات</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                            {% for project in projects %}
+                           <tr>
+                                <td>{{project.id}}</td>
+                            <td>{{project.name}}</td>
+                               {% if ahdaa|length > 0 %}
+                                       <td>{{ ahdaa|length }}
+                                           عهده <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-ahdaa-{{project.id}}" type="button" value="عرض">
+                                       </td>
+                                      {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+
+                               {% if masrouf|length > 0 %}
+                                       <td>{{ masrouf|length }}
+                                           مصروف <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-masrouf-{{project.id}}" type="button" value="عرض">
+                                       </td>
+                                      {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+                                    {% if moustakhlas|length > 0 %}
+                                       <td>{{ moustakhlas|length }}
+                                           مستخلص <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-mostakhlas-{{project.id}}" type="button" value="عرض">
+                                       </td>
+                                      {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+{% endblock %}

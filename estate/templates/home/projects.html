@@ -24,25 +24,21 @@
                                             </div>
                                             <div class="modal-body">
                                                <div class="table-responsive">
-                            <table class="table table-editable table-nowrap align-middle table-edits">
+                            <table class="table  table-nowrap align-middle">
                                 <thead>
                                     <tr>
                                         <th>المسلسل</th>
-                                        <th>الاسم</th>
-                                        <th>القيمة</th>
+                                        <th>المهندس</th>
+                                        <th>قيمة العهدة</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for ah in p.ahdaa.all %}
                                     <tr class="trah{{p.id}}" data-id="{{ ah.id }}">
-                                        <td style="width: 80px">{{ ah.id }}</td>
-                                        <td data-field="name">{{ ah.name }}</td>
-                                        <td data-field="price"> {{ ah.price }} </td>
-                                        <td style="width: 100px">
-                                            <a class="btn btn-secondary btn-sm edit"   title="Edit">
-                                                <i id="icon-{{ah.id}}" class="fas fa-pencil-alt" ></i>
-                                            </a>
-                                        </td>
+                                        <td style="width: 80px">{{forloop.counter}}</td>
+
+                                        <td data-field="price"> {{ ah.engineer_id.name }} </td>
+                                         <td data-field="name">{{ ah.price }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -53,8 +49,7 @@
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" onclick="saveAhdaa({{p.id}},{{p.ahdaa.all|length}})">Save
-                                                    changes</button>
+
                                             </div>
                                             </div>
                                         </div>
@@ -76,7 +71,7 @@
                                             <div class="modal-body">
 
                                                <div class="table-responsive">
-                            <table class="table table-editable table-nowrap align-middle table-edits">
+                            <table class="table table-nowrap align-middle">
                                 <thead>
                                     <tr>
                                         <th>المسلسل</th>
@@ -84,21 +79,18 @@
                                         <th>تاريخ الصرف</th>
                                         <th>الموردين</th>
                                         <th> التفاصيل</th>
+                                        <th>بيان المصروف</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                  {% for mo in p.masourfats.all %}
                                     <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
-                                        <td  style="width: 80px">{{ mo.id }}</td>
+                                        <td  style="width: 80px">{{forloop.counter}}</td>
                                         <td data-field="price">{{ mo.price }}</td>
                                         <td data-field="date_masrouf"> {{ mo.date_masrouf|date:'d-m-Y' }} </td>
                                         <td data-field="almardeen"> {{ mo.almardeen }} </td>
-                                         <td data-field="descriptions"> {{ mo.descriptions }} </td>
-                                        <td style="width: 100px">
-                                            <a class="btn btn-secondary btn-sm edit" title="Edit">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a>
-                                        </td>
+                                        <td data-field="descriptions"> {{ mo.descriptions }} </td>
+                                        <td> {{mo.bain_masrouf.name}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -109,8 +101,7 @@
                                                  <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" onclick="saveMasrouf({{p.id}},{{p.masourfats.all|length}})">Save
-                                                    changes</button>
+
                                             </div>
 
                                             </div>
@@ -119,7 +110,116 @@
                                     </div>
                                     <!-- /.modal-dialog -->
                                 </div>
-    <div class="modal fade" id="staticBackdrop{{p.id}}" data-bs-backdrop="static"
+
+<div class="modal fade modal-mostakhlas-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myLargeModalLabel">
+                                                    المستخلصات
+                                                    </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                               <div class="table-responsive">
+                            <table class="table table-nowrap align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>المسلسل</th>
+                                        <th> اسم المهندس</th>
+                                        <th>تاريخ المستخلص</th>
+                                        <th> قيمة المستخلص الفعلية</th>
+                                        <th>قيمة المستخلص بعد الخصم</th>
+                                        <th> التأمينات</th>
+                                        <th>القوه العاملة</th>
+                                        <th> نسبة خصم الجمعية</th>
+                                        <th> نسبة  البنك</th>
+                                        <th>   الدمغة الهندسية</th>
+                                        <th>   اخري</th>
+                                        <th>    الضرائب</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for mo in p.mostakhlas.all %}
+                                    <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
+                                        <td  style="width: 80px">{{forloop.counter}}</td>
+                                        <td data-field="price">{{ mo.engineer_id.name }}</td>
+                                        <td data-field="date_masrouf"> {{ mo.date_mostakhlas|date:'d-m-Y' }} </td>
+                                        <td data-field="almardeen"> {{ mo.actual_extract_value }} </td>
+                                        <td data-field="almardeen"> {{ mo.price_mostakhlas_after }} </td>
+                                        <td data-field="descriptions"> {{ mo.altaminat }} </td>
+                                        <td> {{mo.workforce}}</td>
+                                        <td> {{mo.Combined_discount_rate}}</td>
+                                        <td> {{mo.bank_ratio}}</td>
+                                        <td> {{mo.engineering_stamp}}</td>
+                                        <td> {{mo.others}}</td>
+                                        <td> {{mo.taxes}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                 <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+<div class="modal fade modal-report-{{p.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myLargeModalLabel">
+                                                    التقرير
+                                                    </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                               <div class="table-responsive">
+                            <table class="table table-nowrap align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>التقرير</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 <tr>
+                                     <td>{{p.report}}</td>
+                                 </tr>
+                                </tbody>
+                                <!-- end tbody -->
+                            </table>
+                            <!-- end table -->
+                        </div>
+                                                 <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+
+<div class="modal fade" id="staticBackdrop{{p.id}}" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog">
@@ -144,6 +244,7 @@
                                     </div>
                                     <!-- /.modal-dialog -->
                                 </div>
+
 {% endfor %}
         <div class="row">
             <div class="col-12">
@@ -162,16 +263,15 @@
                                         <th data-priority="6">تاريخ امر الاسناد</th>
                                         <th data-priority="6">تاريخ امر الشغل</th>
                                         <th data-priority="6">تاريخ انتهاء المشروع </th>
+                                        <th data-priority="6">مدة المشروع</th>
+                                        <th data-priority="6">مدة اضافية</th>
                                         <th data-priority="7">قيمة المشروع</th>
                                         <th data-priority="7"> غرامة التأخير</th>
                                         <th data-priority="7">قيمة المشروع المنفذه فعليا</th>
                                         <th data-priority="8">العهد</th>
                                         <th data-priority="8">المصروفات</th>
-                                        <th data-priority="8">اسم المستخلص</th>
-                                        <th data-priority="8"> تاريخ المستخلص</th>
-                                        <th data-priority="8">قيمة الصرف</th>
-                                        <th data-priority="8">قيمة المستخلص بعد الخصم</th>
-                                        <th data-priority="8">التأميين</th>
+                                        <th data-priority="8">المستخلصات</th>
+                                        <th data-priority="8">التقرير</th>
                                         <th> الانشطة </th>
                                     </tr>
                                     </thead>
@@ -186,6 +286,7 @@
                                        <td>{{p.date_asnad}}</td>
                                        <td>{{p.date_work}}</td>
                                        <td>{{p.date_end}}</td>
+                                       <td>{{p.duration_project}}</td>
                                        <td>{{p.date_extra_end}}</td>
                                        <td>{{p.price_project}}</td>
                                        <td>{{p.gramat_altakheer}}</td>
@@ -202,11 +303,14 @@
                                      {% else %}
                                        <td>لا يوجد</td>
                                        {% endif %}
-                                       <td>{{p.name_mostakhlas}}</td>
-                                       <td>{{p.date_mostakhlas}}</td>
-                                       <td>{{p.price_mostakhlas}}</td>
-                                       <td>{{p.price_mostakhlas_after}}</td>
-                                       <td>{{p.altamin}}</td>
+                                      {% if p.mostakhlas.all|length > 0 %}
+                                       <td>{{ p.mostakhlas.all|length }}
+                                           مستخلص <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-mostakhlas-{{p.id}}" type="button" value="عرض">
+                                       </td>
+                                      {% else %}
+                                       <td>لا يوجد</td>
+                                       {% endif %}
+                                       <td>التقرير <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-report-{{p.id}}" type="button" value="عرض التقرير"></td>
                                        <td><a class="btn btn-info" type="button" href="{% url 'edit_project' p.id %}" >تعديل</a>
                             <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop{{p.id}}"></td>

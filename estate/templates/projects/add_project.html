@@ -9,17 +9,19 @@
 {% endif %}
 {% endblock page_title %}
 
-
-
-
 {% block extra_css %}
+
 <style>
     .input-group-prepend ,.input-group-append{
+    display:none !important;
+    }
+    .select2-container--default{
     display:none !important;
     }
     .bootstrap-touchspin-prefix ,.bootstrap-touchspin-postfix{
     display:block !important;
     }
+
 </style>
 {% endblock %}
 {% block content %}
@@ -128,7 +130,7 @@
                                                 <div class="input-group" id="datepicker7">
                                     <input id="date7" value="{{project.date_work|date:'d-m-Y'}}" name="date6" type="text" class="form-control" placeholder="dd-mm-yyyy"
                                         data-date-format="dd-mm-yyyy" data-date-container='#datepicker7' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                                        data-date-autoclose="true" readonly>
 
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
@@ -139,33 +141,47 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
+                                            <label for="date8" class="col-lg-3 col-form-label">مدة المشروع (شهر) </label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="duration">
+                                                   {% if project %}
+                                                    <input id="data8"   onkeyup="CalculateEnd(this)"  value="{{project.duration_project}}" name="date7" type="number" class="form-control" readonly>
+
+                                                   {% else %}
+                                                    <input id="data8"   onkeyup="CalculateEnd(this)"  value="{{project.duration_project}}" name="date7" type="number" class="form-control" required>
+
+                                                   {% endif %}
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if project %}
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date18" class="col-lg-3 col-form-label">مدة اضافية (شهر)</label>
+                                            <div class="col-lg-9">
+                                               <div class="input-group" id="add_duration">
+                                    <input id="date18" value="0" name="date8" type="number" onkeyup="AddDuration(this)" class="form-control">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-md-6 mx-auto">
+                                        <div class="row mb-3">
                                             <label for="date8" class="col-lg-3 col-form-label">تاريخ انتهاء المشروع </label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="datepicker8">
                                     <input id="date8" value="{{project.date_end|date:'d-m-Y'}}" name="date7" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker8' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                                        data-date-format="dd-mm-yyyy"   readonly required>
 
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label for="date18" class="col-lg-3 col-form-label">تاريخ اضافة</label>
-                                            <div class="col-lg-9">
-                                               <div class="input-group" id="datepicker18">
-                                    <input id="date18" value="{{project.date_extra_end|date:'d-m-Y'}}" name="date8" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker18' data-provide="datepicker"
-                                        data-date-autoclose="true">
-
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
 
@@ -206,6 +222,10 @@
                                         </div>
 
                                 </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="report">التقرير</label>
+                                        <textarea id="report" name="report" class="form-control"   placeholder="التفاصيل هنا">{{project.report}}</textarea>
+                                    </div>
 
                                 </div>
                                 <!-- end row -->
@@ -224,13 +244,23 @@
 
                                 <div class="row" data-repeater-item>
                                     <div  class="mb-3 col-lg-5">
-                                        <label class="form-label" for="name_m_">اسم العهدة</label>
-                                        <input type="text" id="name_m_" value="{{ah.name}}" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>
+<!--                                        <label class="form-label" for="name_m_">اسم العهدة</label>-->
+<!--                                        <input type="text" id="name_m_" value="{{ah.name}}" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>-->
+                                   <label class="form-label">اختر مهندس </label>
+                                    <select class="form-control select2" name="engineer">
+<!--                                    <option>{{ah.engineer_id.name}}</option>-->
+                                   {% for engineer in engineers %}
+                                    {% if ah.engineer_id.id == engineer.id %}
+                                         <option value="{{engineer.id}}" selected>{{engineer.name}}</option>
+                                        {% else %}
+                                         <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                        {%endif%}
+                                    {% endfor %}
+                                </select>
                                     </div>
                                     <div  class="mb-3 col-lg-5">
                                         <label class="form-label" for="price_">قيمة العهدة</label>
                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value="{{ah.price}}"  name="demo2">
-
                                     </div>
                                     <div class="col-lg-2 col-sm-4 align-self-center">
                                         <div class="d-grid">
@@ -247,8 +277,14 @@
                               <div data-repeater-list="group-a">
                                 <div class="row" data-repeater-item>
                                     <div  class="mb-3 col-lg-5">
-                                        <label class="form-label" for="name_m">اسم العهدة</label>
-                                        <input type="text" id="name_m" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>
+<!--                                        <label class="form-label" for="name_m">اسم العهدة</label>-->
+<!--                                        <input type="text" id="name_m" name="untyped-input" class="form-control" placeholder="ادخل اسم العهدة"/>-->
+                                    <label class="form-label">اختر مهندس </label>
+                                <select class="form-control select2" name="engineer">
+                                   {% for engineer in engineers %}
+                                     <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                    {% endfor %}
+                                </select>
                                     </div>
                                     <div  class="mb-3 col-lg-5">
                                         <label class="form-label" for="price">قيمة العهدة</label>
@@ -302,9 +338,21 @@
                                         <label class="form-label6" for="price_2">الموردين</label>
                                          <input id="almordeen6" value="{{mo.almardeen}}" name="moard" type="text"  class=" form-control">
                                     </div>
-                                    <div class="mb-3 col-lg-10 ">
+                                          <div  class="mb-3 col-lg-4">
+                                          <label class="form-label"> بيان المصروف </label>
+                                <select class="form-control select2" name="engineer_">
+                                    {% for engineer in engineers %}
+                                    {% if mo.bain_masrouf.id == engineer.id %}
+                                         <option value="{{engineer.id}}" selected>{{engineer.name}}</option>
+                                        {% else %}
+                                         <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                        {%endif%}
+                                    {% endfor %}
+                                </select>
+                                          </div>
+                                    <div class="mb-3 col-lg-6 ">
                                         <label class="form-label" for="message">التفاصيل</label>
-                                        <input id="messagel" name="des" class="form-control" value="{{mo.descriptions}}" placeholder="التفاصيل هنا"/>
+                                        <input  name="des" class="form-control" value="{{mo.descriptions}}" placeholder="التفاصيل هنا"/>
                                     </div>
                                     <!-- end col -->
                                     <div class="col-lg-2 col-sm-4 align-self-center">
@@ -323,7 +371,7 @@
 
                                     </div>
                                     <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">قيمة المصروف</label>
+                                        <label class="form-label" for="price_2">تاريخ المصروف</label>
                                          <div class="input-group" id="datepicker10">
                                     <input id="date_price" name="date10" type="text" class="form-control" placeholder="dd-mm-yyyy"
                                         data-date-format="dd-mm-yyyy" data-date-container='#datepicker10' data-provide="datepicker"
@@ -336,7 +384,15 @@
                                         <label class="form-label" for="price_2">الموردين</label>
                                          <input id="almordeen" name="moard" type="text"  class=" form-control">
                                     </div>
-                                    <div class="mb-3 col-lg-10 ">
+                                          <div  class="mb-3 col-lg-4">
+                                          <label class="form-label">بيان المصروف</label>
+                                <select class="form-control select2" name="engineer_">
+                                   {% for engineer in engineers %}
+                                     <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                          </div>
+                                    <div class="mb-3 col-lg-6 ">
                                         <label class="form-label" for="message">التفاصيل</label>
                                         <textarea id="message" name="des" class="form-control" placeholder="التفاصيل هنا"></textarea>
                                     </div>
@@ -361,27 +417,54 @@
             </div>
                                      </div>
                             </fieldset>
+
                             <h3> المستخلصات</h3>
                             <fieldset>
                                 <div class="p-3">
-                                        <div class="row">
+                                     <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">المستخلصات</h4>
+                        <div class="repeater">
+                            {% if project.mostakhlas.all %}
+                             <div data-repeater-list="group-c">
+                            {% for ah in project.mostakhlas.all %}
+
+                                <div class="row" data-repeater-item>
+                                    <div class="row">
                                     <div class="col-md-6">
+
                                         <div class="row mb-3">
-                                            <label for="name_mo" class="col-lg-3 col-form-label">اسم المستخلص</label>
-                                            <div class="col-lg-9">
-                                                <input id="name_mo" value="{{project.name_mostakhlas}}" name="name_mo" type="text" class="form-control" placeholder="ادخل اسم المشروع">
+                                             <label for="name_mo" class="col-lg-3 col-form-label">اختر مهندس</label>
+                                            <div class="col-lg-9 ">
+                                            <select class="form-control select2" name="engineer">
+<!--                                    <option>{{ah.engineer_id.name}}</option>-->
+                                   {% for engineer in engineers %}
+                                    {% if ah.engineer_id.id == engineer.id %}
+                                         <option value="{{engineer.id}}" selected>{{engineer.name}}</option>
+                                        {% else %}
+                                         <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                        {%endif%}
+                                    {% endfor %}
+                                </select>
                                             </div>
                                         </div>
                                     </div>
-
+                                        <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="name_mo" class="col-lg-3 col-form-label"> قيمة المستخلص الفعلية</label>
+                                           <div class="col-lg-9 ">
+                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control actual_extract_value" type="number" value="{{ah.actual_extract_value}}"  name="demo2">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date_session" class="col-lg-3 col-form-label">تاريخ المصروف</label>
+                                            <label for="date_session" class="col-lg-3 col-form-label">تاريخ المستخلص</label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="datepicker11">
-                                    <input id="date_mo" type="text" value="{{project.date_mostakhlas|date:'d-m-Y'}}" name="date_mo" class="form-control" placeholder="dd-mm-yyyy"
+                                    <input id="date_mo" type="text" value="{{ah.date_mostakhlas|date:'d-m-Y'}}" name="date_mo" class="form-control" placeholder="dd-mm-yyyy"
                                         data-date-format="dd-mm-yyyy" data-date-container='#datepicker11' data-provide="datepicker"
                                         data-date-autoclose="true">
 
@@ -393,24 +476,153 @@
 
                                      <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date_session" class="col-lg-3 col-form-label">قيمة الصرف</label>
-                                            <div class="col-lg-9">
-                                               <div class="input-group">
-                                                    <input id="price_3_0" data-parsley-type="number" class="form-control" type="number"  value="{{project.price_mostakhlas}}" name="demo2">
+                                             <label for="demo1" class="col-lg-3 col-form-label">التأميناتٍ</label>
 
-                                </div>
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control altaminat" type="number" value="{{ah.altaminat}}" name="demo1">
+
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date_session" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم</label>
+                                             <label for="demo1" class="col-lg-3 col-form-label">القوه العاملة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="number" value="{{ah.workforce}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">تسبة خصم الجمعية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="number" value="{{ah.Combined_discount_rate}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">نسبة البنك </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control bank_ratio" type="number" value="{{ah.bank_ratio}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">تسبة الدمغة الهندسية </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control engineering_stamp" type="number " value="{{ah.engineering_stamp}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                         <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">اخري </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control others" type="number" value="{{ah.others}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">والضرائب</label>
+                                            <div class="col-lg-9 ">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="number" value="{{ah.taxes}}" name="demo1">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                  <input id="total" data-parsley-type="number" class="form-control price_mostakhlas_after" type="number" value="{{ah.price_mostakhlas_after}}"  name="demo2" readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                    </div>
+
+                                </div>
+                                </div>
+                                <!-- end row -->
+
+                            {% endfor %}
+                                  </div>
+                            {% else %}
+                              <div data-repeater-list="group-c">
+                                    <div class="row" data-repeater-item>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="name_mo" class="col-lg-3 col-form-label">اختر مهندس</label>
+                                            <div class="col-lg-9 ">
+                                    <select class="form-control select2" name="engineer">
+
+                                   {% for engineer in engineers %}
+                                         <option value="{{engineer.id}}">{{engineer.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                             </div>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="name_mo" class="col-lg-3 col-form-label">قيمة المستخلص الفعلية</label>
+                                           <div class="col-lg-9 ">
+                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control actual_extract_value" type="number" value=""  name="demo2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date_session" class="col-lg-3 col-form-label">تاريخ المستخلص</label>
                                             <div class="col-lg-9">
-                                               <div class="input-group">
-                                                   <input id="price_3_p" data-parsley-type="number" class="form-control" type="number"  value="{{project.price_mostakhlas_after}}" name="demo2">
+                                               <div class="input-group" id="datepicker11">
+                                    <input id="date_mo" type="text" value="" name="date_mo" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker11' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                             </div>
                                         </div>
@@ -418,17 +630,134 @@
 
                                      <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date_session" class="col-lg-3 col-form-label">التأميين</label>
-                                            <div class="col-lg-9">
-                                               <div class="input-group">
-                                                   <input id="price_3" data-parsley-type="number" class="form-control" type="number" value="{{project.altamin}}" name="demo2">
+                                             <label for="demo1" class="col-lg-3 col-form-label">التأميناتٍ</label>
 
-                                </div>
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)"  class="form-control altaminat" type="number" value="" name="demo1">
+
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">القوه العاملة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">تسبة خصم الجمعية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">نسبة البنك </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control bank_ratio" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">تسبة الدمغة الهندسية </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control engineering_stamp" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                         <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">اخري </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control others" type="number" name="demo1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">والضرائب</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control taxes" type="number"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                  <input id="total" data-parsley-type="number" class="form-control price_mostakhlas_after" type="number" value=""  name="demo2" readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                    </div>
+
+                                </div>
+                                </div>
+                                <!-- end row -->
+                            </div>
+                            {% endif %}
+
+
+
+                            <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0 col-4" value="اضافة مستخلص  اخر"/>
+
+     <div>
+                    </div>
+                </div>
+            </div>
+                                     </div>
+
+
+
+
                                     <button class="btn btn-primary w-100">
                                         {% if project %}
                                         تحديث
@@ -460,6 +789,165 @@
     <script src="{% static  'libs/parsleyjs/dist/parsley.min.js'%}"></script>
     <script src="{% static 'js/pages/form-validation.init.js'%}"></script>
 <script>
+var endProject=document.getElementById("date8");
+function AddDuration(event){
+var durationProject=document.getElementById("data8");
+var addDur=document.getElementById("date18");
+if(durationProject.value==""){
+alert("يجب ادخال مدة المشروع اولا")
+addDur.value="";
+}else{
+var inputDateStr = endProject.value;
+var monthsToAdd = event.value;
+addDurationToEnd(inputDateStr,monthsToAdd)
+}
+}
+
+function CalculateEnd(event){
+var startProject=document.getElementById("date7");
+var durationProject=document.getElementById("data8");
+    if(startProject.value==""){
+    alert('ادخل امر الشغل اولا');
+durationProject.value="";
+    }else{
+
+var inputDateStr = startProject.value;
+var monthsToAdd = event.value;
+
+addDurationToEnd(inputDateStr,monthsToAdd)
+
+
+    }
+
+
+
+}
+function addDurationToEnd(inputDateStr,monthsToAdd){
+var endProject=document.getElementById("date8");
+var parts = inputDateStr.split("-");
+var day = parseInt(parts[0]);
+var month = parseInt(parts[1]);
+var year = parseInt(parts[2]);
+
+var inputDate = new Date(year, month - 1, day);
+
+inputDate.setMonth(inputDate.getMonth() + Number(monthsToAdd));
+
+var newDay = inputDate.getDate();
+var newMonth = inputDate.getMonth() + 1;
+var newYear = inputDate.getFullYear();
+
+var newDateStr = newDay + "-" + newMonth + "-" + newYear;
+
+endProject.value= newDateStr;
+}
+
+function mostakhlas(event){
+const actual_extract_values=document.getElementsByClassName('actual_extract_value');
+const altaminats=document.getElementsByClassName('altaminat');
+const workforces=document.getElementsByClassName('workforce');
+const Combined_discount_rates=document.getElementsByClassName('Combined_discount_rate');
+const bank_ratios=document.getElementsByClassName('bank_ratio');
+const engineering_stamps=document.getElementsByClassName('engineering_stamp');
+const others=document.getElementsByClassName('others');
+const taxes=document.getElementsByClassName('taxes');
+const price_mostakhlas_afters=document.getElementsByClassName('price_mostakhlas_after');
+
+var index=-1
+for(var i=0;i<actual_extract_values.length;i++)
+    {
+    if(actual_extract_values[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    if(index==-1){
+    for(var i=0;i<altaminats.length;i++)
+    {
+    if(altaminats[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+
+     if(index==-1){
+    for(var i=0;i<workforces.length;i++)
+    {
+    if(workforces[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+
+    if(index==-1){
+    for(var i=0;i<Combined_discount_rates.length;i++)
+    {
+    if(Combined_discount_rates[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+    if(index==-1){
+    for(var i=0;i<bank_ratios.length;i++)
+    {
+    if(bank_ratios[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+    if(index==-1){
+    for(var i=0;i<engineering_stamps.length;i++)
+    {
+    if(engineering_stamps[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+    if(index==-1){
+    for(var i=0;i<others.length;i++)
+    {
+    if(others[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+    if(index==-1){
+    for(var i=0;i<taxes.length;i++)
+    {
+    if(taxes[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    }
+
+
+   if(index != -1){
+    if(actual_extract_values[index].value =="" || actual_extract_values[index].value ==0.0 ||actual_extract_values[index].value ==0 ){
+    alert("ادخل قيمة المستخلص الفعلية الاول");
+    return;
+    }
+   var percentage=Number(altaminats[index].value)+Number(workforces[index].value)+Number(Combined_discount_rates[index].value)+Number(bank_ratios[index].value)+
+   Number(engineering_stamps[index].value)+Number(others[index].value)+Number(taxes[index].value)
+   var total=Number(actual_extract_values[index].value)* percentage;
+   price_mostakhlas_afters[index].value=Number(actual_extract_values[index].value)-Number((total/100));
+   }
+
+}
 
 </script>
 {% endblock extra_js %}

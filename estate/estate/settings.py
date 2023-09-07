@@ -48,6 +48,7 @@ LOCAL_APPS = [
     "components",
     "home",
     "projects",
+    "engineers"
 ]
 APPEND_SLASH=False
 THIRDPARTY_APPS = [

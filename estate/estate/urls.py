@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView
 
 urlpatterns = [
+    #enginners
+    path('engineers/',include('engineers.urls')),
     path('admin/', admin.site.urls),
     path('',include('home.urls')),
     path('projects/',include('projects.urls')),

@@ -1,0 +1,82 @@
+{%  extends "partials/base.html" %}
+{% load static %}
+
+{% block page_title %}
+{% if engineer %}
+        {% include 'partials/page_title_projects.html' with page_title=engineer.name sub_title="مهندسين التنفيذ" title="تحديث معلومات المهندس" hide="true" %}
+{% else %}
+   {% include 'partials/page_title_projects.html' with page_title="مهندس جديد" sub_title="مهندسين التنفيذ" title="اضافة مهندس" hide="true" %}
+{% endif %}
+{% endblock page_title %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+{% block content %}
+
+ <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="row g-3 needs-validation" method="POSt" novalidate>
+                            {% csrf_token %}
+                            <div class=" col-12 col-md-6 position-relative">
+                                <label for="name" class="form-label">الاسم</label>
+                                {{form.name}}
+<!--                                {% if form.name.errors %}-->
+<!--                                <div class="text-danger">-->
+<!--                                    {{ form.name.errors }}-->
+<!--                                </div>-->
+<!--                                {% endif %}-->
+                            </div>
+                            <div class="col-12 col-md-6 position-relative">
+                                <label for="job_title" class="form-label">اسم الوظيفة</label>
+                              {{ form.job_title }}
+<!--                                {% if form.job_title.errors %}-->
+<!--                                <div class="text-danger">-->
+<!--                                    {{ form.job_title.errors }}-->
+<!--                                </div>-->
+<!--                                {% endif %}-->
+                            </div>
+
+                              <div class="col-12 col-md-6 position-relative">
+                                  <label for="graduation_year" class="form-label">سنة التخرج </label>
+                                  {{form.graduation_year}}
+<!--                                  {% if form.graduation_year.errors %}-->
+<!--                                <div class="text-danger">-->
+<!--                                    {{ form.graduation_year.errors }}-->
+<!--                                </div>-->
+<!--                                {% endif %}-->
+
+                            </div>
+
+                            <div class="col-12 col-md-6 position-relative">
+                                  <label for="phone_number" class="form-label">رقم التلفون</label>
+                                  {{form.phone_number}}
+<!--                                  {% if form.phone_number.errors %}-->
+<!--                                <div class="text-danger">-->
+<!--                                    {{ form.phone_number.errors }}-->
+<!--                                </div>-->
+<!--                                {% endif %}-->
+                            </div>
+
+
+
+
+                            <!-- end col -->
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">حفظ البيانات </button>
+                            </div>
+                        </form>
+                        <!-- end form -->
+                    </div>
+                    <!-- end cardbody -->
+                </div>
+                <!-- end card -->
+            </div>
+{% endblock %}
+
+{% block extra_js %}
+   <script src="{% static 'libs/parsleyjs/dist/parsley.min.js'%}"></script>
+
+    <script src="{% static 'js/pages/form-validation.init.js'%}"></script>
+{% endblock %}
