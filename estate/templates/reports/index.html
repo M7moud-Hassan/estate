@@ -1,0 +1,129 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %} التقارير{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
+
+{% endblock extra_css %}
+
+{% block page_title %}
+    {% include 'partials/page_title_engineers.html' with page_title=" التقارير" sub_title="" title="" hide="true" %}
+    {% endblock page_title %}
+{% block content %}
+
+<div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                         <div class="col-12 col-md-6">
+                             <form method="POST">
+                                  {% csrf_token %}
+                                <label class="form-label">بحث</label>
+                                <div class="input-daterange input-group mb-2" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                    <input type="text" class="form-control" name="start" placeholder="Start Date" required />
+                                    <input type="text" class="form-control" name="end" placeholder="End Date" required />
+                                <button class="btn btn-primary" type="submit">بحث</button>
+                                </div>
+
+                                 </form>
+                            </div>
+                        <h4 class="card-title"> تقارير </h4>
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>الاسم</th>
+                                    <th>تاريخ بداية العمل</th>
+
+                                    <th> المستخلصات</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                            {% for pro in projects %}
+                           <tr>
+                               <td>{{pro.id}}</td>
+                               <td>{{pro.name}}</td>
+                               <td>{{pro.date_work}}</td>
+                               <td>
+                                     {% if pro.mostakhlas.all %}
+                                   <div class="table-responsive">
+                                   <table class="table table-striped mb-0">
+                                      <tr>
+                                          <th>
+                                          اسم المهندس
+                                       </th>
+                                          <th>
+                                              قيمة المستخلص الفعلية
+                                          </th>
+                                           <th>
+                                              قيمة المستخلص بعد الخصم
+                                          </th>
+                                           <th>
+                                              قيمة  الخصم
+                                          </th>
+                                      </tr>
+                                       {% for mo in pro.mostakhlas.all %}
+                                       <tr>
+                                           <td>
+
+                                           {{mo.engineer_id.name}}
+                                           </td>
+
+                                       <td>
+                                           {{mo.actual_extract_value}}
+                                       </td>
+                                       <td>
+                                           {{mo.price_mostakhlas_after}}
+                                       </td>
+                                       <td>
+                                           {{mo.discount}}
+                                       </td>
+                                       </tr>
+                                       {% endfor %}
+                                       <tr>
+                                           <td>المجموع</td>
+                                           <td>{{pro.sum_actual_extract_value}}</td>
+                                           <td>{{pro.sum_price_mostakhlas_after}}</td>
+                                           <td>{{pro.sum_discount}}</td>
+                                       </tr>
+                                   </table>
+                                     </div>
+                                   {% endif %}
+                               </td>
+                           </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+    <!-- Buttons examples -->
+    <script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'libs/jszip/dist/jszip.min.js'%}"></script>
+    <script src="{% static 'libs/pdfmake/build/pdfmake.min.js'%}"></script>
+    <script src="{% static 'libs/pdfmake/build/vfs_fonts.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js'%}"></script>
+    <!-- Responsive examples -->
+    <script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js'%}"></script>
+    <script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'%}"></script>
+<script src="{% static 'libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+<script src="{% static 'js/pages/form-advanced.init.js'%}"></script>
+<script>
+    $(document).ready(function(){$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","excel","pdf","colvis"]}).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),$(".dataTables_length select").addClass("form-select form-select-sm")});
+</script>
+{% endblock %}

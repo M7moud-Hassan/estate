@@ -129,16 +129,18 @@
                                 <thead>
                                     <tr>
                                         <th>المسلسل</th>
+                                        <th>اسم المشروع</th>
                                         <th> اسم المهندس</th>
                                         <th>تاريخ المستخلص</th>
                                         <th> قيمة المستخلص الفعلية</th>
                                         <th>قيمة المستخلص بعد الخصم</th>
+                                         <th>قيمة  الخصم</th>
                                         <th> التأمينات</th>
                                         <th>القوه العاملة</th>
                                         <th> نسبة خصم الجمعية</th>
                                         <th> نسبة  البنك</th>
                                         <th>   الدمغة الهندسية</th>
-                                        <th>   اخري</th>
+                                        <th>   ضمان اعمال</th>
                                         <th>    الضرائب</th>
                                     </tr>
                                 </thead>
@@ -146,10 +148,12 @@
                                  {% for mo in p.mostakhlas.all %}
                                     <tr class="masro{{p.id}}" data-id="{{ mo.id }}">
                                         <td  style="width: 80px">{{forloop.counter}}</td>
+                                        <td> {{p.name}}</td>
                                         <td data-field="price">{{ mo.engineer_id.name }}</td>
                                         <td data-field="date_masrouf"> {{ mo.date_mostakhlas|date:'d-m-Y' }} </td>
                                         <td data-field="almardeen"> {{ mo.actual_extract_value }} </td>
                                         <td data-field="almardeen"> {{ mo.price_mostakhlas_after }} </td>
+                                        <td data-field="almardeen"> {{ mo.discount }} </td>
                                         <td data-field="descriptions"> {{ mo.altaminat }} </td>
                                         <td> {{mo.workforce}}</td>
                                         <td> {{mo.Combined_discount_rate}}</td>

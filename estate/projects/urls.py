@@ -8,5 +8,6 @@ urlpatterns = [
   path('edit_project/<int:id>/',edit_project,name="edit_project"),
   path('update_ahdaa/',update_ahdaa,name="update_ahdaa"),
   path('update_masrouf/',update_masrouf,name='update_masrouf'),
-  path('delete_project/<int:id>/',delete_project,name='delete_project')
+  path('delete_project/<int:id>/',delete_project,name='delete_project'),
+  path('form/',form,name='form'),
 ]

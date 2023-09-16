@@ -453,7 +453,7 @@
                                         <div class="row mb-3">
                                             <label for="name_mo" class="col-lg-3 col-form-label"> قيمة المستخلص الفعلية</label>
                                            <div class="col-lg-9 ">
-                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control actual_extract_value" type="number" value="{{ah.actual_extract_value}}"  name="demo2">
+                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control actual_extract_value" type="text" value="{{ah.actual_extract_value}}"  name="demo2">
                                             </div>
                                         </div>
                                     </div>
@@ -480,7 +480,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control altaminat" type="number" value="{{ah.altaminat}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control altaminat" type="text" value="{{ah.altaminat}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -495,7 +495,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="number" value="{{ah.workforce}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="text" value="{{ah.workforce}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -507,7 +507,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="number" value="{{ah.Combined_discount_rate}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="text" value="{{ah.Combined_discount_rate}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -521,7 +521,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control bank_ratio" type="number" value="{{ah.bank_ratio}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control bank_ratio" type="text" value="{{ah.bank_ratio}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -533,7 +533,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control engineering_stamp" type="number " value="{{ah.engineering_stamp}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)" class="form-control engineering_stamp" type="text " value="{{ah.engineering_stamp}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -543,11 +543,11 @@
                                          <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                             <label for="demo1" class="col-lg-3 col-form-label">اخري </label>
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضمان الاعمال </label>
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control others" type="number" value="{{ah.others}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control others" type="text" value="{{ah.others}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -557,7 +557,7 @@
                                         <div class="row mb-3">
                                              <label for="demo1" class="col-lg-3 col-form-label">والضرائب</label>
                                             <div class="col-lg-9 ">
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="number" value="{{ah.taxes}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="text" value="{{ah.taxes}}" name="demo1">
                                             </div>
                                         </div>
                                     </div>
@@ -575,12 +575,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">قيمة الخصم  </label>
 
-                                     <div class="col-md-6">
-                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                            <div class="col-lg-9 ">
+
+                                                  <input id="discount" data-parsley-type="number" class="form-control discount" type="text" value="{{ah.discount}}"  name="demo2" readonly>
+
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
+                                     <div class="row" dir="ltr">
+                                              <div class="col-md-6">
+                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                    </div>
                                 </div>
                                 <!-- end row -->
 
@@ -607,7 +618,7 @@
                                         <div class="row mb-3">
                                             <label for="name_mo" class="col-lg-3 col-form-label">قيمة المستخلص الفعلية</label>
                                            <div class="col-lg-9 ">
-                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control actual_extract_value" type="number" value=""  name="demo2">
+                                                  <input  data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control actual_extract_value" type="text" value=""  name="demo2">
                                             </div>
                                         </div>
                                     </div>
@@ -634,7 +645,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)"  class="form-control altaminat" type="number" value="" name="demo1">
+                                                <input id="demo1" data-parsley-type="number"  onkeyup="mostakhlas(this)"  class="form-control altaminat" type="text" value="" name="demo1">
 
                                             </div>
                                         </div>
@@ -649,7 +660,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control workforce" type="text" value="{{project.gramat_altakheer}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -661,7 +672,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control Combined_discount_rate" type="text" value="{{project.gramat_altakheer}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -675,7 +686,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control bank_ratio" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control bank_ratio" type="text" value="{{project.gramat_altakheer}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -687,7 +698,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control engineering_stamp" type="number" value="{{project.gramat_altakheer}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control engineering_stamp" type="text" value="{{project.gramat_altakheer}}" name="demo1">
 
                                             </div>
                                         </div>
@@ -697,11 +708,11 @@
                                          <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                             <label for="demo1" class="col-lg-3 col-form-label">اخري </label>
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضمان الاعمال </label>
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control others" type="number" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control others" type="text" name="demo1">
 
                                             </div>
                                         </div>
@@ -713,7 +724,7 @@
 
                                             <div class="col-lg-9 ">
 
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control taxes" type="number"  name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control taxes" type="text"  name="demo1">
 
 
 
@@ -729,17 +740,32 @@
 
                                             <div class="col-lg-9 ">
 
-                                                  <input id="total" data-parsley-type="number" class="form-control price_mostakhlas_after" type="number" value=""  name="demo2" readonly>
+                                                  <input id="total" data-parsley-type="number" class="form-control price_mostakhlas_after" type="text" value=""  name="demo2" readonly>
 
                                             </div>
                                         </div>
                                     </div>
 
-                                     <div class="col-md-6">
-                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                             <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                  <input id="discount" data-parsley-type="number" class="form-control discount" type="text" value=""  name="demo2" readonly>
+
+                                            </div>
+                                        </div>
                                     </div>
 
+
+
                                 </div>
+                                        <div class="row" dir="ltr">
+                                              <div class="col-md-6">
+                                        <input data-repeater-delete type="button" class="btn btn-primary mb-2 float-end w-75" value="مسح المستخلص"/>
+                                    </div>
+                                        </div>
                                 </div>
                                 <!-- end row -->
                             </div>
@@ -851,6 +877,7 @@ const bank_ratios=document.getElementsByClassName('bank_ratio');
 const engineering_stamps=document.getElementsByClassName('engineering_stamp');
 const others=document.getElementsByClassName('others');
 const taxes=document.getElementsByClassName('taxes');
+const discount=document.getElementsByClassName('discount');
 const price_mostakhlas_afters=document.getElementsByClassName('price_mostakhlas_after');
 
 var index=-1
@@ -944,7 +971,9 @@ for(var i=0;i<actual_extract_values.length;i++)
    var percentage=Number(altaminats[index].value)+Number(workforces[index].value)+Number(Combined_discount_rates[index].value)+Number(bank_ratios[index].value)+
    Number(engineering_stamps[index].value)+Number(others[index].value)+Number(taxes[index].value)
    var total=Number(actual_extract_values[index].value)* percentage;
+
    price_mostakhlas_afters[index].value=Number(actual_extract_values[index].value)-Number((total/100));
+   discount[index].value=Number(actual_extract_values[index].value)-Number(price_mostakhlas_afters[index].value)
    }
 
 }

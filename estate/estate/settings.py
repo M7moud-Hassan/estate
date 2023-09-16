@@ -48,7 +48,8 @@ LOCAL_APPS = [
     "components",
     "home",
     "projects",
-    "engineers"
+    "engineers",
+'reports'
 ]
 APPEND_SLASH=False
 THIRDPARTY_APPS = [
@@ -56,7 +57,8 @@ THIRDPARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.google'
+
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRDPARTY_APPS
