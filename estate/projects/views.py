@@ -97,7 +97,7 @@ def add_project(request):
                                                  others=percentage[5]  if percentage[5] else 0.0,taxes=percentage[6]  if percentage[6] else 0.0,altaminat=percentage[0]  if percentage[0] else 0.0,
                                                  price_mostakhlas_after=price_mostakhlas_after[1] if price_mostakhlas_after[1] else 0.0,
                                                 actual_extract_value=price_mostakhlas_after[0] if price_mostakhlas_after[0] else 0.0,
-                                                         discount=price_mostakhlas_after[0] if price_mostakhlas_after[0] else 0.0-price_mostakhlas_after[1] if price_mostakhlas_after[1] else 0.0)
+                                                         discount=price_mostakhlas_after[2] if price_mostakhlas_after[2] else 0.0)
                     project.mostakhlas.add(mostakjlas)
                     project.save()
                 else:
@@ -208,7 +208,7 @@ def edit_project(request, id):
                                                                price_mostakhlas_after=price_mostakhlas_after[1] if
                                                                price_mostakhlas_after[1] else 0.0,
                                                                actual_extract_value=price_mostakhlas_after[0] if
-                                                               price_mostakhlas_after[0] else 0.0,discount=price_mostakhlas_after[0] if price_mostakhlas_after[0] else 0.0-price_mostakhlas_after[1] if price_mostakhlas_after[1] else 0.0)
+                                                               price_mostakhlas_after[0] else 0.0, discount=price_mostakhlas_after[2] if price_mostakhlas_after[2] else 0.0)
                         project.mostakhlas.add(mostakjlas)
                         project.save()
                     else:
