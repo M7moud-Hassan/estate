@@ -1,0 +1,99 @@
+{%  extends "partials/base.html" %}
+{% load static %}
+
+{% block page_title %}
+{% if engineer %}
+        {% include 'partials/page_title_projects.html' with page_title=engineer.name sub_title="مهندسين عميل" title="تحديث معلومات عميل" hide="true" %}
+{% else %}
+   {% include 'partials/page_title_projects.html' with page_title="عميل جديد" sub_title="العملاء" title="اضافة عميل" hide="true" %}
+{% endif %}
+{% endblock page_title %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+{% block content %}
+
+ <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="row g-3 needs-validation" method="POSt" novalidate>
+                            {% csrf_token %}
+                            <div class=" col-12 col-md-6 position-relative">
+                                <label for="company_name" class="form-label">اسم الشركة</label>
+                                {{form.company_name}}
+                            </div>
+                            <div class="col-12 col-md-6 position-relative">
+                                <label for="email" class="form-label">عنوان البريد</label>
+                              {{ form.email }}
+                            </div>
+                            <div class="col-12 col-md-6 position-relative">
+                                <label for="website" class="form-label">الموقع</label>
+                              {{ form.website }}
+                            </div>
+
+                              <div class="col-12 col-md-6 position-relative">
+                                  <label for="graduation_year" class="form-label">العنوان</label>
+                                  {{form.address}}
+
+
+                            </div>
+
+                            <div>
+                                <div class="repeater">
+                                    {% if phones %}
+                                    {% for phone in phones %}
+                                    <div data-repeater-list="group-d">
+                                        <div class="row" data-repeater-item>
+                                            <div class="col-12 row position-relative d-flex align-items-center justify-content-center">
+                                               <div class="col-12 col-md-9">
+                                                <label for="graduation_year" class="form-label">رقم تلفون</label>
+                                                <input type="text" name="phone" value="{{phone.phone_number}}" class="form-control">   
+                                               </div>
+                                               <div class="col-12 col-md-3">
+                                                <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح الرقم"/>
+                                            </div>      
+                                          </div>
+                                            </div>
+                                            
+                                            </div>
+                                    {% endfor %}
+                                        {% else %}
+                                     <div data-repeater-list="group-d">
+                                        <div class="row" data-repeater-item>
+                                            <div class="col-12 row position-relative d-flex align-items-center justify-content-center">
+                                               <div class="col-12 col-md-9">
+                                                <label for="graduation_year" class="form-label">رقم تلفون</label>
+                                                <input type="text" name="phone" class="form-control">   
+                                               </div>
+                                               <div class="col-12 col-md-3">
+                                                <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح الرقم"/>
+                                            </div>      
+                                          </div>
+                                            </div>
+                                            
+                                            </div>
+                                            {% endif %}
+                                            <input data-repeater-create type="button" class="btn btn-success mt-4" value="اضافة رقم اخر"/>
+                                            </div>
+                                            
+                            </div>
+
+
+                          
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary mx-auto" type="submit">حفظ البيانات </button>
+                            </div>
+                        </form>
+                    </div>
+                  
+                </div>
+            </div>
+{% endblock %}
+
+{% block extra_js %}
+   <script src="{% static 'libs/parsleyjs/dist/parsley.min.js'%}"></script>
+   <script src="{% static 'libs/jquery.repeater/jquery.repeater.min.js'%}"></script>
+   <script src="{% static 'js/pages/form-repeater.int.js'%}"></script>
+    <script src="{% static 'js/pages/form-validation.init.js'%}"></script>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}مهندسين التنفيذ{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
+
+{% endblock extra_css %}
+
+{% block page_title %}
+    {% include 'partials/page_title_imported.html' with page_title=" المؤردين والعملاء" sub_title=" المؤردين والعملاء" title="المؤردين والعملاء" %}
+    {% endblock page_title %}
+{% block content %}
+{% for eng in clients %}
+
+    <div class="modal fade" id="staticBackdrop{{eng.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المهندس
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح العميد {{eng.company_name}}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a href="{% url 'delete_clients' eng.id %}"
+                                                    class="btn btn-primary">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+{% endfor %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">كل المهندسين </h4>
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>اسم الشركة</th>
+                            <th>الايميل</th>
+                            <th> العنوان</th>
+                            <th> الموقع الالكتروني</th>
+                            <th> ارقام الهاتف</th>
+                            <th>تعديل او حذف</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                    {% for eng in clients %}
+                   <tr>
+                        <td>{{eng.id}}</td>
+                    <td>{{eng.company_name}}</td>
+                    <td>{{eng.email}}</td>
+                    <td>{{eng.address}}</td>
+                    <td>{{eng.website}}</td>                    
+                    <td>
+                        <ul>
+                            {% for i in eng.phonesNumber.all %}
+                            <li>{{i.phone_number}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                       <td class="text-center">
+                           <!-- <a class="btn btn-info" type="button" href="{% url 'details_engineer' eng.id %}" >تفاصيل</a> -->
+                           <a class="btn btn-info" type="button" href="{% url 'edit_imported' eng.id %}" >تعديل</a>
+                    <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{eng.id}}"></td>
+                   </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
+<script src="{% static 'libs/jszip/dist/jszip.min.js'%}"></script>
+<script src="{% static 'libs/pdfmake/build/pdfmake.min.js'%}"></script>
+<script src="{% static 'libs/pdfmake/build/vfs_fonts.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js'%}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'%}"></script>
+
+<script>
+$(document).ready(function(){$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","excel","pdf","colvis"]}).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),$(".dataTables_length select").addClass("form-select form-select-sm")});
+</script>
+{% endblock %}

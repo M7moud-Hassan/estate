@@ -35,18 +35,18 @@
                             <h3>تفاصيل المشروع</h3>
                             <fieldset>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label for="name" class="col-lg-3 col-form-label">اسم المشروع</label>
-                                            <div class="col-lg-9  has-validation" >
-                                                <input id="name" name="name_project"  value="{{project.name}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
-                                             <div class="invalid-feedback">
-                                       ادخل اسم المشروع
-                                    </div>
-                                            </div>
+                                    <div class="col-6 row">
+                                        <label for="name" class="col-lg-3 col-form-label">ادخل اسم المشروع</label>
+                                        <div class="col-lg-9">
+                                            <input id="name" name="name_project"  value="{{project.name}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
                                         </div>
-                                    </div>
-
+                                        </div>
+                                    <div class="col-6 row">
+                                        <label for="name" class="col-lg-3 col-form-label">قيمة التأمين</label>
+                                        <div class="col-lg-9">
+                                            <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.price_project}}"  name="demo2">
+                                        </div>
+                                        </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -57,7 +57,6 @@
                                     <input id="date_session" type="text" value="{{project.date_session|date:'d-m-Y'}}" name="date1" class="form-control" placeholder="dd-mm-yyyy"
                                         data-date-format="dd-mm-yyyy" data-date-container='#datepicker2' data-provide="datepicker"
                                         data-date-autoclose="true">
-
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                             </div>
@@ -230,6 +229,134 @@
                                 </div>
                                 <!-- end row -->
                             </fieldset>
+                            <h3>المدد الاضافية</h3>
+                            <fieldset>
+                                <div class="row">
+                              <div class="col-12">
+                 <div class="card">
+                     <div class="card-body">
+                         <h4 class="card-title">الزيادة</h4>
+                         <div class="repeater">
+                             {% if project.durations.all %}
+                              <div data-repeater-list="group-d">
+                             {% for mo in project.durations.all %}
+ 
+                                 <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="date10" type="text" value="{{mo.date_Period|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">النهو المقرر قبل الزيادة </label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="date10" type="text" value="{{mo.terminationBeforeTheIncrease|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">النهو بعد الزيادة</label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="date10" type="text" value="{{mo.terminationAfterTheIncrease|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label6" for="price_2">المدة</label>
+                                         <input id="almordeen6" value="{{mo.duration}}" name="moard" type="text"  class=" form-control">
+                                    </div>
+                                     <div  class="mb-3 col-lg-5">
+                                         <label class="form-label" for="price_">قيمة الزيادة</label>
+                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value="{{mo.price_increase}}"  name="demo2">
+                                     </div>
+                                     <div class="mb-3 col-lg-6 ">
+                                        <label class="form-label" for="message">السبب</label>
+                                        <input  name="des" class="form-control" value="{{mo.reason}}" placeholder="التفاصيل هنا"/>
+                                    </div>
+                                     <div class="col-lg-2 col-sm-4 align-self-center">
+                                         <div class="d-grid">
+                                             <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
+                                         </div>
+                                     </div>
+                                     <!-- end col -->
+                                 </div>
+                                 <!-- end row -->
+ 
+                             {% endfor %}
+                                   </div>
+                             {% else %}
+                               <div data-repeater-list="group-d">
+                                <div class="row" data-repeater-item>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="dated1" type="text" value="" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">النهو المقرر قبل الزيادة </label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="dated2" type="text"  class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label" for="price_2">النهو بعد الزيادة</label>
+                                         <div class="input-group" id="datepicker100">
+                                    <input id="date_price3" name="dated3" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                    </div>
+                                    <div  class="mb-3 col-lg-4">
+                                        <label class="form-label6" for="price_2">المدة</label>
+                                         <input id="totalDuration" value="" name="moard" type="text"  class=" form-control">
+                                    </div>
+                                     <div  class="mb-3 col-lg-5">
+                                         <label class="form-label" for="price_">قيمة الزيادة</label>
+                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value=""  name="demo2">
+                                     </div>
+                                     <div class="mb-3 col-lg-10">
+                                        <label class="form-label" for="message">السبب</label>
+                                        <textarea  name="reason" class="form-control" value="" placeholder="التفاصيل هنا"></textarea>
+                                    </div>
+                                     <div class="col-lg-2 col-sm-4 align-self-center">
+                                         <div class="d-grid">
+                                             <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
+                                         </div>
+                                     </div>
+                                     <!-- end col -->
+                                 </div>
+                                 <!-- end row -->
+                             </div>
+                             {% endif %}
+ 
+                             <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة عهدة اخري"/>
+                         <div>
+                     </div>
+                 </div>
+             </div>
+                             </fieldset>
                             <h3>مصاريف وعهدة</h3>
                             <fieldset>
                                <div class="row">
@@ -335,8 +462,17 @@
                                 </div>
                                     </div>
                                     <div  class="mb-3 col-lg-4">
+                                        <select class="form-control select2" name="imported_">
+                                            {% for im in importeds %}
+                                            {% if mo.imported.id == im.id %}
+                                                 <option value="{{im.id}}" selected>{{im.company_name}}</option>
+                                                {% else %}
+                                                 <option value="{{im.id}}">{{im.company_name}}</option>
+                                                {%endif%}
+                                            {% endfor %}
+                                        </select>
                                         <label class="form-label6" for="price_2">الموردين</label>
-                                         <input id="almordeen6" value="{{mo.almardeen}}" name="moard" type="text"  class=" form-control">
+                                         <!--<input id="almordeen6" value="{{mo.almardeen}}" name="moard" type="text"  class=" form-control"> -->
                                     </div>
                                           <div  class="mb-3 col-lg-4">
                                           <label class="form-label"> بيان المصروف </label>
@@ -382,7 +518,13 @@
                                     </div>
                                     <div  class="mb-3 col-lg-4">
                                         <label class="form-label" for="price_2">الموردين</label>
-                                         <input id="almordeen" name="moard" type="text"  class=" form-control">
+                                        <select class="form-control select2" name="imported_">
+                                            {% for im in importeds %}
+                                            
+                                                 <option value="{{im.id}}">{{im.company_name}}</option>
+                                                
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                           <div  class="mb-3 col-lg-4">
                                           <label class="form-label">بيان المصروف</label>
@@ -557,7 +699,155 @@
                                         <div class="row mb-3">
                                              <label for="demo1" class="col-lg-3 col-form-label">والضرائب</label>
                                             <div class="col-lg-9 ">
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="text" value="{{ah.taxes}}" name="demo1">
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="text"  name="demo1">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">استقطاعات اخري1</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control other_deductions_1" type="text" value="{{ah.other_deductions_1}}"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">استقطاعات اخري2</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control other_deductions_2" type="text" value="{{ah.other_deductions_2}}"   name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة ارباح تجارية وصناعية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control commercial_ndustrial_profits_tax" type="text"  value="{{ah.commercial_ndustrial_profits_tax}}"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة القيمة المضافة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control value_added_tax" type="text" value="{{ah.value_added_tax}}"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة شعبة الدمغة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control stamp_tax_division" type="text" value="{{ah.stamp_tax_division}}"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">صندوق تكريم الشهداء</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control martyrs_Honor_fund" type="text"  name="demo1" value="{{ah.martyrs_Honor_fund}}">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة تنمية الموارد</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control resource_development_tax" type="text"  name="demo1" value="{{ah.resource_development_tax}}">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">1% صندوق تحي مصر </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control long_Live_egypt_fund" type="text"  name="demo1" value="{{ah.long_Live_egypt_fund}}">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">دمغة تطبيقية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control applied_tear" type="text"  name="demo1" value="{{ah.applied_tear}}">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">اتحاد مقاولين</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control union_of_two_sayings" type="text"  name="demo1" value="{{ah.union_of_two_sayings}}">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row mb-3">
+                                             
+
+                                            <div class="col-lg-12 ">
+
+                                                <textarea  placeholder="الملاحظات"  class="form-control taxes" type="text"  name="notes">
+                                                    {{ah.notes}}
+                                                </textarea>
+
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -732,6 +1022,152 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">استقطاعات اخري1</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control other_deductions_1" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">استقطاعات اخري2</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control other_deductions_2" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة ارباح تجارية وصناعية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control commercial_ndustrial_profits_tax" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة القيمة المضافة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control value_added_tax" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة شعبة الدمغة</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control stamp_tax_division" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">صندوق تكريم الشهداء</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control martyrs_Honor_fund" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">ضريبة تنمية الموارد</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control resource_development_tax" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">1% صندوق تحي مصر </label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control long_Live_egypt_fund" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">دمغة تطبيقية</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control applied_tear" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                             <label for="demo1" class="col-lg-3 col-form-label">اتحاد مقاولين</label>
+
+                                            <div class="col-lg-9 ">
+
+                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)"  class="form-control union_of_two_sayings" type="text"  name="demo1">
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row mb-3">
+                                             
+
+                                            <div class="col-lg-12 ">
+
+                                                <textarea  placeholder="الملاحظات"  class="form-control taxes" type="text"  name="notes"></textarea>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                         <div class="row">
                                     <div class="col-md-6">
@@ -879,6 +1315,16 @@ const others=document.getElementsByClassName('others');
 const taxes=document.getElementsByClassName('taxes');
 const discount=document.getElementsByClassName('discount');
 const price_mostakhlas_afters=document.getElementsByClassName('price_mostakhlas_after');
+const other_deductions_1=document.getElementsByClassName('other_deductions_1');
+const other_deductions_2=document.getElementsByClassName('other_deductions_2');
+const commercial_ndustrial_profits_tax=document.getElementsByClassName('commercial_ndustrial_profits_tax');
+const value_added_tax=document.getElementsByClassName('value_added_tax');
+const stamp_tax_division=document.getElementsByClassName('stamp_tax_division');
+const martyrs_Honor_fund=document.getElementsByClassName('martyrs_Honor_fund');
+const resource_development_tax=document.getElementsByClassName('resource_development_tax');
+const long_Live_egypt_fund=document.getElementsByClassName('long_Live_egypt_fund');
+const applied_tear=document.getElementsByClassName('applied_tear');
+const union_of_two_sayings=document.getElementsByClassName('union_of_two_sayings');
 
 var index=-1
 for(var i=0;i<actual_extract_values.length;i++)
@@ -951,7 +1397,9 @@ for(var i=0;i<actual_extract_values.length;i++)
     }
     }
     }
-    if(index==-1){
+
+  
+if(index==-1){
     for(var i=0;i<taxes.length;i++)
     {
     if(taxes[i]==event)
@@ -961,6 +1409,106 @@ for(var i=0;i<actual_extract_values.length;i++)
     }
     }
     }
+    if(index==-1){
+    for(var i=0;i<other_deductions_1.length;i++)
+    {
+    if(other_deductions_1[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<other_deductions_2.length;i++)
+    {
+    if(other_deductions_2[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<commercial_ndustrial_profits_tax.length;i++)
+    {
+    if(commercial_ndustrial_profits_tax[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<value_added_tax.length;i++)
+    {
+    if(value_added_tax[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<stamp_tax_division.length;i++)
+    {
+    if(stamp_tax_division[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<martyrs_Honor_fund.length;i++)
+    {
+    if(martyrs_Honor_fund[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<resource_development_tax.length;i++)
+    {
+    if(resource_development_tax[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<long_Live_egypt_fund.length;i++)
+    {
+    if(long_Live_egypt_fund[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<applied_tear.length;i++)
+    {
+    if(applied_tear[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
+    if(index==-1){
+    for(var i=0;i<union_of_two_sayings.length;i++)
+    {
+    if(union_of_two_sayings[i]==event)
+    {
+    index=i;
+    break;
+    }
+    }
+    } 
 
 
    if(index != -1){
@@ -970,6 +1518,16 @@ for(var i=0;i<actual_extract_values.length;i++)
     }
    var percentage=Number(altaminats[index].value)+Number(workforces[index].value)+Number(Combined_discount_rates[index].value)+Number(bank_ratios[index].value)+
    Number(engineering_stamps[index].value)+Number(others[index].value)+Number(taxes[index].value)
+   +Number(union_of_two_sayings[index].value)
+   +Number(applied_tear[index].value)
+   +Number(long_Live_egypt_fund[index].value)
+   +Number(resource_development_tax[index].value)
+   +Number(martyrs_Honor_fund[index].value)
+   +Number(stamp_tax_division[index].value)
+   +Number(value_added_tax[index].value)
+   +Number(commercial_ndustrial_profits_tax[index].value)
+   +Number(other_deductions_2[index].value)
+   +Number(other_deductions_1[index].value)
    var total=Number(actual_extract_values[index].value)* percentage;
 
    price_mostakhlas_afters[index].value=Number(actual_extract_values[index].value)-Number((total/100));
