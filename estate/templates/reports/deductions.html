@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} التقارير{% endblock title %}
+{% block title %} تقارير المستقطاعات{% endblock title %}
 
 {% block extra_css %}
 <link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
@@ -8,7 +8,7 @@
 {% endblock extra_css %}
 
 {% block page_title %}
-    {% include 'partials/page_title_engineers.html' with page_title=" التقارير" sub_title="" title="" hide="true" %}
+    {% include 'partials/page_title_engineers.html' with page_title=" التقارير" sub_title="تقارير المستقطاعات" title="" hide="true" %}
     {% endblock page_title %}
 {% block content %}
 
@@ -18,36 +18,32 @@
                 <div class="card">
                     <div class="card-body">
                          <div class="col-12 col-md-6">
-                             <form method="POST" action="{% url 'home.report' %}">
+                             <!-- <form method="POST">
                                   {% csrf_token %}
                                 <label class="form-label">بحث</label>
-                                <div class="input-daterange input-group mb-2" id="datepicker6" data-date-format="dd-mm-yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                <div class="input-daterange input-group mb-2" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
                                     <input type="text" class="form-control" name="start" placeholder="Start Date" required />
                                     <input type="text" class="form-control" name="end" placeholder="End Date" required />
                                 <button class="btn btn-primary" type="submit">بحث</button>
                                 </div>
 
-                                 </form>
+                                 </form> -->
                             </div>
-                        <h4 class="card-title"> تقارير </h4>
+                        <h4 class="card-title"> تقارير المستقطاعات </h4>
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>الاسم</th>
-                                    <th>تاريخ بداية العمل</th>
-
+                                    <th>اسم المشروع</th>
                                     <th> المستخلصات</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                             {% for pro in projects %}
                            <tr>
                                <td>{{pro.id}}</td>
                                <td>{{pro.name}}</td>
-                               <td>{{pro.date_work}}</td>
+                              
                                <td>
                                      {% if pro.mostakhlas.all %}
                                    <div class="table-responsive">

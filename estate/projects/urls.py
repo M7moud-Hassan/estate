@@ -10,4 +10,6 @@ urlpatterns = [
   path('update_masrouf/',update_masrouf,name='update_masrouf'),
   path('delete_project/<int:id>/',delete_project,name='delete_project'),
   path('form/',form,name='form'),
+  path('add_duration/',add_duration,name="add_duration"),
+  path('add_importeds/',add_imported,name="add_importeds")
 ]

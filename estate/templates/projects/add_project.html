@@ -36,14 +36,21 @@
                             <fieldset>
                                 <div class="row">
                                     <div class="col-6 row">
-                                        <label for="name" class="col-lg-3 col-form-label">ادخل اسم المشروع</label>
-                                        <div class="col-lg-9">
-                                            <input id="name" name="name_project"  value="{{project.name}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
+                                        <label for="name" class="col-4 col-form-label">ادخل اسم المشروع</label>
+                                        <div class="col-8">
+                                            <input id="name" name="name_project"  style="width:100%" value="{{project.name}}" type="text" class="form-control " placeholder="ادخل اسم المشروع" required>
                                         </div>
-                                        </div>
-                                    <div class="col-6 row">
-                                        <label for="name" class="col-lg-3 col-form-label">قيمة التأمين</label>
-                                        <div class="col-lg-9">
+                                    </div>
+
+                                        <div class="col-6 row">
+                                            <label for="name" class="col-lg-4 col-form-label">جهة اصدار خطاب الضمان</label>
+                                            <div class="col-lg-8">
+                                                <input id="name" name="letter_of_guarantee"  value="{{project.letter_of_guarantee}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
+                                            </div>
+                                            </div>
+                                    <div class="col-6 row mb-4">
+                                        <label for="name" class="col-lg-4 col-form-label">قيمة التأمين</label>
+                                        <div class="col-lg-8">
                                             <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.price_project}}"  name="demo2">
                                         </div>
                                         </div>
@@ -161,7 +168,7 @@
                                             <label for="date18" class="col-lg-3 col-form-label">مدة اضافية (شهر)</label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="add_duration">
-                                    <input id="date18" value="0" name="date8" type="number" onkeyup="AddDuration(this)" class="form-control">
+                                    <input id="date18" value="{{project.date_extra_end}}" name="date8" type="number"  onkeyup="AddDuration(this)" class="form-control">
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                             </div>
@@ -229,134 +236,168 @@
                                 </div>
                                 <!-- end row -->
                             </fieldset>
-                            <h3>المدد الاضافية</h3>
-                            <fieldset>
-                                <div class="row">
-                              <div class="col-12">
-                 <div class="card">
-                     <div class="card-body">
-                         <h4 class="card-title">الزيادة</h4>
-                         <div class="repeater">
-                             {% if project.durations.all %}
-                              <div data-repeater-list="group-d">
-                             {% for mo in project.durations.all %}
- 
-                                 <div class="row" data-repeater-item>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="date10" type="text" value="{{mo.date_Period|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                           {% if project %}
+                           <h3>المدد الاضافية</h3>
+                           <fieldset>
+                               <div class="row">
+                             <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">الزيادة</h4>
+                        <div>
+                       
+                               <div class="row">
+                                   <div  class="mb-3 col-lg-4">
+                                       <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
+                                        <div class="input-group" id="datepicker100">
+                                   <input id="durationDate1" name="dated1" type="text" value="" class="form-control" placeholder="dd-mm-yyyy"
+                                       data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
+                                       data-date-autoclose="true">
 
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                    </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">النهو المقرر قبل الزيادة </label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="date10" type="text" value="{{mo.terminationBeforeTheIncrease|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
-
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                    </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">النهو بعد الزيادة</label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="date10" type="text" value="{{mo.terminationAfterTheIncrease|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
-
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                    </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label6" for="price_2">المدة</label>
-                                         <input id="almordeen6" value="{{mo.duration}}" name="moard" type="text"  class=" form-control">
-                                    </div>
-                                     <div  class="mb-3 col-lg-5">
-                                         <label class="form-label" for="price_">قيمة الزيادة</label>
-                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value="{{mo.price_increase}}"  name="demo2">
-                                     </div>
-                                     <div class="mb-3 col-lg-6 ">
-                                        <label class="form-label" for="message">السبب</label>
-                                        <input  name="des" class="form-control" value="{{mo.reason}}" placeholder="التفاصيل هنا"/>
-                                    </div>
-                                     <div class="col-lg-2 col-sm-4 align-self-center">
-                                         <div class="d-grid">
-                                             <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
-                                         </div>
-                                     </div>
-                                     <!-- end col -->
-                                 </div>
-                                 <!-- end row -->
- 
-                             {% endfor %}
+                                   <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                               </div>
                                    </div>
-                             {% else %}
-                               <div data-repeater-list="group-d">
-                                <div class="row" data-repeater-item>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="dated1" type="text" value="" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                                   <div  class="mb-3 col-lg-4">
+                                       <label class="form-label" for="price_2">النهو المقرر قبل الزيادة </label>
+                                        <div class="input-group" id="datepicker101">
+                                   <input id="durationDate2" name="dated2" type="text"  class="form-control" placeholder="dd-mm-yyyy"
+                                       data-date-format="dd-mm-yyyy" data-date-container='#datepicker101' data-provide="datepicker"
+                                       data-date-autoclose="true">
 
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                    </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">النهو المقرر قبل الزيادة </label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="dated2" type="text"  class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                                   <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                               </div>
+                                   </div>
+                                   <div  class="mb-3 col-lg-4">
+                                       <label class="form-label" for="price_2">النهو بعد الزيادة</label>
+                                        <div class="input-group" id="datepicker102">
+                                   <input id="durationDate3" name="dated3" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                       data-date-format="dd-mm-yyyy" data-date-container='#datepicker102' data-provide="datepicker"
+                                       data-date-autoclose="true">
 
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
+                                   <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                               </div>
+                                   </div>
+                                   <div  class="mb-3 col-lg-4">
+                                       <label class="form-label6" for="price_2">المدة</label>
+                                        <input id="duration1" value="" name="moard" type="text"  class=" form-control" readonly>
+                                   </div>
+                                    <div  class="mb-3 col-lg-5">
+                                        <label class="form-label" for="price_">قيمة الزيادة</label>
+                                         <input id="duration2" data-parsley-type="number" class="form-control" type="number" value=""  name="demo2">
                                     </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label" for="price_2">النهو بعد الزيادة</label>
-                                         <div class="input-group" id="datepicker100">
-                                    <input id="date_price3" name="dated3" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker100' data-provide="datepicker"
-                                        data-date-autoclose="true">
+                                    <div class="mb-3 col-lg-10">
+                                       <label class="form-label" for="message">السبب</label>
+                                       <textarea  id="duration3" name="reason" class="form-control" value="" placeholder="التفاصيل هنا"></textarea>
+                                   </div>
+                                </div>
+                                <!-- end row -->
+                            <input onclick="addDurations(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مدة زيادة"/>
+                           
+                        
+            </div>
+        </div>
+        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>تاريخ امر الزيادة</th>
+                    <th>النهو المقرر قبل الزيادة</th>
+                    <th>النهو بعد الزيادة</th>
+                    <th> المدة</th>
+                    <th>قيمة الزيادة</th>
+                    <th>السبب</th>
 
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                </tr>
+            </thead>
+
+
+            <tbody id="tableDurations">
+            {% for du in project.durations.all %}
+           <tr>
+           
+                <td>{{du.date_Period}}</td>
+                <td>{{du.terminationBeforeTheIncrease}}</td>
+                <td>{{du.terminationAfterTheIncrease}}</td>
+                <td>{{du.duration}}</td>
+                <td>{{du.price_increase}}</td>
+                <td>{{du.reason}}</td>  
+           </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+                            </fieldset>
+                           {% endif %}
+                           {% if project %}
+                           <h3>مصروفات وتحويلات الموردين</h3>
+                           <fieldset>
+                               <div class="row">
+                             <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">المصروفات</h4>
+                        <div>
+                       
+                               <div class="row">
+
+                                <div class="mb-3 col-lg-5">
+                                    <label class="form-label">اختر العميل </label>
+                                     <select class="form-control select2" id="impSelect">
+                                    {% for engineer in importeds %}
+                                          <option value="{{engineer.id}}">{{engineer.company_name}}</option>
+                                     {% endfor %}
+                                 </select>
                                 </div>
-                                    </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <label class="form-label6" for="price_2">المدة</label>
-                                         <input id="totalDuration" value="" name="moard" type="text"  class=" form-control">
-                                    </div>
-                                     <div  class="mb-3 col-lg-5">
-                                         <label class="form-label" for="price_">قيمة الزيادة</label>
-                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value=""  name="demo2">
-                                     </div>
-                                     <div class="mb-3 col-lg-10">
-                                        <label class="form-label" for="message">السبب</label>
-                                        <textarea  name="reason" class="form-control" value="" placeholder="التفاصيل هنا"></textarea>
-                                    </div>
-                                     <div class="col-lg-2 col-sm-4 align-self-center">
-                                         <div class="d-grid">
-                                             <input data-repeater-delete type="button" class="btn btn-primary mb-2" value="مسح العهدة"/>
-                                         </div>
-                                     </div>
-                                     <!-- end col -->
-                                 </div>
-                                 <!-- end row -->
-                             </div>
-                             {% endif %}
- 
-                             <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة عهدة اخري"/>
-                         <div>
-                     </div>
-                 </div>
-             </div>
-                             </fieldset>
+                                <div  class="mb-3 col-lg-5">
+                                    <label class="form-label" for="price_">قيمة المصروف</label>
+                                     <input id="impCost" data-parsley-type="number" class="form-control" type="number" value=""  name="demo2">
+                                </div>
+                                   <div  class="mb-3 col-lg-4">
+                                       <label class="form-label" for="price_2">تاريخ المصروف</label>
+                                        <div class="input-group" id="datepicker1000">
+                                   <input id="impDate" name="dated1" type="text" value="" class="form-control" placeholder="dd-mm-yyyy"
+                                       data-date-format="dd-mm-yyyy" data-date-container='#datepicker1000' data-provide="datepicker"
+                                       data-date-autoclose="true">
+
+                                   <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                               </div>
+                                   </div> 
+                                    <div class="mb-3 col-lg-10">
+                                       <label class="form-label" for="message">ملاحظات</label>
+                                       <textarea  id="impNote" name="reason" class="form-control" value="" placeholder="التفاصيل هنا"></textarea>
+                                   </div>
+                                </div>
+                                <!-- end row -->
+                            <input onclick="addImported(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مدة زيادة"/>
+                           
+                        
+            </div>
+        </div>
+        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>العميل</th>
+                    <th>التكلفة</th>
+                    <th>التاريخ</th>
+                    <th> الملاحظات</th>
+                  
+
+                </tr>
+            </thead>
+
+
+            <tbody id="tableImp">
+            {% for du in project.costs_importeds.all %}
+           <tr>
+                <td>{{du.imported.company_name}}</td>
+                <td>{{du.cost}}</td>
+                <td>{{du.date}}</td>
+                <td>{{du.note}}</td>
+               
+           </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+                            </fieldset>
+                           {% endif %}
                             <h3>مصاريف وعهدة</h3>
                             <fieldset>
                                <div class="row">
@@ -699,7 +740,7 @@
                                         <div class="row mb-3">
                                              <label for="demo1" class="col-lg-3 col-form-label">والضرائب</label>
                                             <div class="col-lg-9 ">
-                                                <input id="demo1" data-parsley-type="number" onkeyup="mostakhlas(this)" class="form-control taxes" type="text"  name="demo1">
+                                                <input id="demo1" data-parsley-type="number" value="{{ah.taxes}}" onkeyup="mostakhlas(this)" class="form-control taxes" type="text"  name="demo1">
                                             </div>
                                         </div>
                                     </div>
@@ -842,9 +883,7 @@
 
                                             <div class="col-lg-12 ">
 
-                                                <textarea  placeholder="الملاحظات"  class="form-control taxes" type="text"  name="notes">
-                                                    {{ah.notes}}
-                                                </textarea>
+                                                <textarea  placeholder="الملاحظات"  class="form-control taxes" type="text"  name="notes">{{ah.notes}}</textarea>
 
 
 
@@ -1535,6 +1574,116 @@ if(index==-1){
    }
 
 }
+
+function addDurations(id) {
+    // Assuming you have retrieved the values from form fields
+    var durationDate1 = $('#durationDate1').val();
+    var durationDate2 = $('#durationDate2').val();
+    var durationDate3 = $('#durationDate3').val();
+    var duration1 = $('#duration1').val();
+    var duration2 = $('#duration2').val();
+    var duration3 = $('#duration3').val();
+    var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+  
+    var formData = {
+        id: id, 
+        durationDate1: durationDate1,
+        durationDate2: durationDate2,
+        durationDate3: durationDate3,
+        duration1: duration1,
+        duration2: duration2,
+        duration3: duration3,
+        csrfmiddlewaretoken: csrfToken
+    };
+
+  
+    $.ajax({
+        type: "POST",
+        url: "/projects/add_duration/",
+        data: formData,
+        success: function(response) {
+            var newRowHtml = '<tr>' +
+    '<td>' + durationDate1 + '</td>' +
+    '<td>' + durationDate2 + '</td>' +
+    '<td>' +durationDate3 + '</td>' +
+    '<td>' + duration1 + '</td>' +
+    '<td>' + duration2 + '</td>' +
+    '<td>' + duration3 + '</td>' +
+    '</tr>';
+$('#tableDurations').append(newRowHtml);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+           
+            console.error("Error:", textStatus, errorThrown);
+        }
+    });
+}
+function addImported(id) {
+    // Assuming you have retrieved the values from form fields
+    var impSelect = $('#impSelect').val();
+    var impCost = $('#impCost').val();
+    var impDate = $('#impDate').val();
+    var impNote = $('#impNote').val();
+    
+    var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+    var formData = {
+        id: id, 
+        impSelect: impSelect,
+        impCost: impCost,
+        impDate: impDate,
+        impNote: impNote,
+        csrfmiddlewaretoken: csrfToken
+    };
+
+  
+    $.ajax({
+        type: "POST",
+        url: "/projects/add_importeds/",
+        data: formData,
+        success: function(response) {
+            var newRowHtml = '<tr>' +
+    '<td>' + impSelect + '</td>' +
+    '<td>' + impCost + '</td>' +
+    '<td>' +impDate + '</td>' +
+    '<td>' + impNote + '</td>' +
+    '</tr>';
+$('#tableImp').append(newRowHtml);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+           
+            console.error("Error:", textStatus, errorThrown);
+        }
+    });
+}
+$(function(){
+    $('#durationDate3').change(function() {
+        var durationDate2 = $('#durationDate2').val();
+        var durationDate3 = $('#durationDate3').val();
+        var formattedDate2 = formatDate(durationDate2);
+        var formattedDate3 = formatDate(durationDate3);
+        var date2 = new Date(formattedDate2);
+        var date3 = new Date(formattedDate3);
+
+        // Check if the parsed dates are valid
+        if (!isNaN(date2) && !isNaN(date3)) {
+            // Calculate the difference in months
+            var diffMonths = (date3.getFullYear() - date2.getFullYear()) * 12 + (date3.getMonth() - date2.getMonth());
+
+            // Set the result in duration1
+            $('#duration1').val(diffMonths);
+        } else {
+            // Handle invalid dates (e.g., display an error message)
+            $('#duration1').val('Invalid dates');
+        }
+    });
+
+    function formatDate(inputDate) {
+        // Assuming inputDate is in the format "DD-MM-YYYY"
+        var parts = inputDate.split("-");
+        return parts[2] + "-" + parts[1] + "-" + parts[0];
+    }
+});
+
 
 </script>
 {% endblock extra_js %}

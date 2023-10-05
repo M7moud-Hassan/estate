@@ -1,10 +1,11 @@
 import json
 from datetime import datetime
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from datetime import timedelta
 
 from engineers.models import Engineers
-from .models import AdditionalPeriods, Projects, Ahdaa, Masourfat, Mostakhlas
+from .models import AdditionalPeriods, CostsImported, Projects, Ahdaa, Masourfat, Mostakhlas
 from decimal import Decimal
 from django.contrib import messages
 from imported.models import Imported
@@ -21,6 +22,7 @@ def add_project(request):
             data_object = DataObject(**request.POST)
             project = Projects.objects.create(
                 name=data_object.name_project[0],
+                letter_of_guarantee=data_object.letter_of_guarantee[0],
                 date_session=datetime.strptime(data_object.date1[0], "%d-%m-%Y").date() if data_object.date1[
                     0] else None,
                 date_finance=datetime.strptime(data_object.date2[0], "%d-%m-%Y").date() if data_object.date2[
@@ -59,38 +61,9 @@ def add_project(request):
                 else:
                     break
                 index = index + 1
-                #durations
+                
             index = 0
             while True:
-                price = getattr(data_object, 'group-d[' + str(index) + '][demo2]', None)
-                if  price and price[0] and  int(price[0])>0 :
-                    date_Period=getattr(data_object, 'group-d[' + str(index) + '][dated1]', None)
-                    reason=getattr(data_object, 'group-d[' + str(index) + '][reason]', None)
-                    terminationBeforeTheIncrease=getattr(data_object, 'group-d[' + str(index) + '][dated2]', None)
-                    terminationAfterTheIncrease=getattr(data_object, 'group-d[' + str(index) + '][dated3]', None)
-                    durations = AdditionalPeriods.objects.create(price_increase=price[0] if price[0] else 0,
-                                                 date_Period=datetime.strptime(date_Period[0],
-                                                                                        "%d-%m-%Y").date() if
-                                                         date_Period[0] else None,
-                                                         reason=reason[0] if
-                                                         reason[0] else None,
-                                                         terminationBeforeTheIncrease=datetime.strptime(terminationBeforeTheIncrease[0],
-                                                                                        "%d-%m-%Y").date() if
-                                                         terminationBeforeTheIncrease[0] else None,
-                                                         terminationAfterTheIncrease=datetime.strptime(terminationAfterTheIncrease[0],
-                                                                                        "%d-%m-%Y").date() if
-                                                         terminationAfterTheIncrease[0] else None,
-                                                         )
-
-                    project.durations.add(durations)
-                    project.save()
-                else:
-                    break
-                index = index + 1
-                ###################################################333
-            index = 0
-            while True:
-
                 date_mosroufat = getattr(data_object, 'group-a[' + str(index) + '][date10]', None)
                 if date_mosroufat and date_mosroufat[0]:
                     eng = getattr(data_object, 'group-a[' + str(index) + '][engineer_]', None)
@@ -159,7 +132,8 @@ def edit_project(request, id):
         if request.method == 'POST':
             data_object = DataObject(**request.POST)
             if project:
-                project.name = data_object.name_project[0]
+                project.name = data_object.name_project[0],
+                letter_of_guarantee=data_object.letter_of_guarantee[0],
                 project.date_session = datetime.strptime(data_object.date1[0], "%d-%m-%Y").date() if data_object.date1[
                     0] else None
                 project.date_finance = datetime.strptime(data_object.date2[0], "%d-%m-%Y").date() if data_object.date2[
@@ -185,8 +159,7 @@ def edit_project(request, id):
                 project.ahdaa.all().delete()
                 project.masourfats.all().delete()
                 project.mostakhlas.all().delete()
-                project.durations.all().delete()
-
+                
                 index = 0
                 while True:
                     eng = getattr(data_object, 'group-a[' + str(index) + '][engineer]', None)
@@ -256,7 +229,7 @@ def edit_project(request, id):
                                                          long_Live_egypt_fund=percentage[14]  if percentage[14] else 0.0,
                                                          applied_tear=percentage[15]  if percentage[15] else 0.0,
                                                          union_of_two_sayings=percentage[16]  if percentage[16] else 0.0,
-                                                         notes=getattr(data_object, 'group-c[' + str(index) + '][notes][0]', None)
+                                                         notes=getattr(data_object, 'group-c[' + str(index) + '][notes]', None)[0]
                                                          )
                         project.mostakhlas.add(mostakjlas)
                         project.save()
@@ -322,3 +295,92 @@ def delete_project(request, id):
 
 def form(request):
    return  render(request,'components/forms/form-advanced.html')
+
+def add_duration(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        durationDate1 = request.POST.get('durationDate1')
+        durationDate2 = request.POST.get('durationDate2')
+        durationDate3 = request.POST.get('durationDate3')
+        duration1 = request.POST.get('duration1')
+        duration2 = request.POST.get('duration2')
+        duration3 = request.POST.get('duration3')
+
+        # Check if any of the fields are empty
+        if not id or not durationDate1 or not durationDate2 or not durationDate3 or not duration1 or not duration2 or not duration3:
+            return HttpResponse('One or more fields are empty', status=400)
+
+        # Convert the date strings to "YYYY-MM-DD" format
+        try:
+            date_format = "%d-%m-%Y"
+            durationDate1 = datetime.strptime(durationDate1, date_format).strftime("%Y-%m-%d")
+            durationDate2 = datetime.strptime(durationDate2, date_format).strftime("%Y-%m-%d")
+            durationDate3 = datetime.strptime(durationDate3, date_format).strftime("%Y-%m-%d")
+
+            # Create a new AdditionalPeriods object
+            duration = AdditionalPeriods.objects.create(
+                price_increase=duration2,
+                date_Period=durationDate1,
+                terminationBeforeTheIncrease=durationDate2,
+                terminationAfterTheIncrease=durationDate3,
+                duration=duration1,
+                reason=duration3
+            )
+
+            # sGet the project and associate the duration with it
+            project = Projects.objects.filter(id=id).first()
+            if project:
+                project.durations.add(duration)
+                project.duration_project += int(duration1)
+                project.date_extra_end += int(duration1)
+
+# Assuming project.date_end is a DateField and duration1 is in months
+                project.date_end += timedelta(days=int(duration1) * 30)
+                project.save()
+                return HttpResponse('ok')
+            else:
+                return HttpResponse('Project not found', status=404)
+        except ValueError:
+            return HttpResponse('Invalid date format', status=400)
+    else:
+        return HttpResponse('Method not allowed', status=405)
+    
+def add_imported(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        impSelect = request.POST.get('impSelect')
+        impCost = request.POST.get('impCost')
+        impDate = request.POST.get('impDate')
+        impNote = request.POST.get('impNote')
+    
+
+        # Check if any of the fields are empty
+        if not id or not impSelect  or not impCost or not impDate or not impNote:
+            return HttpResponse('One or more fields are empty', status=400)
+
+        # Convert the date strings to "YYYY-MM-DD" format
+        try:
+            date_format = "%d-%m-%Y"
+            impDate = datetime.strptime(impDate, date_format).strftime("%Y-%m-%d")
+          
+
+            # Create a new AdditionalPeriods object
+            imp = CostsImported.objects.create(
+              imported=Imported.objects.filter(id=int(impSelect)).first(),
+              cost=impCost,
+              date=impDate,
+              note=impNote
+            )
+
+            # sGet the project and associate the duration with it
+            project = Projects.objects.filter(id=id).first()
+            if project:
+                project.costs_importeds.add(imp)
+                project.save()
+                return HttpResponse('ok')
+            else:
+                return HttpResponse('Project not found', status=404)
+        except ValueError:
+            return HttpResponse('Invalid date format', status=400)
+    else:
+        return HttpResponse('Method not allowed', status=405)

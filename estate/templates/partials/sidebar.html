@@ -31,10 +31,20 @@
                         </li>
 
                         <li>
-                            <a href="{% url 'home.report' %}" class="waves-effect">
-                                <span> التقارير</span>
+                            <a class="waves-effect">
+                                <span> </span>
                             </a>
                         </li>
+                        <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                         
+                            <span>التقارير</span>
+                            </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                                           <li><a  href="{% url 'home.report' %}">تقارير المشاريع</a></li>
+                                                            <li><a href="{% url 'mos_report'%}">تقارير المستقطاعات</a></li>
+                                    </ul>
+                         </li> 
 
 <!--                        <li>-->
 <!--                            <a href="{% url 'main:calendar'%}" class=" waves-effect">-->

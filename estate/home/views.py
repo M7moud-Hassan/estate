@@ -10,3 +10,6 @@ def home(request):
 
 def projects(request):
     return render(request, 'home/projects.html',context={'projects':Projects.objects.all()})
+
+def mos_report(request):
+    pass

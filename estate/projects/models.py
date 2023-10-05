@@ -6,6 +6,7 @@ from imported.models import Imported
 
 class Projects(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
+    letter_of_guarantee = models.CharField(max_length=200, null=True, blank=True)
     date_session = models.DateField(null=True, blank=True)
     date_finance = models.DateField(null=True, blank=True)
     date_notification_Altrsih = models.DateField(null=True, blank=True)
@@ -24,7 +25,14 @@ class Projects(models.Model):
     mostakhlas = models.ManyToManyField('Mostakhlas', blank=True)
     durations=models.ManyToManyField('AdditionalPeriods', blank=True)
     report=models.TextField(null=True)
+    costs_importeds=models.ManyToManyField('CostsImported',blank=True)
 
+
+class CostsImported(models.Model):
+    imported = models.ForeignKey(Imported, on_delete=models.CASCADE, null=True, blank=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+    note=models.CharField(null=True,blank=True,max_length=1000)
 
 class Ahdaa(models.Model):
     engineer_id = models.ForeignKey(Engineers, on_delete=models.CASCADE, null=True, blank=True)
@@ -71,4 +79,4 @@ class Mostakhlas(models.Model):
     long_Live_egypt_fund = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     applied_tear = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     union_of_two_sayings = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    notes = models.CharField(max_length=10000, null=True, blank=True)
+    notes = models.CharField(default='',max_length=10000, null=True, blank=True)
