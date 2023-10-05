@@ -9,15 +9,15 @@ from .views import MyPasswordChangeView, MyPasswordSetView
 
 urlpatterns = [
     #enginners
-    path('engineers/',include('engineers.urls')),
-    path('reports/', include('reports.urls')),
-    path('imported/', include('imported.urls')),
-    path('admin/', admin.site.urls),
-    path('',include('home.urls')),
-    path('projects/',include('projects.urls')),
-    path('', include('main.urls')),
-    path('components/', include('components.urls')),
-    path('', include('extras.urls')),
+    path('mtm-group/engineers/',include('engineers.urls')),
+    path('mtm-group/reports/', include('reports.urls')),
+    path('mtm-group/imported/', include('imported.urls')),
+    path('mtm-group/admin/', admin.site.urls),
+    path('mtm-group/',include('home.urls')),
+    path('mtm-group/projects/',include('projects.urls')),
+    path('mtm-group/', include('main.urls')),
+    path('mtm-group/components/', include('components.urls')),
+    path('mtm-group/', include('extras.urls')),
 
     path(
         "account/password/change/",

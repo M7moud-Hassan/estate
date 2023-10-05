@@ -119,7 +119,7 @@ def add_project(request):
                     break
                 index = index + 1
             messages.success(request, "تم حفط المشروع")
-            return redirect('/projects/')
+            return redirect('/mtm-group/projects/')
     # except Exception as e:
     #     messages.error(request, str(e))
         return render(request, 'projects/add_project.html',context={'engineers':Engineers.objects.all(),
@@ -237,7 +237,7 @@ def edit_project(request, id):
                         break
                     index = index + 1
                 messages.success(request, "تم تعديل المشروع")
-                return redirect('/projects/')
+                return redirect('/mtm-group/projects/')
 
         else:
             if project:
@@ -245,7 +245,7 @@ def edit_project(request, id):
                                                                              'importeds':Imported.objects.all()})
     # except Exception as e:
     #     messages.error(request, str(e))
-        return redirect('/projects/')
+        return redirect('/mtm-group/projects/')
 
 
 def update_ahdaa(request):
@@ -290,7 +290,7 @@ def delete_project(request, id):
     if project:
         project.delete()
         messages.success(request, "تم مسح المشروع")
-    return redirect('/projects/')
+    return redirect('/mtm-group/projects/')
 
 
 def form(request):

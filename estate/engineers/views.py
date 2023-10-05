@@ -22,7 +22,7 @@ def add(request):
             engineer = form.save(commit=False)
             engineer.save()
             messages.success(request, 'تم اضافة البيانات بنجاح')
-            return redirect('/engineers/')
+            return redirect('/mtm-group/engineers/')
     context = {
         "form": form
     }
@@ -38,14 +38,14 @@ def edit(request, pk):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'تم تحديث البيانات بنجاح')
-                return redirect('/engineers/')
+                return redirect('/mtm-group/engineers/')
 
         form = EngineersForm(instance=eng)
         return render(request, 'engineers/add.html', context={'form': form, 'engineer': eng})
 
     else:
         messages.error(request, 'المهندس الذي تريد تعديله ليس موجود')
-        return redirect('/engineers/')
+        return redirect('/mtm-group/engineers/')
 
 
 def delete(request, pk):
@@ -54,11 +54,11 @@ def delete(request, pk):
 
             eng.delete()
             messages.success(request, 'تم مسح البيانات بنجاح')
-            return redirect('/engineers/')
+            return redirect('/mtm-group/engineers/')
        
     else:
         messages.error(request, 'المهندس الذي تريد مسحة ليس موجود')
-        return redirect('/engineers/')
+        return redirect('/mtm-group/engineers/')
 
 
 def details(request,pk):
@@ -75,4 +75,4 @@ def details(request,pk):
         return render(request,'engineers/details_engineer.html',context={"engineer":engineer,"projects":projects,"masrouf":masrouf,"ahdaa":ahdaa,"moustakhlas":moustakhlas})
     else:
         messages.error("المهندس ليس موجود")
-        return  redirect("/engineers/")
+        return  redirect("/mtm-group/engineers/")

@@ -17,15 +17,18 @@ def add_imported(request):
             instance = form.save()
             index=0
             while True:
-                phone=request.POST.getlist(f'group-d[{index}][phone]')[0]
-                if phone:
-                    phone = PhoneNumber.objects.create(phone_number=phone)
-                    instance.phonesNumber.add(phone)
-                else:
+                try:
+                    phone=request.POST.getlist(f'group-d[{index}][phone]')[0]
+                    if phone:
+                        phone = PhoneNumber.objects.create(phone_number=phone)
+                        instance.phonesNumber.add(phone)
+                    else:
+                        break
+                    index=index+1
+                except:
                     break
-                index=index+1
             instance.save()
-        return redirect('/imported/')
+        return redirect('/mtm-group/imported/')
             
     else:
         form = ImportedForm()
@@ -48,7 +51,7 @@ def edit_imported(request,id):
                     phone = PhoneNumber.objects.create(phone_number=phone_number)
                     client.phonesNumber.add(phone)
                 client.save()
-                return redirect('/imported/')
+                return redirect('/mtm-group/imported/')
         else:
             form=ImportedForm(instance=client)
             return  render(request, 'imported/add.html', context={'form': form,'phones':client.phonesNumber.all()})
@@ -56,4 +59,4 @@ def delete_clients(request,id):
     client=Imported.objects.filter(id=id).first()
     if client:
         client.delete()
-    return redirect('/imported/')
+    return redirect('/mtm-group/imported/')
