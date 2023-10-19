@@ -26,6 +26,65 @@
 {% endblock %}
 {% block content %}
 
+<div id="models">
+    {% for du in project.costs_importeds.all %}
+
+    <div class="modal fade" id="staticBackdropM{{du.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المدة
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح  {{du.imported.company_name}}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a onclick="DeleteMasrouf(`{{du.id}}`,`{{project.id}}`)"
+                                                    class="btn btn-primary" data-bs-dismiss="modal">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+{% endfor %}
+    {% for du in project.durations.all %}
+
+    <div class="modal fade" id="staticBackdrop{{du.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المدة
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح  {{du.date_Period}}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a onclick="DeleteDuratins(`{{du.id}}`,`{{project.id}}`)"
+                                                    class="btn btn-primary" data-bs-dismiss="modal">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+{% endfor %}
+
+</div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -34,25 +93,36 @@
                              {% csrf_token %}
                             <h3>تفاصيل المشروع</h3>
                             <fieldset>
-                                <div class="row">
-                                    <div class="col-6 row">
-                                        <label for="name" class="col-4 col-form-label">ادخل اسم المشروع</label>
-                                        <div class="col-8">
+                                <div class="row g-4">
+                                    <div class="col-6 row p-0 m-0">
+                                        <label for="name" class="col-3 col-form-label">ادخل اسم المشروع</label>
+                                        <div class="col-9">
                                             <input id="name" name="name_project"  style="width:100%" value="{{project.name}}" type="text" class="form-control " placeholder="ادخل اسم المشروع" required>
                                         </div>
                                     </div>
-
-                                        <div class="col-6 row">
-                                            <label for="name" class="col-lg-4 col-form-label">جهة اصدار خطاب الضمان</label>
-                                            <div class="col-lg-8">
-                                                <input id="name" name="letter_of_guarantee"  value="{{project.letter_of_guarantee}}" type="text" class="form-control" placeholder="ادخل اسم المشروع" required>
+                                        <div class="col-6 row p-0 m-0">
+                                            <label for="name" class="col-lg-3 col-form-label">جهة اصدار خطاب الضمان</label>
+                                            <div class="col-lg-9">
+                                                <input id="name" name="letter_of_guarantee"  value="{{project.letter_of_guarantee}}" type="text" class="form-control" placeholder="اصدار خطاب الضمان" required>
                                             </div>
                                             </div>
-                                    <div class="col-6 row mb-4">
-                                        <label for="name" class="col-lg-4 col-form-label">قيمة التأمين</label>
-                                        <div class="col-lg-8">
+                                    <div class="col-6 row p-0 m-0">
+                                        <label for="name" class="col-lg-3 col-form-label">قيمة التأمين</label>
+                                        <div class="col-lg-9">
                                             <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.price_project}}"  name="demo2">
                                         </div>
+                                        </div>
+                                        <div class="col-6 row p-0 m-0">
+                                            <label for="date4" class="col-lg-3 col-form-label">تاريخ سداد تأمين خطاب الخسمات</label>
+                                            <div class="col-lg-9">
+                                                <div class="input-group" id="datepicker5">
+                                    <input id="date4" value="{{project.date_sadad_khatab_alkhsmat|date:'d-m-Y'}}" name="date4" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker5' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
                                         </div>
                                 </div>
                                 <div class="row">
@@ -87,36 +157,6 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date3" class="col-lg-3 col-form-label">تاريخ اخطار الترسية</label>
-                                            <div class="col-lg-9">
-                                               <div class="input-group" id="datepicker4">
-                                    <input id="date3" value="{{project.date_notification_Altrsih|date:'d-m-Y'}}" name="date3" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker4' data-provide="datepicker"
-                                        data-date-autoclose="true">
-
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
-                                            <label for="date4" class="col-lg-3 col-form-label">تاريخ سداد تأمين خطاب الخسمات</label>
-                                            <div class="col-lg-9">
-                                                <div class="input-group" id="datepicker5">
-                                    <input id="date4" value="{{project.date_sadad_khatab_alkhsmat|date:'d-m-Y'}}" name="date4" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker5' data-provide="datepicker"
-                                        data-date-autoclose="true">
-
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row mb-3">
                                             <label for="date5" class="col-lg-3 col-form-label">تاريخ امر الاسناد</label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="datepicker6">
@@ -131,23 +171,24 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date7" class="col-lg-3 col-form-label">تاريخ امر الشعل</label>
+                                            <label for="date3" class="col-lg-3 col-form-label">تاريخ اخطار الترسية</label>
                                             <div class="col-lg-9">
-                                                <div class="input-group" id="datepicker7">
-                                    <input id="date7" value="{{project.date_work|date:'d-m-Y'}}" name="date6" type="text" class="form-control" placeholder="dd-mm-yyyy"
-                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker7' data-provide="datepicker"
-                                        data-date-autoclose="true" readonly>
+                                               <div class="input-group" id="datepicker4">
+                                    <input id="date3" value="{{project.date_notification_Altrsih|date:'d-m-Y'}}" name="date3" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker4' data-provide="datepicker"
+                                        data-date-autoclose="true">
 
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date8" class="col-lg-3 col-form-label">مدة المشروع (شهر) </label>
+                                            <label for="date8" class="col-lg-3 col-form-label">مدة المشروع (يوم) </label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="duration">
                                                    {% if project %}
@@ -162,10 +203,27 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label for="date7" class="col-lg-3 col-form-label">تاريخ استلام الموقع</label>
+                                            <div class="col-lg-9">
+                                                <div class="input-group" id="datepicker7">
+                                    <input id="date7" value="{{project.date_work|date:'d-m-Y'}}" name="date6" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker7' data-provide="datepicker"
+                                        data-date-autoclose="true" readonly>
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
                                     {% if project %}
                                     <div class="col-md-6">
                                         <div class="row mb-3">
-                                            <label for="date18" class="col-lg-3 col-form-label">مدة اضافية (شهر)</label>
+                                            <label for="date18" class="col-lg-3 col-form-label">مدة اضافية (يوم)</label>
                                             <div class="col-lg-9">
                                                <div class="input-group" id="add_duration">
                                     <input id="date18" value="{{project.date_extra_end}}" name="date8" type="number"  onkeyup="AddDuration(this)" class="form-control">
@@ -245,7 +303,7 @@
                     <div class="card-body">
                         <h4 class="card-title">الزيادة</h4>
                         <div>
-                       
+                            
                                <div class="row">
                                    <div  class="mb-3 col-lg-4">
                                        <label class="form-label" for="price_2">تاريخ امر الزيادة</label>
@@ -291,7 +349,7 @@
                                    </div>
                                 </div>
                                 <!-- end row -->
-                            <input onclick="addDurations(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مدة زيادة"/>
+                            <inpu id="addDurations" onclick="addDurations(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مدة زيادة"/>
                            
                         
             </div>
@@ -305,6 +363,7 @@
                     <th> المدة</th>
                     <th>قيمة الزيادة</th>
                     <th>السبب</th>
+                    <th>action</th>
 
                 </tr>
             </thead>
@@ -312,14 +371,19 @@
 
             <tbody id="tableDurations">
             {% for du in project.durations.all %}
-           <tr>
-           
-                <td>{{du.date_Period}}</td>
-                <td>{{du.terminationBeforeTheIncrease}}</td>
-                <td>{{du.terminationAfterTheIncrease}}</td>
+           <tr id="trD{{du.id}}">
+                <td>{{du.date_Period |date:"d-m-Y" }}</td>
+                <td>{{du.terminationBeforeTheIncrease |date:"d-m-Y" }}</td>
+                <td>{{du.terminationAfterTheIncrease |date:"d-m-Y" }}</td>
                 <td>{{du.duration}}</td>
                 <td>{{du.price_increase}}</td>
                 <td>{{du.reason}}</td>  
+                <td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editDuration(`{{du.id}}`,`{{du.date_Period |date:'d-m-Y'}}`,
+                    `{{du.terminationBeforeTheIncrease |date:'d-m-Y'}}`,`{{du.terminationAfterTheIncrease |date:'d-m-Y'}}`,`{{du.duration}}`,
+                    `{{du.price_increase}}`,`{{du.reason}}`)" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdrop{{du.id}}"></td>
            </tr>
             {% endfor %}
             </tbody>
@@ -335,9 +399,7 @@
                     <div class="card-body">
                         <h4 class="card-title">المصروفات</h4>
                         <div>
-                       
                                <div class="row">
-
                                 <div class="mb-3 col-lg-5">
                                     <label class="form-label">اختر العميل </label>
                                      <select class="form-control select2" id="impSelect">
@@ -366,7 +428,7 @@
                                    </div>
                                 </div>
                                 <!-- end row -->
-                            <input onclick="addImported(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مدة زيادة"/>
+                            <input id="addImportedd" onclick="addImported(`{{project.id}}`)" type="button" class="btn btn-success mt-2 mt-sm-0" value="اضافة مصروف"/>
                            
                         
             </div>
@@ -378,6 +440,7 @@
                     <th>التكلفة</th>
                     <th>التاريخ</th>
                     <th> الملاحظات</th>
+                    <th> actions</th>
                   
 
                 </tr>
@@ -386,12 +449,17 @@
 
             <tbody id="tableImp">
             {% for du in project.costs_importeds.all %}
-           <tr>
+           <tr id="trM{{du.id}}">
                 <td>{{du.imported.company_name}}</td>
                 <td>{{du.cost}}</td>
                 <td>{{du.date}}</td>
                 <td>{{du.note}}</td>
-               
+                <td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editMasrouf(`{{du.id}}`,`{{du.imported.id}}`,
+                    `{{du.cost}}`,`{{du.date |date:'d-m-Y'}}`,`{{du.note}}`
+                    )" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdropM{{du.id}}"></td>
            </tr>
             {% endfor %}
             </tbody>
@@ -426,9 +494,19 @@
                                     {% endfor %}
                                 </select>
                                     </div>
-                                    <div  class="mb-3 col-lg-5">
+                                    <div  class="mb-3 col-lg-6">
                                         <label class="form-label" for="price_">قيمة العهدة</label>
                                          <input id="price_" data-parsley-type="number" class="form-control" type="number" value="{{ah.price}}"  name="demo2">
+                                    </div>
+                                    <div  class="mb-3 col-lg-6">
+                                        <label class="form-label" for="price_2">تاريخ العهدة</label>
+                                         <div class="input-group" id="datepicker1001">
+                                    <input id="date_price3" name="date10" type="text" value="{{ah.date_ahdaa|date:'d-m-Y'}}" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker1001' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-4 align-self-center">
                                         <div class="d-grid">
@@ -454,10 +532,20 @@
                                     {% endfor %}
                                 </select>
                                     </div>
-                                    <div  class="mb-3 col-lg-5">
+                                    <div  class="mb-3 col-lg-6">
                                         <label class="form-label" for="price">قيمة العهدة</label>
                                         <input id="price" data-parsley-type="number" class="form-control" type="number" value="0" name="demo2">
 
+                                    </div>
+                                    <div  class="mb-3 col-lg-6">
+                                        <label class="form-label" for="price_2">تاريخ العهدة</label>
+                                         <div class="input-group" id="datepicker1001">
+                                    <input id="date_price3" name="date10" type="text" class="form-control" placeholder="dd-mm-yyyy"
+                                        data-date-format="dd-mm-yyyy" data-date-container='#datepicker1001' data-provide="datepicker"
+                                        data-date-autoclose="true">
+
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-4 align-self-center">
                                         <div class="d-grid">
@@ -482,7 +570,7 @@
                     <div class="card-body">
                         <h4 class="card-title">مصروفات</h4>
                            <div class="repeater">
-                                <div data-repeater-list="group-a">
+                                <div data-repeater-list="group-b">
                                {% if project.masourfats.all %}
                                     {% for mo in project.masourfats.all %}
                                      <div class="row" data-repeater-item>
@@ -502,8 +590,8 @@
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                     </div>
-                                    <div  class="mb-3 col-lg-4">
-                                        <select class="form-control select2" name="imported_">
+                                    <!-- <div  class="mb-3 col-lg-4"> -->
+                                        <!-- <select class="form-control select2" name="imported_">
                                             {% for im in importeds %}
                                             {% if mo.imported.id == im.id %}
                                                  <option value="{{im.id}}" selected>{{im.company_name}}</option>
@@ -512,9 +600,9 @@
                                                 {%endif%}
                                             {% endfor %}
                                         </select>
-                                        <label class="form-label6" for="price_2">الموردين</label>
+                                        <label class="form-label6" for="price_2">الموردين</label> -->
                                          <!--<input id="almordeen6" value="{{mo.almardeen}}" name="moard" type="text"  class=" form-control"> -->
-                                    </div>
+                                    <!-- </div> -->
                                           <div  class="mb-3 col-lg-4">
                                           <label class="form-label"> بيان المصروف </label>
                                 <select class="form-control select2" name="engineer_">
@@ -557,7 +645,7 @@
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
                                     </div>
-                                    <div  class="mb-3 col-lg-4">
+                                    <!-- <div  class="mb-3 col-lg-4">
                                         <label class="form-label" for="price_2">الموردين</label>
                                         <select class="form-control select2" name="imported_">
                                             {% for im in importeds %}
@@ -566,7 +654,7 @@
                                                 
                                             {% endfor %}
                                         </select>
-                                    </div>
+                                    </div> -->
                                           <div  class="mb-3 col-lg-4">
                                           <label class="form-label">بيان المصروف</label>
                                 <select class="form-control select2" name="engineer_">
@@ -602,6 +690,7 @@
                             </fieldset>
 
                             <h3> المستخلصات</h3>
+                            
                             <fieldset>
                                 <div class="p-3">
                                      <div class="card">
@@ -611,8 +700,9 @@
                             {% if project.mostakhlas.all %}
                              <div data-repeater-list="group-c">
                             {% for ah in project.mostakhlas.all %}
-
+                            
                                 <div class="row" data-repeater-item>
+                                    <h4>{{forloop.counter}} مستخلص رقم</h4>
                                     <div class="row">
                                     <div class="col-md-6">
 
@@ -929,6 +1019,7 @@
                             {% else %}
                               <div data-repeater-list="group-c">
                                     <div class="row" data-repeater-item>
+                                        <h4 class="countNum"></h4>
                                     <div class="row">
                                     <div class="col-md-6">
                                         <div class="row mb-3">
@@ -1223,7 +1314,7 @@
 
                                              <div class="col-md-6">
                                         <div class="row mb-3">
-                                             <label for="demo1" class="col-lg-3 col-form-label">قيمة المستخلص بعد الخصم </label>
+                                             <label for="demo1" class="col-lg-3 col-form-label">القيمة المخصومة</label>
 
                                             <div class="col-lg-9 ">
 
@@ -1248,7 +1339,7 @@
 
 
 
-                            <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0 col-4" value="اضافة مستخلص  اخر"/>
+                            <input onclick="addNum()" data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0 col-4" value="اضافة مستخلص  اخر"/>
 
      <div>
                     </div>
@@ -1290,6 +1381,16 @@
     <script src="{% static  'libs/parsleyjs/dist/parsley.min.js'%}"></script>
     <script src="{% static 'js/pages/form-validation.init.js'%}"></script>
 <script>
+var durationId=0;
+var MasroufId=0;
+var numCount=`{{project.mostakhlas.count}}`;
+$('.countNum').last().text('مستخلص رقم  '+ (Number(numCount)+1));
+function addNum(){
+   setTimeout(()=>{
+    numCount++;
+    $('.countNum').last().text('مستخلص رقم  '+ (Number(numCount)+1));
+   },100)
+}
 var endProject=document.getElementById("date8");
 function AddDuration(event){
 var durationProject=document.getElementById("data8");
@@ -1323,24 +1424,24 @@ addDurationToEnd(inputDateStr,monthsToAdd)
 
 
 }
-function addDurationToEnd(inputDateStr,monthsToAdd){
-var endProject=document.getElementById("date8");
-var parts = inputDateStr.split("-");
-var day = parseInt(parts[0]);
-var month = parseInt(parts[1]);
-var year = parseInt(parts[2]);
+function addDurationToEnd(inputDateStr, daysToAdd) {
+  var endProject = document.getElementById("date8");
+  var parts = inputDateStr.split("-");
+  var day = parseInt(parts[0]);
+  var month = parseInt(parts[1]) - 1; 
+  var year = parseInt(parts[2]);
 
-var inputDate = new Date(year, month - 1, day);
+  var inputDate = new Date(year, month, day);
 
-inputDate.setMonth(inputDate.getMonth() + Number(monthsToAdd));
+  inputDate.setDate(inputDate.getDate() + Number(daysToAdd));
 
-var newDay = inputDate.getDate();
-var newMonth = inputDate.getMonth() + 1;
-var newYear = inputDate.getFullYear();
+  var newDay = inputDate.getDate();
+  var newMonth = inputDate.getMonth() + 1;
+  var newYear = inputDate.getFullYear();
 
-var newDateStr = newDay + "-" + newMonth + "-" + newYear;
+  var newDateStr = newDay + "-" + newMonth + "-" + newYear;
 
-endProject.value= newDateStr;
+  endProject.value = newDateStr;
 }
 
 function mostakhlas(event){
@@ -1574,9 +1675,11 @@ if(index==-1){
    }
 
 }
-
+$('#addDurations').text('اضافة مدة')
+$('#addImportedd').val('اضافة مصروف')
 function addDurations(id) {
     // Assuming you have retrieved the values from form fields
+    
     var durationDate1 = $('#durationDate1').val();
     var durationDate2 = $('#durationDate2').val();
     var durationDate3 = $('#durationDate3').val();
@@ -1586,6 +1689,7 @@ function addDurations(id) {
     var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
   
     var formData = {
+        idD:durationId,
         id: id, 
         durationDate1: durationDate1,
         durationDate2: durationDate2,
@@ -1596,20 +1700,58 @@ function addDurations(id) {
         csrfmiddlewaretoken: csrfToken
     };
 
-  
+    if(durationId==0){
     $.ajax({
         type: "POST",
-        url: "/projects/add_duration/",
+        url: "/mtm-group/projects/add_duration/",
         data: formData,
         success: function(response) {
-            var newRowHtml = '<tr>' +
+            var newRowHtml = `<tr id="trD${response}">` +
     '<td>' + durationDate1 + '</td>' +
     '<td>' + durationDate2 + '</td>' +
     '<td>' +durationDate3 + '</td>' +
     '<td>' + duration1 + '</td>' +
     '<td>' + duration2 + '</td>' +
     '<td>' + duration3 + '</td>' +
+    ` <td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editDuration(${response},'${durationDate1}',
+                    '${durationDate2}','${durationDate3}','${duration1}',
+                    '${duration2}','${duration3}')" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdrop${response}"></td>`+
     '</tr>';
+    $('#models').append(`<div class="modal fade" id="staticBackdrop${response}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المدة
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح  ${durationDate1}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a onclick="DeleteDuratins(${response},{{project.id}})"
+                                                    class="btn btn-primary" data-bs-dismiss="modal">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>`);
+                                $('#durationDate1').val('');
+    $('#durationDate2').val('');
+    $('#durationDate3').val('');
+    $('#duration1').val('');
+    $('#duration2').val('');
+    $('#duration3').val('');
+
 $('#tableDurations').append(newRowHtml);
         },
         error: function(xhr, textStatus, errorThrown) {
@@ -1617,6 +1759,45 @@ $('#tableDurations').append(newRowHtml);
             console.error("Error:", textStatus, errorThrown);
         }
     });
+}else{
+    $.ajax({
+        type: "POST",
+        url: "/mtm-group/projects/add_duration/",
+        data: formData,
+        success: function(response) {
+            var newRowHtml = `<tr id="trD${response}">` +
+    '<td>' + durationDate1 + '</td>' +
+    '<td>' + durationDate2 + '</td>' +
+    '<td>' +durationDate3 + '</td>' +
+    '<td>' + duration1 + '</td>' +
+    '<td>' + duration2 + '</td>' +
+    '<td>' + duration3 + '</td>' +
+    ` <td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editDuration(${response},'${durationDate1}',
+                    '${durationDate2}','${durationDate3}','${duration1}',
+                    '${duration2}','${duration3}')" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdrop${response}"></td>`+
+    '</tr>';
+  
+    $('#addDurations').text('اضافة مدة')
+    $('#trD' + durationId).remove();
+    durationId=0;
+    $('#tableDurations').append(newRowHtml);
+    
+    $('#durationDate1').val('');
+    $('#durationDate2').val('');
+    $('#durationDate3').val('');
+    $('#duration1').val('');
+    $('#duration2').val('');
+    $('#duration3').val('');
+        },
+        error: function(xhr, textStatus, errorThrown) {
+           
+            console.error("Error:", textStatus, errorThrown);
+        }
+    });
+}
 }
 function addImported(id) {
     // Assuming you have retrieved the values from form fields
@@ -1627,6 +1808,7 @@ function addImported(id) {
     
     var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
     var formData = {
+        idM:MasroufId,
         id: id, 
         impSelect: impSelect,
         impCost: impCost,
@@ -1635,25 +1817,96 @@ function addImported(id) {
         csrfmiddlewaretoken: csrfToken
     };
 
-  
+  if(MasroufId==0){
     $.ajax({
         type: "POST",
-        url: "/projects/add_importeds/",
+        url: "/mtm-group/projects/add_imported/",
         data: formData,
         success: function(response) {
-            var newRowHtml = '<tr>' +
-    '<td>' + impSelect + '</td>' +
+            response = JSON.parse(response);
+            var newRowHtml = `<tr id="trM${response.id}">` +
+    '<td>' + response.name + '</td>' +
     '<td>' + impCost + '</td>' +
     '<td>' +impDate + '</td>' +
     '<td>' + impNote + '</td>' +
+    `<td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editMasrouf(${response.id},${impSelect},
+                    '${impCost}','${impDate}','${impNote}'
+                    )" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdropM${response.id}"></td>`+
     '</tr>';
+    $('#addImportedd').val('اضافة مصروف')
+    $('#impSelect').val('');
+    $('#impCost').val('');
+    $('#impDate').val('');
+    $('#impNote').val('');
 $('#tableImp').append(newRowHtml);
+$('#models').append(`<div class="modal fade" id="staticBackdropM${response.id}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel"> مسح المدة
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              هل انت متأكد لمسح ${response.name} 
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">غلق</button>
+                                                <a onclick="DeleteMasrouf(${response.id},{{project.id}})"
+                                                    class="btn btn-primary" data-bs-dismiss="modal">مسح</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>`);
         },
         error: function(xhr, textStatus, errorThrown) {
            
             console.error("Error:", textStatus, errorThrown);
         }
     });
+}else{
+    $.ajax({
+        type: "POST",
+        url: "/mtm-group/projects/add_imported/",
+        data: formData,
+        success: function(response) {
+            response = JSON.parse(response);
+            var newRowHtml =  `<tr id="trM${response.id}">` +
+    '<td>' +response.name  + '</td>' +
+    '<td>' + impCost + '</td>' +
+    '<td>' +impDate + '</td>' +
+    '<td>' + impNote + '</td>' +
+    `<td class="text-center">    
+                    <a class="btn btn-info" type="button" onclick="editMasrouf(${response.id},${impSelect},
+                    '${impCost}','${impDate}','${impNote}'
+                    )" >تعديل</a>
+             <input class="btn btn-danger"  value="حذف" data-bs-toggle="modal"
+                         data-bs-target="#staticBackdropM${response.id}"></td>`+
+    '</tr>';
+    $('#addImportedd').val('اضافة مصروف')
+    $('#impSelect').val('');
+    $('#impCost').val('');
+    $('#impDate').val('');
+    $('#impNote').val('');
+    $('#trM'+response.id).remove()
+$('#tableImp').append(newRowHtml);
+MasroufId=0;
+        },
+        error: function(xhr, textStatus, errorThrown) {
+           
+            console.error("Error:", textStatus, errorThrown);
+        }
+    });
+}
 }
 $(function(){
     $('#durationDate3').change(function() {
@@ -1663,18 +1916,16 @@ $(function(){
         var formattedDate3 = formatDate(durationDate3);
         var date2 = new Date(formattedDate2);
         var date3 = new Date(formattedDate3);
-
         // Check if the parsed dates are valid
         if (!isNaN(date2) && !isNaN(date3)) {
-            // Calculate the difference in months
-            var diffMonths = (date3.getFullYear() - date2.getFullYear()) * 12 + (date3.getMonth() - date2.getMonth());
+    var diffMilliseconds = date3 - date2;
+    var diffDays = Math.floor(diffMilliseconds / (1000 * 60 * 60 * 24));
 
-            // Set the result in duration1
-            $('#duration1').val(diffMonths);
-        } else {
-            // Handle invalid dates (e.g., display an error message)
-            $('#duration1').val('Invalid dates');
-        }
+    $('#duration1').val(diffDays);
+} else {
+    // Handle invalid dates (e.g., display an error message)
+    $('#duration1').val('Invalid dates');
+}
     });
 
     function formatDate(inputDate) {
@@ -1682,8 +1933,63 @@ $(function(){
         var parts = inputDate.split("-");
         return parts[2] + "-" + parts[1] + "-" + parts[0];
     }
+
+   
 });
 
+function editMasrouf(id,id_import,cost,date,note){
+     $('#impSelect').val(id_import);
+     $('#impCost').val(cost);
+     $('#impDate').val(date);
+    $('#impNote').val(note);
+    MasroufId=id
+    console.log(MasroufId)
+    $('#addImportedd').val('تعديل مصروف')
+}
+function editDuration(id,date_Period,terminationBeforeTheIncrease,terminationAfterTheIncrease,duration,price_increase,reason){
+  
+     $('#durationDate1').val(date_Period);
+    $('#durationDate2').val(terminationBeforeTheIncrease);
+    $('#durationDate3').val(terminationAfterTheIncrease);
+    $('#duration1').val(duration);
+    $('#duration2').val(price_increase);
+    $('#duration3').val(reason);
+       $('#addDurations').text('تعديل مدة')
+       durationId=id;
+    }
 
+    function DeleteMasrouf(id,idP){
+        var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+        var formData = {
+        idD:id,
+        csrfmiddlewaretoken: csrfToken
+        };
+
+        $.ajax({
+        type: "POST",
+        url: "/mtm-group/projects/delete_masrouf/",
+        data: formData,
+        success: function(response) {
+            $('#trM'+response).remove();
+        }}
+        );
+    }
+    function DeleteDuratins(id,idP){
+        var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+        var formData = {
+        idD:id,
+        id:idP,
+        csrfmiddlewaretoken: csrfToken
+        };
+        $.ajax({
+        type: "POST",
+        url: "/mtm-group/projects/delete_duration/",
+        data: formData,
+        success: function(response) {
+            console.log(response);
+            $('#trD' + response).remove();
+        }}
+        );
+    }
 </script>
 {% endblock extra_js %}

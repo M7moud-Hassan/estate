@@ -10,6 +10,7 @@ from .views import MyPasswordChangeView, MyPasswordSetView
 urlpatterns = [
     #enginners
     path('mtm-group/engineers/',include('engineers.urls')),
+    path('mtm-group/account/',include('accounts.urls')),
     path('mtm-group/reports/', include('reports.urls')),
     path('mtm-group/imported/', include('imported.urls')),
     path('mtm-group/admin/', admin.site.urls),
@@ -19,16 +20,16 @@ urlpatterns = [
     path('mtm-group/components/', include('components.urls')),
     path('mtm-group/', include('extras.urls')),
 
-    path(
-        "account/password/change/",
-        login_required(MyPasswordChangeView.as_view()),
-        name="account_change_password",
-    ),
-    path(
-        "account/password/set/",
-        login_required(MyPasswordSetView.as_view()),
-        name="account_set_password",
-    ),
+    # path(
+    #     "account/password/change/",
+    #     login_required(MyPasswordChangeView.as_view()),
+    #     name="account_change_password",
+    # ),
+    # path(
+    #     "account/password/set/",
+    #     login_required(MyPasswordSetView.as_view()),
+    #     name="account_set_password",
+    # ),
     # All Auth
-    path('account/', include('allauth.urls')),
+    # path('account/', include('allauth.urls')),
 ]

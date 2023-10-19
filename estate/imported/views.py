@@ -2,13 +2,14 @@ from django.shortcuts import render,redirect
 
 from imported.forms import ImportedForm
 from imported.models import Imported, PhoneNumber
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required
 def imported(request):
     clients=Imported.objects.all()
     return render(request,'imported/index.html',context={'clients':clients})
-
+@login_required
 def add_imported(request):
     if request.method == 'POST':
         print(request.POST)
@@ -33,7 +34,7 @@ def add_imported(request):
     else:
         form = ImportedForm()
     return render(request, 'imported/add.html', context={'form': form})
-
+@login_required
 def edit_imported(request,id):
     client=Imported.objects.filter(id=id).first()
     if client:
@@ -55,6 +56,7 @@ def edit_imported(request,id):
         else:
             form=ImportedForm(instance=client)
             return  render(request, 'imported/add.html', context={'form': form,'phones':client.phonesNumber.all()})
+@login_required
 def delete_clients(request,id):
     client=Imported.objects.filter(id=id).first()
     if client:

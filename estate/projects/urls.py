@@ -11,5 +11,8 @@ urlpatterns = [
   path('delete_project/<int:id>/',delete_project,name='delete_project'),
   path('form/',form,name='form'),
   path('add_duration/',add_duration,name="add_duration"),
-  path('add_importeds/',add_imported,name="add_importeds")
+  path('delete_duration/',delete_duration,name="delete_duration"),
+  path('delete_masrouf/',delete_masrouf,name="delete_masrouf"),
+  # path('add_duration/',edd_duration,name="add_duration"),
+  path('add_imported/',add_imported,name="add_importeds")
 ]

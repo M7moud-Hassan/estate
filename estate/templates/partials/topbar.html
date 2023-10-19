@@ -230,40 +230,40 @@
 <!--                        </div>-->
 <!--                    </div>-->
 
-<!--                    <div class="dropdown d-inline-block">-->
-<!--                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"-->
-<!--                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                            <img class="rounded-circle header-profile-user" src="{% static 'images/users/user-4.jpg'%}"-->
-<!--                                alt="Header Avatar">-->
-<!--                        </button>-->
-<!--                        <div class="dropdown-menu dropdown-menu-end">-->
-<!--                            &lt;!&ndash; item&ndash;&gt;-->
-<!--                            <a class="dropdown-item text-center" href="#">{{user.username}} </a>-->
-<!--                            <hr>-->
-<!--                            <a class="dropdown-item" href="#"><i class="mdi mdi-wallet font-size-17 align-middle me-1"></i> My Wallet</a>-->
-<!--                            <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog font-size-17 align-middle me-1"></i> Settings<span class="badge bg-success ms-auto">11</span></a>-->
-<!--                            <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline font-size-17 align-middle me-1"></i> Lock screen</a>-->
+                   <div class="dropdown d-inline-block">
+                       <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <img class="rounded-circle header-profile-user" src="{% static 'images/users/user-4.jpg'%}"
+                               alt="Header Avatar">
+                       </button>
+                       <div class="dropdown-menu dropdown-menu-end">
+                           <!-- &lt;!&ndash; item&ndash;&gt;
+                           <a class="dropdown-item text-center" href="#">{{user.username}} </a>
+                           <hr> -->
+                           <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-wallet font-size-17 align-middle me-1"></i> My Wallet</a> -->
+                           <!-- <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog font-size-17 align-middle me-1"></i> Settings<span class="badge bg-success ms-auto">11</span></a> -->
+                           <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline font-size-17 align-middle me-1"></i> Lock screen</a> -->
 <!--                            <div class="dropdown-divider"></div>-->
 <!--                            {% if user.is_authenticated %}-->
 <!--                            {% if user.has_usable_password %}-->
-<!--                                <a class="dropdown-item" href="{% url 'account_change_password' %}">-->
+<!--                                <a class="dropdown-item" ">-->
 <!--                                    <i class="mdi mdi-key text-muted fs-16 align-middle me-1"></i>-->
 <!--                                    <span class="align-middle" data-key="t-logout">change password</span>-->
 <!--                                </a>-->
 <!--                            {% else %}-->
-<!--                                <a class="dropdown-item" href="{% url 'account_set_password' %}">-->
+<!--                                <a class="dropdown-item">-->
 <!--                                    <i class="mdi mdi-key text-muted fs-16 align-middle me-1"></i>-->
 <!--                                    <span class="align-middle" data-key="t-logout">set password</span>-->
 <!--                                </a>-->
 <!--                            {% endif %}-->
-<!--                            <a class="dropdown-item text-danger" href="{% url 'account_logout' %}">-->
-<!--                                <i class="mdi mdi-logout fs-16 align-middle me-1"></i>-->
-<!--                                <span class="align-middle " data-key="t-logout">Logout</span>-->
-<!--                            </a>-->
+                           <a class="dropdown-item text-danger" href="{% url 'log_out' %}">
+                               <i class="mdi mdi-logout fs-16 align-middle me-1"></i>
+                               <span class="align-middle " data-key="t-logout">Logout</span>
+                           </a>
 <!--                        {% endif %}-->
-<!--                        </div>-->
+<!--                        </div>
 
-<!--                        {% if messages %}-->
+                       {% if messages %}-->
 <!--                        {% for message in messages %}-->
 <!--                        <input type="hidden" id="login-msg" value="{{message}}">-->
 

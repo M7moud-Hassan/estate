@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from datetime import timedelta
-
+from django.contrib.auth.decorators import login_required
 from engineers.models import Engineers
 from .models import AdditionalPeriods, CostsImported, Projects, Ahdaa, Masourfat, Mostakhlas
 from decimal import Decimal
@@ -16,7 +16,7 @@ class DataObject:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
+@login_required
 def add_project(request):
         if request.method == 'POST':
             data_object = DataObject(**request.POST)
@@ -36,7 +36,6 @@ def add_project(request):
                 date_asnad=datetime.strptime(data_object.date5[0], "%d-%m-%Y").date() if data_object.date5[0] else None,
                 date_work=datetime.strptime(data_object.date6[0], "%d-%m-%Y").date() if data_object.date6[0] else None,
                 date_end=datetime.strptime(data_object.date7[1], "%d-%m-%Y").date() if data_object.date7[0] else None,
-                # date_extra_end=data_object.date8[0],
                 duration_project=int(data_object.date7[0]) if data_object.date7[0] else 0,
                 price_project=data_object.demo2[1] if data_object.demo2[1] else 0.0,
                 insurance_value=data_object.demo2[0] if data_object.demo2[0] else 0.0,
@@ -46,16 +45,15 @@ def add_project(request):
                 )
             index = 0
             while True:
-
                 price = getattr(data_object, 'group-a[' + str(index) + '][demo2]', None)
-
                 if price and  int(price[0])>0:
                     eng = getattr(data_object, 'group-a[' + str(index) + '][engineer]', None)
-                    # eng = getattr(data_object,  'group-a[' + str(index) + '][engineer]', None)
-
+                    date_ahdaa = getattr(data_object, 'group-a[' + str(index) + '][date10]', None)
                     ahdaa = Ahdaa.objects.create(price=price[0] if price[0] else 0,
+                                                 date_ahdaa=datetime.strptime(date_ahdaa[0],
+                                                                                        "%d-%m-%Y").date() if
+                                                         date_ahdaa[0] else None,
                                                  engineer_id=Engineers.objects.filter(id=int(eng[0])).first() if eng[0] else None)
-
                     project.ahdaa.add(ahdaa)
                     project.save()
                 else:
@@ -64,24 +62,24 @@ def add_project(request):
                 
             index = 0
             while True:
-                date_mosroufat = getattr(data_object, 'group-a[' + str(index) + '][date10]', None)
+                date_mosroufat = getattr(data_object, 'group-b[' + str(index) + '][date10]', None)
                 if date_mosroufat and date_mosroufat[0]:
-                    eng = getattr(data_object, 'group-a[' + str(index) + '][engineer_]', None)
-                    price = getattr(data_object, 'group-a[' + str(index) + '][demo2]', None)
-                    des = getattr(data_object, 'group-a[' + str(index) + '][des]', None)
-                    moard = getattr(data_object, 'group-a[' + str(index) + '][imported_]', None)
-                    masourfat = Masourfat.objects.create(price=price[1] if price[1] else None,
+                    eng = getattr(data_object, 'group-b[' + str(index) + '][engineer_]', None)
+                    price = getattr(data_object, 'group-b[' + str(index) + '][demo2]', None)
+                    des = getattr(data_object, 'group-b[' + str(index) + '][des]', None)
+                    # moard = getattr(data_object, 'group-b[' + str(index) + '][moard]', None)
+                    masourfat = Masourfat.objects.create(price=price[0] if price[0] else None,
                                                          date_masrouf=datetime.strptime(date_mosroufat[0],
                                                                                         "%d-%m-%Y").date() if
                                                          date_mosroufat[0] else None,
-                                                         imported=Imported.objects.filter(id=int(moard[0])).first(), descriptions=des[0],
+                                                         descriptions=des[0] if des[0] else None,
+                                                        #  imported=Imported.objects.filter(id=int(moard[0])).first(), descriptions=des[0],
                                                          bain_masrouf=Engineers.objects.filter(id=int(eng[0])).first() if eng[0] else None)
                     project.masourfats.add(masourfat)
                     project.save()
                 else:
                     break
                 index = index + 1
-
             index=0
             while True:
                 price_mostakhlas_after = getattr(data_object, 'group-c[' + str(index) + '][demo2]', None)
@@ -125,15 +123,15 @@ def add_project(request):
         return render(request, 'projects/add_project.html',context={'engineers':Engineers.objects.all(),
                                                                     'importeds':Imported.objects.all()})
 
-
+@login_required
 def edit_project(request, id):
         project = Projects.objects.filter(id=id).first()
-
+       
         if request.method == 'POST':
             data_object = DataObject(**request.POST)
             if project:
-                project.name = data_object.name_project[0],
-                letter_of_guarantee=data_object.letter_of_guarantee[0],
+                project.name = data_object.name_project[0]
+                project.letter_of_guarantee=data_object.letter_of_guarantee[0]
                 project.date_session = datetime.strptime(data_object.date1[0], "%d-%m-%Y").date() if data_object.date1[
                     0] else None
                 project.date_finance = datetime.strptime(data_object.date2[0], "%d-%m-%Y").date() if data_object.date2[
@@ -162,38 +160,38 @@ def edit_project(request, id):
                 
                 index = 0
                 while True:
-                    eng = getattr(data_object, 'group-a[' + str(index) + '][engineer]', None)
-                    if eng and eng[0]:
-                        price = getattr(data_object, 'group-a[' + str(index) + '][demo2]', None)
-                        # eng = getattr(data_object,  'group-a[' + str(index) + '][engineer]', None)
-
+                    price = getattr(data_object, 'group-a[' + str(index) + '][demo2]', None)
+                    if price and price[0]:
+                        eng = getattr(data_object, 'group-a[' + str(index) + '][engineer]', None)
+                        date_ahdaa = getattr(data_object, 'group-a[' + str(index) + '][date10]', None)
                         ahdaa = Ahdaa.objects.create(price=price[0] if price[0] else 0,
-                                                     engineer_id=Engineers.objects.filter(id=int(eng[0])).first() if
-                                                     eng[0] else None)
+                                                 date_ahdaa=datetime.strptime(date_ahdaa[0],
+                                                                                        "%d-%m-%Y").date() if
+                                                         date_ahdaa[0] else None,
+                                                 engineer_id=Engineers.objects.filter(id=int(eng[0])).first() if eng[0] else None)
                         project.ahdaa.add(ahdaa)
+                        project.save()
                     else:
                         break
                     index += 1
 
                 index = 0
                 while True:
-                    date_mosroufat = getattr(data_object, 'group-a[' + str(index) + '][date10]', None)
+                    date_mosroufat = getattr(data_object, 'group-b[' + str(index) + '][date10]', None)
                     if date_mosroufat and date_mosroufat[0]:
-                        price = getattr(data_object, 'group-a[' + str(index) + '][demo2]', None)
-                        eng = getattr(data_object, 'group-a[' + str(index) + '][engineer_]', None),
-                        des = getattr(data_object, 'group-a[' + str(index) + '][des]', None)
-                        moard = getattr(data_object, 'group-a[' + str(index) + '][moard]', None)
-                        
-                        masourfat = Masourfat.objects.create(
-                            price=price[1] if price[1] else None,
-                            date_masrouf=datetime.strptime(date_mosroufat[0], "%d-%m-%Y").date() if date_mosroufat[
-                                0] else None,
-                            almardeen=moard[0],
-                            descriptions=des[0],
-
-                            bain_masrouf=Engineers.objects.filter(id=int(eng[0][0])).first() if eng[0] else None
-                        )
+                        eng = getattr(data_object, 'group-b[' + str(index) + '][engineer_]', None)
+                        price = getattr(data_object, 'group-b[' + str(index) + '][demo2]', None)
+                        des = getattr(data_object, 'group-b[' + str(index) + '][des]', None)
+                        # moard = getattr(data_object, 'group-b[' + str(index) + '][moard]', None)
+                        masourfat = Masourfat.objects.create(price=price[0] if price[0] else None,
+                                                            date_masrouf=datetime.strptime(date_mosroufat[0],
+                                                                                            "%d-%m-%Y").date() if
+                                                            date_mosroufat[0] else None,
+                                                            #  imported=Imported.objects.filter(id=int(moard[0])).first(), descriptions=des[0],
+                                                            descriptions=des[0] if des[0] else None,
+                                                            bain_masrouf=Engineers.objects.filter(id=int(eng[0])).first() if eng[0] else None)
                         project.masourfats.add(masourfat)
+                        project.save()
                     else:
                         break
                     index += 1
@@ -247,7 +245,7 @@ def edit_project(request, id):
     #     messages.error(request, str(e))
         return redirect('/mtm-group/projects/')
 
-
+@login_required
 def update_ahdaa(request):
     try:
         data = json.loads(request.body)
@@ -262,7 +260,7 @@ def update_ahdaa(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
-
+@login_required
 def update_masrouf(request):
     try:
         data = json.loads(request.body)
@@ -284,7 +282,7 @@ def update_masrouf(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
-
+@login_required
 def delete_project(request, id):
     project = Projects.objects.filter(id=id).first()
     if project:
@@ -292,12 +290,14 @@ def delete_project(request, id):
         messages.success(request, "تم مسح المشروع")
     return redirect('/mtm-group/projects/')
 
-
+@login_required
 def form(request):
    return  render(request,'components/forms/form-advanced.html')
 
+@login_required
 def add_duration(request):
     if request.method == 'POST':
+        idDu=request.POST.get('idD')
         id = request.POST.get('id')
         durationDate1 = request.POST.get('durationDate1')
         durationDate2 = request.POST.get('durationDate2')
@@ -318,42 +318,80 @@ def add_duration(request):
             durationDate3 = datetime.strptime(durationDate3, date_format).strftime("%Y-%m-%d")
 
             # Create a new AdditionalPeriods object
-            duration = AdditionalPeriods.objects.create(
-                price_increase=duration2,
-                date_Period=durationDate1,
-                terminationBeforeTheIncrease=durationDate2,
-                terminationAfterTheIncrease=durationDate3,
-                duration=duration1,
-                reason=duration3
-            )
+            
+            if  idDu == '0' :
+                duration = AdditionalPeriods.objects.create(
+                    price_increase=duration2,
+                    date_Period=durationDate1,
+                    terminationBeforeTheIncrease=durationDate2,
+                    terminationAfterTheIncrease=durationDate3,
+                    duration=duration1,
+                    reason=duration3
+                )
 
-            # sGet the project and associate the duration with it
-            project = Projects.objects.filter(id=id).first()
-            if project:
-                project.durations.add(duration)
+                # sGet the project and associate the duration with it
+                project = Projects.objects.filter(id=id).first()
+                if project:
+                    project.durations.add(duration)
+                    project.duration_project += int(duration1)
+                    project.date_extra_end += int(duration1)
+                    project.date_end += timedelta(days=int(duration1) * 30)
+                    project.save()
+                    return HttpResponse(duration.id)
+                else:
+                    return HttpResponse('Project not found', status=404)
+            else:
+                record_to_update = AdditionalPeriods.objects.get(id=idDu)
+                project = Projects.objects.filter(id=id).first()
+                project.duration_project -= int(record_to_update.duration)
+                project.date_extra_end -= int(record_to_update.duration)
+                project.date_end -= timedelta(days=int(record_to_update.duration) * 30)
+                project.save()
+                record_to_update.price_increase = duration2
+                record_to_update.date_Period = durationDate1
+                record_to_update.terminationBeforeTheIncrease = durationDate2
+                record_to_update.terminationAfterTheIncrease = durationDate3
+                record_to_update.duration = duration1
+                record_to_update.reason = duration3
+                record_to_update.save()
                 project.duration_project += int(duration1)
                 project.date_extra_end += int(duration1)
-
-# Assuming project.date_end is a DateField and duration1 is in months
                 project.date_end += timedelta(days=int(duration1) * 30)
                 project.save()
-                return HttpResponse('ok')
-            else:
-                return HttpResponse('Project not found', status=404)
+                return HttpResponse(record_to_update.id)
         except ValueError:
             return HttpResponse('Invalid date format', status=400)
     else:
         return HttpResponse('Method not allowed', status=405)
-    
+
+@login_required
+def delete_duration(request):
+    idDu=request.POST.get('idD')
+    id=request.POST.get('id')
+    record_to_update = AdditionalPeriods.objects.get(id=idDu)
+    project = Projects.objects.filter(id=id).first()
+    project.duration_project -= int(record_to_update.duration)
+    project.date_extra_end -= int(record_to_update.duration)
+    project.date_end -= timedelta(days=int(record_to_update.duration) * 30)
+    project.save()
+    record_to_update.delete()
+    return HttpResponse(idDu)
+@login_required
+def delete_masrouf(request):
+    idDu=request.POST.get('idD')
+    record_to_update = CostsImported.objects.get(id=idDu)
+    record_to_update.delete()
+    return HttpResponse(idDu)
+@login_required
 def add_imported(request):
     if request.method == 'POST':
         id = request.POST.get('id')
+        idM = request.POST.get('idM')
         impSelect = request.POST.get('impSelect')
         impCost = request.POST.get('impCost')
         impDate = request.POST.get('impDate')
         impNote = request.POST.get('impNote')
     
-
         # Check if any of the fields are empty
         if not id or not impSelect  or not impCost or not impDate or not impNote:
             return HttpResponse('One or more fields are empty', status=400)
@@ -364,23 +402,32 @@ def add_imported(request):
             impDate = datetime.strptime(impDate, date_format).strftime("%Y-%m-%d")
           
 
-            # Create a new AdditionalPeriods object
-            imp = CostsImported.objects.create(
-              imported=Imported.objects.filter(id=int(impSelect)).first(),
-              cost=impCost,
-              date=impDate,
-              note=impNote
-            )
+            if idM =='0':
+                imp = CostsImported.objects.create(
+                imported=Imported.objects.filter(id=int(impSelect)).first(),
+                cost=impCost,
+                date=impDate,
+                note=impNote
+                )
 
-            # sGet the project and associate the duration with it
-            project = Projects.objects.filter(id=id).first()
-            if project:
-                project.costs_importeds.add(imp)
-                project.save()
-                return HttpResponse('ok')
+                # sGet the project and associate the duration with it
+                project = Projects.objects.filter(id=id).first()
+                if project:
+                    project.costs_importeds.add(imp)
+                    project.save()
+                    return HttpResponse(json.dumps({"id":imp.id,"name":imp.imported.company_name}))
+                else:
+                    return HttpResponse('Project not found', status=404)
             else:
-                return HttpResponse('Project not found', status=404)
-        except ValueError:
-            return HttpResponse('Invalid date format', status=400)
+                imp = CostsImported.objects.get(id=idM)
+                imp.imported=Imported.objects.filter(id=int(impSelect)).first()
+                imp.cost=impCost
+                imp.date=impDate
+                imp.note=impNote
+                imp.save()
+                return HttpResponse(json.dumps({"id":imp.id,"name":imp.imported.company_name}))
+        except Exception as e:
+            print(e)
+            return HttpResponse(e, status=400)
     else:
         return HttpResponse('Method not allowed', status=405)

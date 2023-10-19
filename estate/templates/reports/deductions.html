@@ -8,7 +8,7 @@
 {% endblock extra_css %}
 
 {% block page_title %}
-    {% include 'partials/page_title_engineers.html' with page_title=" التقارير" sub_title="تقارير المستقطاعات" title="" hide="true" %}
+    {% include 'partials/drop_down_projects.html' with page_title=" التقارير" sub_title="تقارير المستقطاعات" title="" projects=all_p  url=0 %}
     {% endblock page_title %}
 {% block content %}
 
@@ -18,16 +18,6 @@
                 <div class="card">
                     <div class="card-body">
                          <div class="col-12 col-md-6">
-                             <!-- <form method="POST">
-                                  {% csrf_token %}
-                                <label class="form-label">بحث</label>
-                                <div class="input-daterange input-group mb-2" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
-                                    <input type="text" class="form-control" name="start" placeholder="Start Date" required />
-                                    <input type="text" class="form-control" name="end" placeholder="End Date" required />
-                                <button class="btn btn-primary" type="submit">بحث</button>
-                                </div>
-
-                                 </form> -->
                             </div>
                         <h4 class="card-title"> تقارير المستقطاعات </h4>
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">

@@ -1,0 +1,17 @@
+{% extends "partials/page_title_projects.html" %}
+  {% block dropdown %}
+                 <div class="dropdown">
+                    <button class="btn btn-primary  dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        المشاريع
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        {% for project in projects %}
+                        {% if url == 0 %}
+                        <a class="dropdown-item" href="{% url 'mos_report' project.id %}">{{project.name}}</a>
+                        {% elif url == 1 %}
+                        <a class="dropdown-item" href="{% url 'durations_report' project.id %}">{{project.name}}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+{% endblock %}

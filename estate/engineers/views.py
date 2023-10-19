@@ -5,16 +5,17 @@ from .form import EngineersForm
 from .models import Engineers
 from django.db.models import Q
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def engineers(request):
     context = {
         "engineers": Engineers.objects.all()
     }
     return render(request, 'engineers/index.html', context=context)
 
-
+@login_required
 def add(request):
     form = EngineersForm(request.POST)
     if request.method == 'POST':
@@ -29,7 +30,7 @@ def add(request):
 
     return render(request, 'engineers/add.html', context=context)
 
-
+@login_required
 def edit(request, pk):
     eng = Engineers.objects.filter(id=pk).first()
     if eng:
@@ -47,7 +48,7 @@ def edit(request, pk):
         messages.error(request, 'المهندس الذي تريد تعديله ليس موجود')
         return redirect('/mtm-group/engineers/')
 
-
+@login_required
 def delete(request, pk):
     eng = Engineers.objects.filter(id=pk).first()
     if eng:
@@ -60,7 +61,7 @@ def delete(request, pk):
         messages.error(request, 'المهندس الذي تريد مسحة ليس موجود')
         return redirect('/mtm-group/engineers/')
 
-
+@login_required
 def details(request,pk):
     engineer=Engineers.objects.filter(id=pk).first()
     if engineer:

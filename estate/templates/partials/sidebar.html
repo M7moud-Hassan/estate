@@ -42,7 +42,12 @@
                             </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                                            <li><a  href="{% url 'home.report' %}">تقارير المشاريع</a></li>
-                                                            <li><a href="{% url 'mos_report'%}">تقارير المستقطاعات</a></li>
+                                                            <li><a href="{% url 'mos_report' 0 %}">تقارير المستقطاعات</a></li>
+                                                            <li><a href="{% url 'durations_report' 0 %}">تقارير المدد الاضافية</a></li>
+                                                            <li><a href="{% url 'masrouf_report' 0 %}">تقارير مصروفات المؤردين</a></li>
+                                                            <li><a href="{% url 'details_report' 0 %}">تقارير التفاصيل</a></li>
+                                                            <li><a href="{% url 'finance_report' 0 %}">تقارير المالية للمشروع</a></li>
+                                                            <li><a href="{% url 'ahdaa_report' 0 %}">تقارير العهد</a></li>
                                     </ul>
                          </li> 
 

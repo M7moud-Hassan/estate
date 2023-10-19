@@ -5,8 +5,8 @@ from imported.models import Imported
 
 
 class Projects(models.Model):
-    name = models.CharField(max_length=200, null=True, blank=True)
-    letter_of_guarantee = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True)
+    letter_of_guarantee = models.CharField(max_length=200, null=True)
     date_session = models.DateField(null=True, blank=True)
     date_finance = models.DateField(null=True, blank=True)
     date_notification_Altrsih = models.DateField(null=True, blank=True)
@@ -37,6 +37,8 @@ class CostsImported(models.Model):
 class Ahdaa(models.Model):
     engineer_id = models.ForeignKey(Engineers, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    date_ahdaa = models.DateField(null=True, blank=True)
+
 
 
 class Masourfat(models.Model):

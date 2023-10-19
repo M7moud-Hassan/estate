@@ -49,6 +49,7 @@ LOCAL_APPS = [
     "home",
     "projects",
     "engineers",
+    "accounts",
 'reports',
 'imported'
 ]
@@ -180,7 +181,7 @@ DEFAULT_FROM_EMAIL = "Your Email Address"
 SITE_ID = 2
 
 LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "account_login"
+LOGIN_URL = "/mtm-group/account/login_view/"
 ACCOUNT_LOGOUT_ON_GET = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
