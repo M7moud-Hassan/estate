@@ -1991,5 +1991,10 @@ function editDuration(id,date_Period,terminationBeforeTheIncrease,terminationAft
         }}
         );
     }
+    $(document).ready(function() {
+    $('input[data-provide="datepicker"]').datepicker({
+        orientation: 'top'
+    });
+});
 </script>
 {% endblock extra_js %}

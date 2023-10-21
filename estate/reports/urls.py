@@ -8,6 +8,7 @@ urlpatterns=[
      path('details_report/<int:pk>/',details_report,name="details_report"),
      path('finance_report/<int:pk>/',finance_report,name="finance_report"),
      path('ahdaa_report/<int:pk>/',ahdaa_report,name="ahdaa_report"),
+     path('mostkhlas_report/<int:pk>/',mostkhlas_report,name="mostkhlas_report"),
      
     # path('add-engineer/',add,name='add_engineer'),
     # path('edit-engineer/<int:pk>',edit,name='edit_engineer'),

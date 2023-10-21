@@ -424,4 +424,12 @@
     <script src="{% static 'libs/bootstrap-maxlength/dist/bootstrap-maxlength.min.js'%}"></script>
 
     <script src="{% static 'js/pages/form-advanced.init.js'%}"></script>
+    <script>
+
+$(document).ready(function() {
+    $('input[data-provide="datepicker"]').datepicker({
+        orientation: 'top'
+    });
+});
+    </script>
 {% endblock extra_js %}
