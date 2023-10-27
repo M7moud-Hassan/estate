@@ -74,10 +74,16 @@
                         </ul>
                     </td>
                        <td class="text-center">
-                           <!-- <a class="btn btn-info" type="button" href="{% url 'details_engineer' eng.id %}" >تفاصيل</a> -->
+                           
+                        <!-- <a class="btn btn-info" type="button" href="{% url 'details_engineer' eng.id %}" >تفاصيل</a> -->
+                        {% if  perms.imported.change_imported %}
                            <a class="btn btn-info" type="button" href="{% url 'edit_imported' eng.id %}" >تعديل</a>
+                           {% endif %}
+                           {% if  perms.imported.delete_imported %}
                     <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop{{eng.id}}"></td>
+                                data-bs-target="#staticBackdrop{{eng.id}}">
+                            {% endif %}
+                            </td>
                    </tr>
                     {% endfor %}
                     </tbody>

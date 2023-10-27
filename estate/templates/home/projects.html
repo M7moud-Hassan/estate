@@ -315,9 +315,15 @@
                                        <td>لا يوجد</td>
                                        {% endif %}
                                        <td>التقرير <input class="btn btn-outline-info waves-effect waves-light"  data-bs-toggle="modal" data-bs-target=".modal-report-{{p.id}}" type="button" value="عرض التقرير"></td>
-                                       <td><a class="btn btn-info" type="button" href="{% url 'edit_project' p.id %}" >تعديل</a>
+                                       <td>
+                                        {% if  perms.projects.change_projects %}
+                                        <a class="btn btn-info" type="button" href="{% url 'edit_project' p.id %}" >تعديل</a>
+                                        {% endif %}
+                                        {% if  perms.projects.delete_projects %}
                             <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop{{p.id}}"></td>
+                                        data-bs-target="#staticBackdrop{{p.id}}">
+                                    {% endif %}
+                                    </td>
                                    </tr>
                                     {% endfor %}
                                     </tbody>

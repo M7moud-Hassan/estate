@@ -67,10 +67,16 @@
                             <td>{{eng.graduation_year}}</td>
                             <td>{{eng.phone_number}}</td>
                                <td class="text-center">
+
                                    <a class="btn btn-info" type="button" href="{% url 'details_engineer' eng.id %}" >تفاصيل</a>
+                                   {% if  perms.engineers.change_engineers %}
                                    <a class="btn btn-info" type="button" href="{% url 'edit_engineer' eng.id %}" >تعديل</a>
+                                   {% endif %}
+                                   {% if  perms.engineers.delete_engineers %}
                             <input class="btn btn-danger" type="submit" value="حذف" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop{{eng.id}}"></td>
+                                        data-bs-target="#staticBackdrop{{eng.id}}">
+                                    {% endif %}
+                                    </td>
                            </tr>
                             {% endfor %}
                             </tbody>

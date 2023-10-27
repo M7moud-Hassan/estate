@@ -8,49 +8,71 @@
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li class="menu-title">المشاريع</li>
-
+                        {% if  perms.projects.view_projects %}
                         <li>
                             <a href="{% url 'home.projects' %}" class="waves-effect">
 <!--                                <i class="ti-home"></i><span class="badge rounded-pill bg-primary float-end">1</span>-->
                                 <span>المشاريع</span>
                             </a>
-
-
                         </li>
-
+                        {% endif %}
+                        {% if  perms.engineers.view_engineers %}
                          <li>
                             <a href="{% url 'home.engineers' %}" class="waves-effect">
                                 <span>مهندسين التنفيذ</span>
                             </a>
                         </li>
-
+                        {% endif  %}
+                        
+                        {% if  perms.imported.view_imported %}
                         <li>
                             <a href="{% url 'home.imported' %}" class="waves-effect">
                                 <span> مؤردين وعملاء</span>
                             </a>
                         </li>
-
+                       
+                        {% endif  %}
                         <li>
                             <a class="waves-effect">
                                 <span> </span>
                             </a>
                         </li>
+                        {% if  perms.projects.all_view_report %}
                         <li>
+
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                                                          
                             <span>التقارير</span>
                             </a>
+
                                 <ul class="sub-menu" aria-expanded="false">
+                                                            {% if  perms.projects.view_report %}
                                                            <li><a  href="{% url 'home.report' %}">تقارير المشاريع</a></li>
+                                                           {% endif %}
+                                                           {% if  perms.projects.view_mostakhlas_report %}
                                                             <li><a href="{% url 'mos_report' 0 %}">تقارير المستقطاعات</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view_Periods_report %}
                                                             <li><a href="{% url 'durations_report' 0 %}">تقارير المدد الاضافية</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view_masourfat_report %}
                                                             <li><a href="{% url 'masrouf_report' 0 %}">تقارير مصروفات المؤردين</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view_details %}
                                                             <li><a href="{% url 'details_report' 0 %}">تقارير التفاصيل</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view_finance %}
                                                             <li><a href="{% url 'finance_report' 0 %}">تقارير المالية للمشروع</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view__ahdaa_report %}
                                                             <li><a href="{% url 'ahdaa_report' 0 %}">تقارير العهد</a></li>
+                                                            {% endif %}
+                                                            {% if  perms.projects.view_mostakhlas_report2 %}
                                                             <li><a href="{% url 'mostkhlas_report' 0 %}">تقارير المستخلصات</a></li>
+                                                            {% endif %}
                                     </ul>
                          </li> 
+                         {% endif %}
 
 <!--                        <li>-->
 <!--                            <a href="{% url 'main:calendar'%}" class=" waves-effect">-->

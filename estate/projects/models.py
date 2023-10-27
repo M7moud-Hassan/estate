@@ -26,7 +26,13 @@ class Projects(models.Model):
     durations=models.ManyToManyField('AdditionalPeriods', blank=True)
     report=models.TextField(null=True)
     costs_importeds=models.ManyToManyField('CostsImported',blank=True)
-
+    class Meta:
+        permissions = [
+            ("view_report", "Can do view report project"),
+            ("view_details", "Can do view report details"),
+            ("view_finance", "Can do view report finance"),
+            ("all_view_report", "Can do view reports"),
+        ]
 
 class CostsImported(models.Model):
     imported = models.ForeignKey(Imported, on_delete=models.CASCADE, null=True, blank=True)
@@ -38,6 +44,10 @@ class Ahdaa(models.Model):
     engineer_id = models.ForeignKey(Engineers, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     date_ahdaa = models.DateField(null=True, blank=True)
+    class Meta:
+        permissions = [
+            ("view__ahdaa_report", "Can do view report ahdaa"),
+        ]
 
 
 
@@ -47,6 +57,10 @@ class Masourfat(models.Model):
     imported = models.ForeignKey(Imported, on_delete=models.CASCADE, null=True, blank=True)
     descriptions = models.CharField(max_length=500, null=True, blank=True)
     bain_masrouf = models.ForeignKey(Engineers, on_delete=models.CASCADE, null=True, blank=True)
+    class Meta:
+        permissions = [
+            ("view_masourfat_report", "Can do view report imported"),
+        ]
 
 class AdditionalPeriods(models.Model):
     price_increase = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -55,7 +69,10 @@ class AdditionalPeriods(models.Model):
     terminationAfterTheIncrease = models.DateField(null=True, blank=True)
     reason = models.CharField(max_length=200, null=True, blank=True)
     duration = models.CharField(max_length=500, null=True, blank=True)
-    
+    class Meta:
+        permissions = [
+            ("view_Periods_report", "Can do view report Periods"),
+        ]
 
 
 class Mostakhlas(models.Model):
@@ -82,3 +99,8 @@ class Mostakhlas(models.Model):
     applied_tear = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     union_of_two_sayings = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.CharField(default='',max_length=10000, null=True, blank=True)
+    class Meta:
+        permissions = [
+            ("view_mostakhlas_report", "Can do view report Mostakhlas"),
+            ("view_mostakhlas_report2", "Can do view report Mostakhlas"),
+        ]
