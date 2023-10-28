@@ -18,7 +18,7 @@ class Projects(models.Model):
     duration_project = models.IntegerField(null=True, blank=True)
     price_project = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     gramat_altakheer = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    total_price_end = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    total_price_end = models.DecimalField(max_digits=10, decimal_places=2,default=0.0)
     insurance_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     ahdaa = models.ManyToManyField('Ahdaa', blank=True)
     masourfats = models.ManyToManyField('Masourfat', blank=True)

@@ -40,7 +40,7 @@ def add_project(request):
                 price_project=data_object.demo2[1] if data_object.demo2[1] else 0.0,
                 insurance_value=data_object.demo2[0] if data_object.demo2[0] else 0.0,
                 gramat_altakheer=data_object.demo1[0] if data_object.demo1[0] else 0.0,
-                total_price_end=data_object.demo2[2] if data_object.demo2[2] else 0.0,
+                # total_price_end=data_object.demo2[2] if data_object.demo2[2] else 0.0,
                 report=data_object.report[0]
                 )
             index = 0
@@ -81,6 +81,8 @@ def add_project(request):
                     break
                 index = index + 1
             index=0
+            project.total_price_end=0
+            project.save()
             while True:
                 price_mostakhlas_after = getattr(data_object, 'group-c[' + str(index) + '][demo2]', None)
                 if price_mostakhlas_after and price_mostakhlas_after[0]:
@@ -88,6 +90,7 @@ def add_project(request):
                     date_mostakhlas=getattr(data_object, 'group-c[' + str(index) + '][date_mo]', None)
                     percentage=getattr(data_object, 'group-c[' + str(index) + '][demo1]', None)
                     price_mostakhlas_after=getattr(data_object, 'group-c[' + str(index) + '][demo2]', None)
+                    project.total_price_end=Decimal(project.total_price_end)+Decimal(price_mostakhlas_after[1])
                     mostakjlas=Mostakhlas.objects.create(engineer_id=Engineers.objects.filter(id=int(engineer_id[0])).first(),date_mostakhlas=
                     datetime.strptime(date_mostakhlas[0],
                                       "%d-%m-%Y").date() if
@@ -152,7 +155,7 @@ def edit_project(request, id):
                 project.report=data_object.report[0]
                 project.price_project = data_object.demo2[0] if data_object.demo2[0] else 0.0
                 project.gramat_altakheer = data_object.demo1[0] if data_object.demo1[0] else 0.0
-                project.total_price_end = data_object.demo2[1] if data_object.demo2[1] else 0.0
+                # project.total_price_end = data_object.demo2[1] if data_object.demo2[1] else 0.0
                 project.save()
                 project.ahdaa.all().delete()
                 project.masourfats.all().delete()
@@ -198,6 +201,8 @@ def edit_project(request, id):
                 project.save()
 
                 index = 0
+                project.total_price_end=0
+                project.save()
                 while True:
                     price_mostakhlas_after = getattr(data_object, 'group-c[' + str(index) + '][demo2]', None)
                     if price_mostakhlas_after and price_mostakhlas_after[0]:
@@ -205,6 +210,7 @@ def edit_project(request, id):
                         date_mostakhlas = getattr(data_object, 'group-c[' + str(index) + '][date_mo]', None)
                         percentage = getattr(data_object, 'group-c[' + str(index) + '][demo1]', None)
                         price_mostakhlas_after = getattr(data_object, 'group-c[' + str(index) + '][demo2]', None)
+                        project.total_price_end=Decimal(project.total_price_end)+Decimal(price_mostakhlas_after[1])
                         mostakjlas = Mostakhlas.objects.create(
                             engineer_id=Engineers.objects.filter(id=int(engineer_id[0])).first(), date_mostakhlas=
                             datetime.strptime(date_mostakhlas[0],
