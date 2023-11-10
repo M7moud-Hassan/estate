@@ -4,144 +4,149 @@
 {% block title %}المشاريع{% endblock title %}
 
 {% block extra_css %}
-    <!-- Responsive Table css -->
-    <link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}" rel="stylesheet" type="text/css">
 
-    <link href="{% static 'libs/admin-resources/rwd-table/rwd-table.min.css'%}" rel="stylesheet" type="text/css">
-<style>
-    .dataTables_filter{
-        display: none;
-    }
-</style>
     {% endblock extra_css %}
 
 {% block page_title %}
     {% include 'partials/drop_down_projects.html' with page_title=" التقارير" sub_title="تقارير المستخلصات" title="" projects=all_p  url=2 %}
     {% endblock page_title %}
 {% block content %}
-        <div class="row">
-            <div class="col-12">
+   
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-rep-plugin">
-                            <div class="table-responsive mb-0" data-bs-pattern="priority-columns" style="height: 800px;">
-                                <table id="datatable-buttons" class="table table-striped" >
-                                    <thead>
-                                    <tr>
-                                        <th data-priority="1">مستخلص رقم </th>
-                                        <th data-priority="1">المهندس </th>
-                                        <th data-priority="1"> قيمة المستخلص الفعلية</th>
-                                        <th data-priority="1"> تاريخ المستخلص</th>
-                                        <th data-priority="1"> التأميناتٍ</th>
-                                        <th data-priority="1"> القوه العاملة</th>
-                                        <th data-priority="1"> تسبة خصم الجمعية</th>
-                                        <th data-priority="1"> نسبة البنك </th>
-                                        <th data-priority="1"> تسبة الدمغة الهندسية  </th>
-                                        <th data-priority="1"> ضمان الاعمال   </th>
-                                        <th data-priority="1"> الضرائب   </th>
-                                        <th data-priority="1"> استقطاعات اخري1   </th>
-                                        <th data-priority="1"> استقطاعات اخري2 </th>
-                                        <th data-priority="1"> ضريبة ارباح تجارية وصناعية </th>
-                                        <th data-priority="1"> ضريبة القيمة المضافة </th>
-                                        <th data-priority="1"> ضريبة شعبة الدمغة </th>
-                                        <th data-priority="1"> صندوق تكريم الشهداء </th>
-                                        <th data-priority="1"> ضريبة تنمية الموارد </th>
-                                        <th data-priority="1"> 1% صندوق تحي مصر  </th>
-                                        <th data-priority="1"> دمغة تطبيقية </th>
-                                        <th data-priority="1"> اتحاد مقاولين </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                  
-                                        
-                                        {% for mo in pro.mostakhlas.all %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{mo.engineer_id.name}}</td>
-                                            <td>{{mo.actual_extract_value}}</td>
-                                            <td>{{mo.date_mostakhlas}}</td>
-                                            <td>{{ mo.altaminat }}% | {{ altaminat|get_item_by_index:forloop.counter0 | floatformat:2}}</td>
-                                            <td>{{mo.workforce}}% | {{ workforce|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.Combined_discount_rate}}% | {{ Combined_discount_rate|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.bank_ratio}}% | {{ bank_ratio|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.engineering_stamp}}% | {{ engineering_stamp|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.others}}% | {{ others|get_item_by_index:forloop.counter0 | floatformat:2 }}</td>
-                                            <td>{{mo.taxes}}% | {{ taxes|get_item_by_index:forloop.counter0 | floatformat:2 }}</td>
-                                            <td>{{mo.other_deductions_1}}% | {{ other_deductions_1|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.other_deductions_2}}% | {{ other_deductions_2|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.commercial_ndustrial_profits_tax}}% | {{ commercial_ndustrial_profits_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.value_added_tax}}% | {{ value_added_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.stamp_tax_division}}% | {{ stamp_tax_division|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.martyrs_Honor_fund}}% | {{ martyrs_Honor_fund|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.resource_development_tax}}% | {{ resource_development_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.long_Live_egypt_fund}}% | {{ long_Live_egypt_fund|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.applied_tear}}% | {{ applied_tear|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                            <td>{{mo.union_of_two_sayings}}% | {{ union_of_two_sayings|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td> المجموع</td>
-                                            <td>{{mo.actual_extract_value}}</td>
-                                            <td>{{mo.date_mostakhlas}}</td>
-                                            <td>{{summ|get_item_by_index:6}}</td>
-                                            <td>{{summ|get_item_by_index:0}}</td>
-                                            <td>{{summ|get_item_by_index:1}}</td>
-                                            <td>{{summ|get_item_by_index:2}}</td>
-                                            <td>{{summ|get_item_by_index:3}}</td>
-                                            <td>{{summ|get_item_by_index:4}}</td>
-                                            <td>{{summ|get_item_by_index:5}}</td>
-                                            <td>{{summ|get_item_by_index:7}}</td>
-                                            <td>{{summ|get_item_by_index:9}}</td>
-                                            <td>{{summ|get_item_by_index:10}}</td>
-                                            <td>{{summ|get_item_by_index:11}}</td>
-                                            <td>{{summ|get_item_by_index:12}}</td>
-                                            <td>{{summ|get_item_by_index:13}}</td>
-                                            <td>{{summ|get_item_by_index:14}}</td>
-                                            <td>{{summ|get_item_by_index:15}}</td>
-                                            <td>{{summ|get_item_by_index:16}}</td>
-                                            <td>{{summ|get_item_by_index:17}}</td>
-                                        </tr>
-                                      
-                                    </tbody>
-                                </table>
+                        {% for mo in pro.mostakhlas.all %}
+                        <table dir="rtl" id="datatable-buttons{{forloop.counter}}" class="datatable-buttons table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>مستخلص رقم </th>
+                                    <th>{{forloop.counter}}</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                           
+                          
+                           <tr>
+                            <td>المهندس</td>
+                            <td>{{mo.engineer_id.name}}</td>
+                            <td></td>
+                            <td>قيمة المستخلص الفعلية</td>
+                            <td>{{mo.actual_extract_value}}</td>
+                            <td></td>
+                           </tr>
+                           <tr>
+                            <td>تاريخ المستخلص</td>
+                            <td>{{mo.date_mostakhlas}}</td>
+                            <td></td>
+                            <td>التأميناتٍ</td>
+                            <td>{{ mo.altaminat }}%</td>
+                            <td> {{ altaminat|get_item_by_index:forloop.counter0 | floatformat:2}}</td>
+                           </tr>
+                           <tr>
+                            <td>القوه العاملة</td>
+                            <td>{{mo.workforce}}%</td>
+                            <td>{{ workforce|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>تسبة خصم الجمعية</td>
+                            <td>{{mo.Combined_discount_rate}}%</td>
+                            <td>{{ Combined_discount_rate|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>نسبة البنك</td>
+                            <td>{{mo.bank_ratio}}%</td>
+                            <td>{{ bank_ratio|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>تسبة الدمغة الهندسية</td>
+                            <td>{{mo.engineering_stamp}}%</td>
+                            <td>{{ engineering_stamp|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>ضمان الاعمال</td>
+                            <td>{{mo.others}}%</td>
+                            <td>{{ others|get_item_by_index:forloop.counter0 | floatformat:2 }}</td>
+                            <td>الضرائب</td>
+                            <td>{{mo.taxes}}%</td>
+                            <td>{{ taxes|get_item_by_index:forloop.counter0 | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>استقطاعات اخري1</td>
+                            <td>{{mo.other_deductions_1}}%</td>
+                            <td>{{ other_deductions_1|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>استقطاعات اخري2</td>
+                            <td>{{mo.other_deductions_2}}%</td>
+                            <td>{{ other_deductions_2|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>ضريبة ارباح تجارية وصناعية</td>
+                            <td>{{mo.commercial_ndustrial_profits_tax}}%</td>
+                            <td>{{ commercial_ndustrial_profits_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>ضريبة القيمة المضافة</td>
+                            <td>{{mo.value_added_tax}}% </td>
+                            <td>{{ value_added_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>ضريبة شعبة الدمغة</td>
+                            <td>{{mo.stamp_tax_division}}%</td>
+                            <td>{{ stamp_tax_division|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>صندوق تكريم الشهداء</td>
+                            <td>{{mo.martyrs_Honor_fund}}%</td>
+                            <td>{{ martyrs_Honor_fund|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>ضريبة تنمية الموارد</td>
+                            <td>{{mo.resource_development_tax}}%</td>
+                            <td> {{ resource_development_tax|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>1% صندوق تحي مصر </td>
+                            <td>{{mo.long_Live_egypt_fund}}%</td>
+                            <td> {{ long_Live_egypt_fund|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           <tr>
+                            <td>دمغة تطبيقية</td>
+                            <td>{{mo.applied_tear}}%</td>
+                            <td>{{ applied_tear|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                            <td>اتحاد مقاولين</td>
+                            <td>{{mo.union_of_two_sayings}}%</td>
+                            <td>{{ union_of_two_sayings|get_item_by_index:forloop.counter0  | floatformat:2 }}</td>
+                           </tr>
+                           
+                            </tbody>
+                        </table>
+                        {% endfor %}
                             </div>
-                        </div>
-                    </div>
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
 
 {% endblock content %}
 
 {% block extra_js %}
-    <!-- Responsive Table js -->
-    <!--  -->
+<script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
+<script src="{% static 'libs/jszip/dist/jszip.min.js'%}"></script>
+<script src="{% static 'libs/pdfmake/build/pdfmake.min.js'%}"></script>
+<script src="{% static 'libs/pdfmake/build/vfs_fonts.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js'%}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js'%}"></script>
+<script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'%}"></script>
 
-    <script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js'%}"></script>
-    <script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
-     <!-- Buttons examples -->
-     <script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
-     <script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
-     <script src="{% static 'libs/jszip/dist/jszip.min.js'%}"></script>
-     <script src="{% static 'libs/pdfmake/build/pdfmake.min.js'%}"></script>
-     <script src="{% static 'libs/pdfmake/build/vfs_fonts.js'%}"></script>
-     <script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
-     <script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
-     <script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js'%}"></script>
-     <!-- Responsive examples -->
-     <script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js'%}"></script>
-     <script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'%}"></script>
- <script src="{% static 'libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
- <script src="{% static 'js/pages/form-advanced.init.js'%}"></script>
- <script src="{% static 'libs/admin-resources/rwd-table/rwd-table.min.js'%}"></script>
-    <!-- Init js -->
-    <script src="{% static 'js/pages/table-responsive.init.js'%}"></script>
-    <script src="{% static 'libs/table-edits/build/table-edits.min.js'%}"></script>
-    <script src="{% static 'js/pages/table-editable.init.js'%}"></script>
- <script>
+<script>
+$(document).ready(
+    function(){
+    for(var i=1;i<10;i++){
+        // setTimeout(()=>{
+            $("#datatable-buttons"+i).DataTable({lengthChange:!1,buttons:["excel","print"],rtl:true}).buttons().container().appendTo("#datatable-buttons"+i+"_wrapper .col-md-6:eq(0)"),$(".dataTables_length select").addClass("form-select form-select-sm")}
+        // },1000)
     
-     $(document).ready(function(){
-        $("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","excel","pdf","colvis"]}).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),$(".dataTables_length select").addClass("form-select form-select-sm")});
- </script>
+});
+
+</script>
 {% endblock extra_js %}

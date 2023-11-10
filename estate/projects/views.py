@@ -305,15 +305,15 @@ def add_duration(request):
     if request.method == 'POST':
         idDu=request.POST.get('idD')
         id = request.POST.get('id')
-        durationDate1 = request.POST.get('durationDate1')
-        durationDate2 = request.POST.get('durationDate2')
-        durationDate3 = request.POST.get('durationDate3')
-        duration1 = request.POST.get('duration1')
-        duration2 = request.POST.get('duration2')
-        duration3 = request.POST.get('duration3')
+        durationDate1 = request.POST.get('durationDate1',None)
+        durationDate2 = request.POST.get('durationDate2',None)
+        durationDate3 = request.POST.get('durationDate3',None)
+        duration1 = request.POST.get('duration1',None)
+        duration2 = request.POST.get('duration2',None)
+        duration3 = request.POST.get('duration3',None)
 
         # Check if any of the fields are empty
-        if not id or not durationDate1 or not durationDate2 or not durationDate3 or not duration1 or not duration2 or not duration3:
+        if not id :
             return HttpResponse('One or more fields are empty', status=400)
 
         # Convert the date strings to "YYYY-MM-DD" format
@@ -342,6 +342,7 @@ def add_duration(request):
                     project.duration_project += int(duration1)
                     project.date_extra_end += int(duration1)
                     project.date_end += timedelta(days=int(duration1) * 30)
+                    project.price_project+= Decimal(duration2)
                     project.save()
                     return HttpResponse(duration.id)
                 else:
@@ -379,6 +380,7 @@ def delete_duration(request):
     project.duration_project -= int(record_to_update.duration)
     project.date_extra_end -= int(record_to_update.duration)
     project.date_end -= timedelta(days=int(record_to_update.duration) * 30)
+    project.price_project -= Decimal(record_to_update.price_increase)
     project.save()
     record_to_update.delete()
     return HttpResponse(idDu)

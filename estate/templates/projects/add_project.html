@@ -109,7 +109,7 @@
                                     <div class="col-6 row p-0 m-0">
                                         <label for="name" class="col-lg-3 col-form-label">قيمة التأمين</label>
                                         <div class="col-lg-9">
-                                            <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.price_project}}"  name="demo2">
+                                            <input id="total" data-parsley-type="number" class="form-control" type="number" value="{{project.insurance_value}}"  name="demo2">
                                         </div>
                                         </div>
                                         <div class="col-6 row p-0 m-0">
@@ -337,7 +337,7 @@
                                    </div>
                                    <div  class="mb-3 col-lg-4">
                                        <label class="form-label6" for="price_2">المدة</label>
-                                        <input id="duration1" value="" name="moard" type="text"  class=" form-control" readonly>
+                                        <input id="duration1" value="" name="moard" type="text"  class=" form-control" onchange="ChangeDayes()">
                                    </div>
                                     <div  class="mb-3 col-lg-5">
                                         <label class="form-label" for="price_">قيمة الزيادة</label>
@@ -1401,7 +1401,7 @@ addDur.value="";
 }else{
 var inputDateStr = endProject.value;
 var monthsToAdd = event.value;
-addDurationToEnd(inputDateStr,monthsToAdd)
+addDurationToEnd(inputDateStr,monthsToAdd,document.getElementById("date8"))
 }
 }
 
@@ -1416,7 +1416,7 @@ durationProject.value="";
 var inputDateStr = startProject.value;
 var monthsToAdd = event.value;
 
-addDurationToEnd(inputDateStr,monthsToAdd)
+addDurationToEnd(inputDateStr,monthsToAdd,document.getElementById("date8"))
 
 
     }
@@ -1424,8 +1424,7 @@ addDurationToEnd(inputDateStr,monthsToAdd)
 
 
 }
-function addDurationToEnd(inputDateStr, daysToAdd) {
-  var endProject = document.getElementById("date8");
+function addDurationToEnd(inputDateStr, daysToAdd,endProject){
   var parts = inputDateStr.split("-");
   var day = parseInt(parts[0]);
   var month = parseInt(parts[1]) - 1; 
@@ -1996,5 +1995,16 @@ function editDuration(id,date_Period,terminationBeforeTheIncrease,terminationAft
         orientation: 'top'
     });
 });
+function ChangeDayes(){
+  var days=$('#duration1').val()
+  var date=$('#durationDate2').val()
+if(date==""){
+alert("يجب ادخال النهو قبل الزيادة اولا")
+ $('#duration1').val("")
+}else{
+addDurationToEnd(date,days,document.getElementById("durationDate3"))
+}
+
+}
 </script>
 {% endblock extra_js %}

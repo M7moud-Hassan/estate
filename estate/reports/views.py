@@ -157,7 +157,7 @@ def mostkhlas_report(request,pk):
                         summ[10]=summ[10]+mo.actual_extract_value*(mo.commercial_ndustrial_profits_tax/100)
                     else:
                         summ[10]=mo.actual_extract_value*(mo.commercial_ndustrial_profits_tax/100)
-                    value_added_tax.append(mo.actual_extract_value*(mo.commercial_ndustrial_profits_tax/100))
+                    commercial_ndustrial_profits_tax.append(mo.actual_extract_value*(mo.commercial_ndustrial_profits_tax/100))
                     if summ[11]:
                         summ[11]=summ[11]+mo.actual_extract_value*(mo.value_added_tax/100)
                     else:
